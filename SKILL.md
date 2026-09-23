@@ -25,29 +25,34 @@ description: 生成"日语歌词逐句学习网页"。当用户给出日语歌�
 - 每句拆成 `jp`（带 `<ruby>`）、`seg`（分词）、`tr`（翻译）、`gram`（语法）、`ws`（本句生词数组）。
 - **英语一律跳过**：歌词中的拉丁字母英文（如 `love`、`OK`、`yeah`）原样保留，不做振假名、分词、生词、词性、语法或 JLPT 处理；也不进 `ws` / `POS`。片假名外来语仍按日语处理。
 - 填 `POS` 表：所有（非英语）词给 `pos`；**仅** 动词/形容词/助动词/句型 给 `form`+`forms`（其他词只需 `pos`）。
-- **JLPT 分级只查索引**：见下方「JLPT 索引检索」。词汇填 `ws` 第 3 列、语法点若要写等级，一律用 `references/jlpt/index.jsonl` 的 `lv`。**索引里没有的词/语法点不分级**（`ws` 等级填 `''`；`gram` 里也不写 N 级）。禁止凭感觉或 data-guide 旧 Rubric 估级。
+- **JLPT 分级只查索引**：见下方「JLPT 索引检索」。词汇查 `references/jlpt/vocabulary.jsonl` 填 `ws` 第 3 列；语法查 `references/jlpt/grammar.jsonl`。**索引里没有的词/语法点不分级**（`ws` 等级填 `''`；`gram` 里也不写 N 级）。禁止凭感觉或 data-guide 旧 Rubric 估级。
 - 遵守读音规则：纯平假名词读音留空；片假名词读音转平假名；说明行只写与词性/形态/原形不重复的内容，无则留空。
 - 重复出现的词在 `POS` 只写一次（模板会自动标注出处）。
 
 ### 第 3.5 步：JLPT 索引检索（必做）
 
-文件：`references/jlpt/index.jsonl`（一行一条 JSON）。**不要整文件读入**，用搜索只取命中行。
+两个索引文件（一行一条 JSON），**分开查、不要整文件读入**：
 
-字段：`t`=`v` 词汇 / `g` 语法；`k` 查找键；`lv`=`n5`–`n1`；`r` 读音；读音行可有 `w`（词形）；语法核心行可有 `src`（完整句型）。
+| 文件 | 用途 |
+|------|------|
+| `references/jlpt/vocabulary.jsonl` | 生词等级（`ws[3]`） |
+| `references/jlpt/grammar.jsonl` | 语法点等级（若要在 `gram` 标注） |
 
-**批量优先**：先收集本首歌全部待定级词形（及需标等级的语法核心），**尽量一次 `grep -E` 查完**，再根据命中行填等级。一词一搜浪费往返与 token。词特别多时可拆成每批 30–50 个，仍远好于逐词搜。
+字段：`k` 查找键；`lv`=`n5`–`n1`；词汇另有 `r` 读音，读音行可有 `w`（词形）；语法核心行可有 `src`（完整句型）。
+
+**批量优先**：先收集本首歌全部待定级词形，对 `vocabulary.jsonl` **尽量一次 `grep -E` 查完**；需标等级的语法核心另对 `grammar.jsonl` 批量查。一词一搜浪费往返与 token。词特别多时可拆成每批 30–50 个。
 
 检索方式（冒号后有空格）：
 
 ```bash
-# 推荐：本首歌全部词形一次查
-grep -E '"k": "(会う|私|だけ|向こう|浮かぶ)"' references/jlpt/index.jsonl
+# 词汇：本首歌全部词形一次查
+grep -E '"k": "(会う|私|向こう|浮かぶ)"' references/jlpt/vocabulary.jsonl
 
-# 仅调试单条时
-grep '"k": "向こう"' references/jlpt/index.jsonl
+# 词汇调试单条
+grep '"k": "向こう"' references/jlpt/vocabulary.jsonl
 
-# 语法核心一并放进同一批（波浪号用 〜）
-grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/index.jsonl
+# 语法：句型核心一次查（波浪号用 〜）
+grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 ```
 
 定级规则：
@@ -56,7 +61,7 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/index.jsonl
 3. 若只命中读音行（带 `"w": "词形"`）：以 `w` 与歌词词形一致的那条为准；同音多义（如 `むこう`→向こう/無効）不可混用。
 4. 命中行的 `m`（英文释义）与歌词用法明显不符时（如助词「に」对上「荷」），视为未命中。
 5. **无命中 → 不分级**：`ws[3]=''`；不要写 `n5`/`n4`/`n3`/`n2`/`n1`。
-6. 禁止打开整份 `index.jsonl` 或各级 `vocabulary.md` 来估级。
+6. 禁止打开整份 `vocabulary.jsonl` / `grammar.jsonl` 或各级源 md 来估级。
 
 ### 第 4 步：生成并交付
 
@@ -74,7 +79,7 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/index.jsonl
 - **浮层出处**：多出处词直接写明每处句子内容（不要跳转链接）。
 - **其他形态**：tag 用 flex-wrap + gap:4px 控制间距，tag 内不换行。
 - **说明行**：与词性/形态/原形重复的内容不显示；无说明时隐藏整行。
-- **JLPT 只认索引**：等级唯一来源是 `references/jlpt/index.jsonl`；未命中不分级（空字符串）。禁止臆测等级。
+- **JLPT 只认索引**：词汇用 `vocabulary.jsonl`，语法用 `grammar.jsonl`；未命中不分级（空字符串）。禁止臆测等级。
 - **生词总表**：词性与形态放在生词按钮内部；按 JLPT 分组去重（无等级词归入「NX」（未收录））。
 - **hero 氛围**：每首歌按歌词意象同时定制 hero 背景配色与动画特效（如 夜蓝泡沫 / 深夜→破晓微光+飘雪 / 花瓣 / 星光…），配色与特效都要贴合本首歌情绪，不要沿用上一首。
 - **展开箭头**：用内联 SVG，不用字符。
@@ -84,4 +89,4 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/index.jsonl
 
 - `assets/lyric-page-template.html`：成品页面模板（样式/交互/渲染完整，仅数据留占位）。生成时复制并替换数据。
 - `references/data-guide.md`：`S`/`POS` 的数据结构、读音与去重规则、完整示例。填数据前必读。
-- `references/jlpt/index.jsonl`：词汇/语法 JLPT 唯一分级源。用 `grep '"k": "词形"'` 检索（见第 3.5 步）。由 `references/jlpt/build_index.py` 从各级 md 生成；改源表后需重跑该脚本。
+- `references/jlpt/vocabulary.jsonl` / `grammar.jsonl`：JLPT 唯一分级源（词汇 / 语法分开）。用 `grep '"k": "…"'` 检索（见第 3.5 步）。由 `references/jlpt/build_index.py` 从各级 md 生成；改源表后需重跑该脚本。

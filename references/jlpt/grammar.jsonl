@@ -1,0 +1,1142 @@
+{"meta": true, "entries": 353, "note": "k 查找键(句型或核心); lv 为 n5–n1; src 完整原条目(核心行时); m 英文释义"}
+{"k": "A-くない", "lv": "n1", "m": "It's not that ... is not / It's somewhat ...", "src": "[V-ない / A-くない / Na-でなく / N-でなく] + はない"}
+{"k": "Adj-stem + びる", "lv": "n1", "m": "Looks like; behaves like (matured/refined)", "src": "N / Adj-stem + びる"}
+{"k": "Adj-stem + ぶる", "lv": "n1", "m": "Pretend to be; act like", "src": "N / Adj-stem + ぶる"}
+{"k": "Clause (Plain) + とばかりに", "lv": "n1", "m": "As if to say"}
+{"k": "Interrogative + ともなく", "lv": "n1", "m": "Without intending to; aimlessly", "src": "V-辞書形 + ともなく / Interrogative + ともなく"}
+{"k": "N", "lv": "n1", "m": "Looks like; behaves like (matured/refined)", "src": "N / Adj-stem + びる"}
+{"k": "N", "lv": "n1", "m": "Pretend to be; act like", "src": "N / Adj-stem + ぶる"}
+{"k": "N", "lv": "n1", "m": "Cannot bear; unbearable; worth doing (in the negative sense)", "src": "N / V-る + に堪えない"}
+{"k": "N (+ 助詞) + すら", "lv": "n1", "m": "Even"}
+{"k": "N + だに", "lv": "n1", "m": "Even; just (by doing)", "src": "V-辞書形 + だに / N + だに"}
+{"k": "N + ながらに(して)", "lv": "n1", "m": "While being in the state of; as it is", "src": "V-stem / N + ながらに(して)"}
+{"k": "N + にかたくない", "lv": "n1", "m": "Not difficult to (imagine/understand)", "src": "V-辞書形 / N + にかたくない"}
+{"k": "N + にたる", "lv": "n1", "m": "Worthy of; deserves; sufficient to", "src": "V-辞書形 / N + にたる"}
+{"k": "N + に堪える", "lv": "n1", "m": "Worthy of; can withstand (evaluation/scrutiny)", "src": "V-辞書形 / N + に堪える"}
+{"k": "N + の", "lv": "n1", "m": "Like; as if; such as", "src": "N + の / V-辞書形 + (が) + ごとき / ごとく"}
+{"k": "N + の極み", "lv": "n1", "m": "The peak of; extreme"}
+{"k": "N + の至りだ", "lv": "n1", "m": "The height of; utmost"}
+{"k": "N + めく", "lv": "n1", "m": "Seems like; becoming"}
+{"k": "N + を余儀なくされる", "lv": "n1", "m": "Be forced to"}
+{"k": "N + を禁じ得ない", "lv": "n1", "m": "Cannot help but feel; cannot suppress"}
+{"k": "N-でなく] + はない", "lv": "n1", "m": "It's not that ... is not / It's somewhat ...", "src": "[V-ない / A-くない / Na-でなく / N-でなく] + はない"}
+{"k": "N-の + きらいがある", "lv": "n1", "m": "Have a tendency to (negative)", "src": "V-辞書形 / N-の + きらいがある"}
+{"k": "N1 + あっての + N2", "lv": "n1", "m": "Because of; thanks to"}
+{"k": "N2", "lv": "n1", "m": "Because of; thanks to", "src": "N1 + あっての + N2"}
+{"k": "Na-でなく", "lv": "n1", "m": "It's not that ... is not / It's somewhat ...", "src": "[V-ない / A-くない / Na-でなく / N-でなく] + はない"}
+{"k": "Noun", "lv": "n1", "m": "Even though", "src": "Noun / Plain form + といえども"}
+{"k": "Noun", "lv": "n1", "m": "Although; nonetheless", "src": "Noun / Phrase + とはいえ"}
+{"k": "Noun + といえども (often with たとえ)", "lv": "n1", "m": "Even if; though"}
+{"k": "Phrase + とはいえ", "lv": "n1", "m": "Although; nonetheless", "src": "Noun / Phrase + とはいえ"}
+{"k": "Plain form + といえども", "lv": "n1", "m": "Even though", "src": "Noun / Plain form + といえども"}
+{"k": "Plain form + と思いきや", "lv": "n1", "m": "Contrary to what I thought"}
+{"k": "V-stem", "lv": "n1", "m": "While being in the state of; as it is", "src": "V-stem / N + ながらに(して)"}
+{"k": "V-stem + っぱなし", "lv": "n1", "m": "Leaving something in a state"}
+{"k": "V-ず + じまい", "lv": "n1", "m": "Ended up not doing"}
+{"k": "V-ず + にはおかない", "lv": "n1", "m": "Will definitely; cannot help but"}
+{"k": "V-ず + にはすまない", "lv": "n1", "m": "Must; cannot avoid doing"}
+{"k": "V-た形", "lv": "n1", "m": "Happened as expected; naturally; bound to happen", "src": "V-辞書形 + べくして + V-た形"}
+{"k": "V-た形 + までだ", "lv": "n1", "m": "No choice but to; just"}
+{"k": "V-て + はばからない", "lv": "n1", "m": "Unhesitatingly; have the audacity to"}
+{"k": "V-て + やまない", "lv": "n1", "m": "Always; sincerely"}
+{"k": "V-ない + ではおかない", "lv": "n1", "m": "Will definitely; cannot help but"}
+{"k": "V-ない(stem) + んばかりだ", "lv": "n1", "m": "As if; about to", "src": "V-ない(stem) + んばかりだ / せんばかりだ"}
+{"k": "V-る + に堪えない", "lv": "n1", "m": "Cannot bear; unbearable; worth doing (in the negative sense)", "src": "N / V-る + に堪えない"}
+{"k": "V-辞書形", "lv": "n1", "m": "Not difficult to (imagine/understand)", "src": "V-辞書形 / N + にかたくない"}
+{"k": "V-辞書形", "lv": "n1", "m": "Worthy of; can withstand (evaluation/scrutiny)", "src": "V-辞書形 / N + に堪える"}
+{"k": "V-辞書形", "lv": "n1", "m": "Worthy of; deserves; sufficient to", "src": "V-辞書形 / N + にたる"}
+{"k": "V-辞書形", "lv": "n1", "m": "Have a tendency to (negative)", "src": "V-辞書形 / N-の + きらいがある"}
+{"k": "V-辞書形", "lv": "n1", "m": "Ended up with the result of (negative)", "src": "V-辞書形/た形 + 始末だ"}
+{"k": "V-辞書形 + (が) + ごとき", "lv": "n1", "m": "Like; as if; such as", "src": "N + の / V-辞書形 + (が) + ごとき / ごとく"}
+{"k": "V-辞書形 + だに", "lv": "n1", "m": "Even; just (by doing)", "src": "V-辞書形 + だに / N + だに"}
+{"k": "V-辞書形 + ともなく", "lv": "n1", "m": "Without intending to; aimlessly", "src": "V-辞書形 + ともなく / Interrogative + ともなく"}
+{"k": "V-辞書形 + べからざる + N", "lv": "n1", "m": "Unacceptable; that should not be"}
+{"k": "V-辞書形 + べからず", "lv": "n1", "m": "Must not (public signs/rules)"}
+{"k": "V-辞書形 + べくして + V-た形", "lv": "n1", "m": "Happened as expected; naturally; bound to happen"}
+{"k": "V-辞書形 + べくもない (Exception: する -> すべく)", "lv": "n1", "m": "Cannot possibly; no way to"}
+{"k": "V-辞書形 + まじき", "lv": "n1", "m": "Should not; unacceptable"}
+{"k": "V-辞書形 + までだ", "lv": "n1", "m": "Only; no choice but to"}
+{"k": "V-辞書形 + までもない", "lv": "n1", "m": "Needless to say; no need to"}
+{"k": "V・Adj plain (often conditional) + ものを", "lv": "n1", "m": "If only; unfortunately"}
+{"k": "V・Adj・Noun + ところを", "lv": "n1", "m": "In the middle of; despite"}
+{"k": "[V-potential-negative]", "lv": "n1", "m": "Even if I want to ..., I can't", "src": "[V-volitional] + にも + [V-potential-negative]"}
+{"k": "[V-volitional] + にも + [V-potential-negative]", "lv": "n1", "m": "Even if I want to ..., I can't"}
+{"k": "[V-ない", "lv": "n1", "m": "It's not that ... is not / It's somewhat ...", "src": "[V-ない / A-くない / Na-でなく / N-でなく] + はない"}
+{"k": "[V-ない] + ものでもない", "lv": "n1", "m": "Not impossible to / Might be able to"}
+{"k": "〜たるもの", "lv": "n1", "m": "As someone who is; in the role of"}
+{"k": "〜ともあろうものが", "lv": "n1", "m": "Despite being someone who is; for someone of such stature"}
+{"k": "いA", "lv": "n1", "m": "Extremely; words cannot describe", "src": "いA / なA + といったらない"}
+{"k": "いAいこと + 極まりない", "lv": "n1", "m": "Extremely; to the limit", "src": "なA + 極まりない / いAいこと + 極まりない"}
+{"k": "いかんだ", "lv": "n1", "m": "Depending on; whether or not... depends on", "src": "名詞 (+ の) + いかんだ / いかんで"}
+{"k": "いかんで", "lv": "n1", "m": "Depending on; whether or not... depends on", "src": "名詞 (+ の) + いかんだ / いかんで"}
+{"k": "いかんにかかわらず", "lv": "n1", "m": "Regardless of; no matter what...", "src": "名詞 (+ の) + いかんによらず / いかんにかかわらず"}
+{"k": "いかんによらず", "lv": "n1", "m": "Regardless of; no matter what...", "src": "名詞 (+ の) + いかんによらず / いかんにかかわらず"}
+{"k": "いざしらず", "lv": "n1", "m": "If it were... but it's not; it might be okay for... but for...", "src": "名詞 / 形容詞・動詞の普通形 + なら + いざしらず"}
+{"k": "かたがた", "lv": "n1", "m": "While (at the same time; formal)", "src": "名詞 + かたがた"}
+{"k": "かたわら", "lv": "n1", "m": "While (besides; primary vs secondary)", "src": "名詞 + の / 動詞辞書形 + かたわら"}
+{"k": "からというもの", "lv": "n1", "m": "Ever since", "src": "動詞て形 + からというもの"}
+{"k": "が)", "lv": "n1", "m": "Because; due to", "src": "名詞(+が) / 動詞・形容詞(普通形) + ゆえ(に)"}
+{"k": "がてら", "lv": "n1", "m": "While (at the same time)", "src": "名詞 / 動詞ます形 + がてら"}
+{"k": "が早いか", "lv": "n1", "m": "As soon as", "src": "動詞辞書形 / た形 + が早いか"}
+{"k": "きらいがある", "lv": "n1", "m": "Have a tendency to (negative)", "src": "V-辞書形 / N-の + きらいがある"}
+{"k": "ここ（この）＋ 期間を表す名詞 ＋ というもの", "lv": "n1", "m": "During; for the past (period)"}
+{"k": "こそ", "lv": "n1", "m": "Only because", "src": "動詞ば形 / 形容詞ければ / 名詞・な形であれば + こそ"}
+{"k": "こととて", "lv": "n1", "m": "Because", "src": "名詞+の / 活用語連体形 + こととて"}
+{"k": "ごとき", "lv": "n1", "m": "Like; as if; such as", "src": "N + の / V-辞書形 + (が) + ごとき / ごとく"}
+{"k": "ごとく", "lv": "n1", "m": "Like; as if; such as", "src": "N + の / V-辞書形 + (が) + ごとき / ごとく"}
+{"k": "じまい", "lv": "n1", "m": "Ended up not doing", "src": "V-ず + じまい"}
+{"k": "すら", "lv": "n1", "m": "Even", "src": "N (+ 助詞) + すら"}
+{"k": "せんばかりだ", "lv": "n1", "m": "As if; about to", "src": "V-ない(stem) + んばかりだ / せんばかりだ"}
+{"k": "そばから", "lv": "n1", "m": "As soon as; repeatedly right after", "src": "動詞辞書形 / た形 + そばから"}
+{"k": "たりとも ... ない", "lv": "n1", "m": "Even (not even a tiny bit)", "src": "数量詞 (最小単位) + たりとも ... ない"}
+{"k": "た形 + が早いか", "lv": "n1", "m": "As soon as", "src": "動詞辞書形 / た形 + が早いか"}
+{"k": "た形 + そばから", "lv": "n1", "m": "As soon as; repeatedly right after", "src": "動詞辞書形 / た形 + そばから"}
+{"k": "た形 + 始末だ", "lv": "n1", "m": "Ended up with the result of (negative)", "src": "V-辞書形/た形 + 始末だ"}
+{"k": "だに", "lv": "n1", "m": "Even; just (by doing)", "src": "V-辞書形 + だに / N + だに"}
+{"k": "っぱなし", "lv": "n1", "m": "Leaving something in a state", "src": "V-stem + っぱなし"}
+{"k": "ではおかない", "lv": "n1", "m": "Will definitely; cannot help but", "src": "V-ない + ではおかない"}
+{"k": "とあって", "lv": "n1", "m": "Because of (special circumstances)", "src": "名詞 / 動詞(普通形) + とあって"}
+{"k": "といえども", "lv": "n1", "m": "Even though", "src": "Noun / Plain form + といえども"}
+{"k": "といえども (often with たとえ)", "lv": "n1", "m": "Even if; though", "src": "Noun + といえども (often with たとえ)"}
+{"k": "といったらない", "lv": "n1", "m": "Extremely; words cannot describe", "src": "いA / なA + といったらない"}
+{"k": "ところを", "lv": "n1", "m": "In the middle of; despite", "src": "V・Adj・Noun + ところを"}
+{"k": "とはいえ", "lv": "n1", "m": "Although; nonetheless", "src": "Noun / Phrase + とはいえ"}
+{"k": "とばかりに", "lv": "n1", "m": "As if to say", "src": "Clause (Plain) + とばかりに"}
+{"k": "ともなく", "lv": "n1", "m": "Without intending to; aimlessly", "src": "V-辞書形 + ともなく / Interrogative + ともなく"}
+{"k": "と思いきや", "lv": "n1", "m": "Contrary to what I thought", "src": "Plain form + と思いきや"}
+{"k": "なA + といったらない", "lv": "n1", "m": "Extremely; words cannot describe", "src": "いA / なA + といったらない"}
+{"k": "なA + 極まりない", "lv": "n1", "m": "Extremely; to the limit", "src": "なA + 極まりない / いAいこと + 極まりない"}
+{"k": "ながらに(して)", "lv": "n1", "m": "While being in the state of; as it is", "src": "V-stem / N + ながらに(して)"}
+{"k": "なしでは", "lv": "n1", "m": "Without", "src": "名＋なしに（は） / なしでは"}
+{"k": "なり", "lv": "n1", "m": "As soon as; right after", "src": "動詞辞書形 + なり"}
+{"k": "にあって", "lv": "n1", "m": "In the situation of; at the time of", "src": "名詞 + にあって"}
+{"k": "にかたくない", "lv": "n1", "m": "Not difficult to (imagine/understand)", "src": "V-辞書形 / N + にかたくない"}
+{"k": "にたる", "lv": "n1", "m": "Worthy of; deserves; sufficient to", "src": "V-辞書形 / N + にたる"}
+{"k": "にはおかない", "lv": "n1", "m": "Will definitely; cannot help but", "src": "V-ず + にはおかない"}
+{"k": "にはすまない", "lv": "n1", "m": "Must; cannot avoid doing", "src": "V-ず + にはすまない"}
+{"k": "に堪えない", "lv": "n1", "m": "Cannot bear; unbearable; worth doing (in the negative sense)", "src": "N / V-る + に堪えない"}
+{"k": "に堪える", "lv": "n1", "m": "Worthy of; can withstand (evaluation/scrutiny)", "src": "V-辞書形 / N + に堪える"}
+{"k": "の極み", "lv": "n1", "m": "The peak of; extreme", "src": "N + の極み"}
+{"k": "の至りだ", "lv": "n1", "m": "The height of; utmost", "src": "N + の至りだ"}
+{"k": "はない", "lv": "n1", "m": "It's not that ... is not / It's somewhat ...", "src": "[V-ない / A-くない / Na-でなく / N-でなく] + はない"}
+{"k": "はばからない", "lv": "n1", "m": "Unhesitatingly; have the audacity to", "src": "V-て + はばからない"}
+{"k": "びる", "lv": "n1", "m": "Looks like; behaves like (matured/refined)", "src": "N / Adj-stem + びる"}
+{"k": "ぶる", "lv": "n1", "m": "Pretend to be; act like", "src": "N / Adj-stem + ぶる"}
+{"k": "べからず", "lv": "n1", "m": "Must not (public signs/rules)", "src": "V-辞書形 + べからず"}
+{"k": "べくもない (Exception: する -> すべく)", "lv": "n1", "m": "Cannot possibly; no way to", "src": "V-辞書形 + べくもない (Exception: する -> すべく)"}
+{"k": "まじき", "lv": "n1", "m": "Should not; unacceptable", "src": "V-辞書形 + まじき"}
+{"k": "までだ", "lv": "n1", "m": "Only; no choice but to", "src": "V-辞書形 + までだ"}
+{"k": "までだ", "lv": "n1", "m": "No choice but to; just", "src": "V-た形 + までだ"}
+{"k": "までもない", "lv": "n1", "m": "Needless to say; no need to", "src": "V-辞書形 + までもない"}
+{"k": "めく", "lv": "n1", "m": "Seems like; becoming", "src": "N + めく"}
+{"k": "ものでもない", "lv": "n1", "m": "Not impossible to / Might be able to", "src": "[V-ない] + ものでもない"}
+{"k": "ものを", "lv": "n1", "m": "If only; unfortunately", "src": "V・Adj plain (often conditional) + ものを"}
+{"k": "やまない", "lv": "n1", "m": "Always; sincerely", "src": "V-て + やまない"}
+{"k": "や否や", "lv": "n1", "m": "The moment that; as soon as", "src": "動詞辞書形 + や / や否や"}
+{"k": "ゆえ(に)", "lv": "n1", "m": "Because; due to", "src": "名詞(+が) / 動詞・形容詞(普通形) + ゆえ(に)"}
+{"k": "をものともせず", "lv": "n1", "m": "Defying; in spite of the obstacle", "src": "名詞 + をものともせずに / をものともせず"}
+{"k": "をものともせずに", "lv": "n1", "m": "Defying; in spite of the obstacle", "src": "名詞 + をものともせずに / をものともせず"}
+{"k": "をよそに", "lv": "n1", "m": "Disregarding; ignoring the opinions/surroundings", "src": "名詞 + をよそに"}
+{"k": "を余儀なくされる", "lv": "n1", "m": "Be forced to", "src": "N + を余儀なくされる"}
+{"k": "を境にして", "lv": "n1", "m": "Since the boundary of; since", "src": "名詞 ＋ を境に / を境にして"}
+{"k": "を契機として", "lv": "n1", "m": "Using as a turning point", "src": "名詞 + を契機に（して） / を契機として"}
+{"k": "を契機に（して）", "lv": "n1", "m": "Using as a turning point", "src": "名詞 + を契機に（して） / を契機として"}
+{"k": "を機に", "lv": "n1", "m": "Taking the opportunity of", "src": "名詞 + を機に"}
+{"k": "を皮切りとして", "lv": "n1", "m": "Starting with", "src": "名詞 + を皮切りに（して） / を皮切りとして"}
+{"k": "を皮切りに（して）", "lv": "n1", "m": "Starting with", "src": "名詞 + を皮切りに（して） / を皮切りとして"}
+{"k": "を禁じ得ない", "lv": "n1", "m": "Cannot help but feel; cannot suppress", "src": "N + を禁じ得ない"}
+{"k": "を背景に", "lv": "n1", "m": "With ... as a background", "src": "名詞 + を背景に"}
+{"k": "んばかりだ", "lv": "n1", "m": "As if; about to", "src": "V-ない(stem) + んばかりだ / せんばかりだ"}
+{"k": "動詞(普通形) + とあって", "lv": "n1", "m": "Because of (special circumstances)", "src": "名詞 / 動詞(普通形) + とあって"}
+{"k": "動詞て形 + からというもの", "lv": "n1", "m": "Ever since"}
+{"k": "動詞ば形", "lv": "n1", "m": "Only because", "src": "動詞ば形 / 形容詞ければ / 名詞・な形であれば + こそ"}
+{"k": "動詞ます形 + がてら", "lv": "n1", "m": "While (at the same time)", "src": "名詞 / 動詞ます形 + がてら"}
+{"k": "動詞ナイ形（「ない」を除く）＋んがために（「する」は「せんがために」）", "lv": "n1", "m": "In order to (formal/literary variation)"}
+{"k": "動詞ナイ形（「ない」を除く）＋んがため（「する」は「せんがため」）", "lv": "n1", "m": "In order to (formal/literary)"}
+{"k": "動詞・形容詞(普通形) + ゆえ(に)", "lv": "n1", "m": "Because; due to", "src": "名詞(+が) / 動詞・形容詞(普通形) + ゆえ(に)"}
+{"k": "動詞・形容詞の普通形 + なり + に", "lv": "n1", "m": "In one's own way; to the best of one's ability", "src": "名詞 / 動詞・形容詞の普通形 + なり + に"}
+{"k": "動詞辞書形", "lv": "n1", "m": "As soon as", "src": "動詞辞書形 / た形 + が早いか"}
+{"k": "動詞辞書形", "lv": "n1", "m": "As soon as; repeatedly right after", "src": "動詞辞書形 / た形 + そばから"}
+{"k": "動詞辞書形 + かたわら", "lv": "n1", "m": "While (besides; primary vs secondary)", "src": "名詞 + の / 動詞辞書形 + かたわら"}
+{"k": "動詞辞書形 + なり", "lv": "n1", "m": "As soon as; right after"}
+{"k": "動詞辞書形 + や", "lv": "n1", "m": "The moment that; as soon as", "src": "動詞辞書形 + や / や否や"}
+{"k": "動詞辞書形 ＋ に至って", "lv": "n1", "m": "Having reached the point where; only after reaching the stage of", "src": "名詞 / 動詞辞書形 ＋ に至って"}
+{"k": "動詞辞書形＋べく（「する」は「すべく」または「するべく」）", "lv": "n1", "m": "In order to / With the intention of"}
+{"k": "動（タ形）＋ところで", "lv": "n1", "m": "Even if (negative outcome)"}
+{"k": "動（ナイ形）＋までも", "lv": "n1", "m": "Even if not... at least"}
+{"k": "動（辞書形）＋ことなしに", "lv": "n1", "m": "Without"}
+{"k": "名・動・形（普通体）＋とあれば", "lv": "n1", "m": "If it is the case that"}
+{"k": "名・動・形（普通体）＋としたところで", "lv": "n1", "m": "Even if (negative outcome)"}
+{"k": "名詞", "lv": "n1", "m": "Because of (special circumstances)", "src": "名詞 / 動詞(普通形) + とあって"}
+{"k": "名詞", "lv": "n1", "m": "While (at the same time)", "src": "名詞 / 動詞ます形 + がてら"}
+{"k": "名詞", "lv": "n1", "m": "Having reached the point where; only after reaching the stage of", "src": "名詞 / 動詞辞書形 ＋ に至って"}
+{"k": "名詞", "lv": "n1", "m": "If it were... but it's not; it might be okay for... but for...", "src": "名詞 / 形容詞・動詞の普通形 + なら + いざしらず"}
+{"k": "名詞", "lv": "n1", "m": "In one's own way; to the best of one's ability", "src": "名詞 / 動詞・形容詞の普通形 + なり + に"}
+{"k": "名詞 (+ の) + いかんだ", "lv": "n1", "m": "Depending on; whether or not... depends on", "src": "名詞 (+ の) + いかんだ / いかんで"}
+{"k": "名詞 (+ の) + いかんによらず", "lv": "n1", "m": "Regardless of; no matter what...", "src": "名詞 (+ の) + いかんによらず / いかんにかかわらず"}
+{"k": "名詞 + かたがた", "lv": "n1", "m": "While (at the same time; formal)"}
+{"k": "名詞 + にあって", "lv": "n1", "m": "In the situation of; at the time of"}
+{"k": "名詞 + の", "lv": "n1", "m": "While (besides; primary vs secondary)", "src": "名詞 + の / 動詞辞書形 + かたわら"}
+{"k": "名詞 + をものともせずに", "lv": "n1", "m": "Defying; in spite of the obstacle", "src": "名詞 + をものともせずに / をものともせず"}
+{"k": "名詞 + をよそに", "lv": "n1", "m": "Disregarding; ignoring the opinions/surroundings"}
+{"k": "名詞 + を契機に（して）", "lv": "n1", "m": "Using as a turning point", "src": "名詞 + を契機に（して） / を契機として"}
+{"k": "名詞 + を機に", "lv": "n1", "m": "Taking the opportunity of"}
+{"k": "名詞 + を皮切りに（して）", "lv": "n1", "m": "Starting with", "src": "名詞 + を皮切りに（して） / を皮切りとして"}
+{"k": "名詞 + を背景に", "lv": "n1", "m": "With ... as a background"}
+{"k": "名詞 ＋ といったところだ", "lv": "n1", "m": "At most; something like"}
+{"k": "名詞 ＋ に至るまで", "lv": "n1", "m": "Even to; until; down to"}
+{"k": "名詞 ＋ をもって", "lv": "n1", "m": "As of (time); by means of"}
+{"k": "名詞 ＋ を境に", "lv": "n1", "m": "Since the boundary of; since", "src": "名詞 ＋ を境に / を境にして"}
+{"k": "名詞 ＋ を経て", "lv": "n1", "m": "After passing through; via"}
+{"k": "名詞 ＋ を限りに", "lv": "n1", "m": "Starting from; until (as the last time)"}
+{"k": "名詞(+が)", "lv": "n1", "m": "Because; due to", "src": "名詞(+が) / 動詞・形容詞(普通形) + ゆえ(に)"}
+{"k": "名詞+の", "lv": "n1", "m": "Because", "src": "名詞+の / 活用語連体形 + こととて"}
+{"k": "名詞・な形であれば + こそ", "lv": "n1", "m": "Only because", "src": "動詞ば形 / 形容詞ければ / 名詞・な形であれば + こそ"}
+{"k": "名詞・動詞辞書形 ＋ に至る", "lv": "n1", "m": "To reach the point of; to arrive at a state"}
+{"k": "名詞・数量詞 ＋ というところだ", "lv": "n1", "m": "At most; roughly"}
+{"k": "名詞（＋助詞）＋はおろか", "lv": "n1", "m": "Needless to say; let alone"}
+{"k": "名詞＋であれ（名詞＋であれ）", "lv": "n1", "m": "Whether A or B"}
+{"k": "名詞＋といい（名詞＋といい）", "lv": "n1", "m": "Both A and B (evaluation)"}
+{"k": "名詞＋といわず（名詞＋といわず）", "lv": "n1", "m": "Not just A and B, but everything (all over/all the time)"}
+{"k": "名詞＋ときたら", "lv": "n1", "m": "When it comes to (negative nuance)"}
+{"k": "名詞＋ともなれば", "lv": "n1", "m": "When it comes to; once it becomes"}
+{"k": "名詞＋ならでは（の）", "lv": "n1", "m": "Unique to; only possible with"}
+{"k": "名詞＋に則って", "lv": "n1", "m": "Following (rule/tradition/law)"}
+{"k": "名詞＋に即して", "lv": "n1", "m": "In accordance with; based on (facts/reality)"}
+{"k": "名詞＋に照らして", "lv": "n1", "m": "In light of; compared to (a standard)"}
+{"k": "名詞＋もさることながら", "lv": "n1", "m": "Not only... but also (B is more emphasized)"}
+{"k": "名詞＋をおいて（ほかに〜ない）", "lv": "n1", "m": "Other than; except for"}
+{"k": "名詞＋をおいて（ほかに～ない）", "lv": "n1", "m": "Other than; except for"}
+{"k": "名詞＋をもって", "lv": "n1", "m": "By means of; with; at (time)"}
+{"k": "名詞＋を介して", "lv": "n1", "m": "Through; via; by way of (an intermediary)"}
+{"k": "名詞／動詞辞書形＋ともなると", "lv": "n1", "m": "When it becomes; once it reaches the stage of"}
+{"k": "名詞／動詞辞書形＋なり（名詞／動詞辞書形＋なり）", "lv": "n1", "m": "A or B; either... or (as examples)"}
+{"k": "名詞／動詞辞書形＋にかこつけて", "lv": "n1", "m": "Using as an excuse; under the pretext of"}
+{"k": "名詞／動詞辞書形＋にとどまらず", "lv": "n1", "m": "Not limited to; not only"}
+{"k": "名詞／普通形（な形-である／名-である）＋のみならず", "lv": "n1", "m": "Not only"}
+{"k": "名＋なくしては", "lv": "n1", "m": "Without; if not for"}
+{"k": "名＋なしに（は）", "lv": "n1", "m": "Without", "src": "名＋なしに（は） / なしでは"}
+{"k": "始末だ", "lv": "n1", "m": "Ended up with the result of (negative)", "src": "V-辞書形/た形 + 始末だ"}
+{"k": "形容詞ければ", "lv": "n1", "m": "Only because", "src": "動詞ば形 / 形容詞ければ / 名詞・な形であれば + こそ"}
+{"k": "形容詞・動詞の普通形 + なら + いざしらず", "lv": "n1", "m": "If it were... but it's not; it might be okay for... but for...", "src": "名詞 / 形容詞・動詞の普通形 + なら + いざしらず"}
+{"k": "数量詞 (最小単位) + たりとも ... ない", "lv": "n1", "m": "Even (not even a tiny bit)"}
+{"k": "極まりない", "lv": "n1", "m": "Extremely; to the limit", "src": "なA + 極まりない / いAいこと + 極まりない"}
+{"k": "活用語連体形 + こととて", "lv": "n1", "m": "Because", "src": "名詞+の / 活用語連体形 + こととて"}
+{"k": "～たるもの", "lv": "n1", "m": "As someone who is; in the role of"}
+{"k": "～ともあろうものが", "lv": "n1", "m": "Despite being someone who is; for someone of such stature"}
+{"k": "(か)と思うと", "lv": "n2", "m": "Just when; as soon as", "src": "V-た形 + (か)と思うと / (か)と思ったら"}
+{"k": "(か)と思ったら", "lv": "n2", "m": "Just when; as soon as", "src": "V-た形 + (か)と思うと / (か)と思ったら"}
+{"k": "3) + まい", "lv": "n2", "m": "Will not; probably not", "src": "V-plain + まい / V-masu (Group 2/3) + まい"}
+{"k": "A", "lv": "n2", "m": "It doesn't mean that; it's not the case that", "src": "V/A/N (ordinary form) + わけではない (Na-adj: なわけではない / N: というわけではない)"}
+{"k": "A", "lv": "n2", "m": "Impossible that; no way", "src": "V/A/N (ordinary form) + わけがない (Na-adj: なわけがない / N: であるわけがない)"}
+{"k": "A", "lv": "n2", "m": "Rather than", "src": "V/A/N + というより"}
+{"k": "A (ordinary form) + ものか", "lv": "n2", "m": "Certainly not; as if; used to express strong denial", "src": "V/A (ordinary form) + ものか / もんか (Na-adj: なものか / N: なものか)"}
+{"k": "A-i", "lv": "n2", "m": "Far from; on the contrary", "src": "V-plain / A-i / A-na (na) / N + どころか"}
+{"k": "A-i", "lv": "n2", "m": "On the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (de aru) + 反面"}
+{"k": "A-i", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "A-i", "lv": "n2", "m": "Instead of; in exchange for", "src": "V-dict / A-i / A-na (na) / N (no) + かわりに"}
+{"k": "A-i", "lv": "n2", "m": "Even though; while", "src": "V-masu stem / A-i / A-na / N + ながらも"}
+{"k": "A-i", "lv": "n2", "m": "How...! (emphasis of emotion or degree)", "src": "[V-plain/A-i/A-na (+な)] + ことか"}
+{"k": "A-na", "lv": "n2", "m": "Even though; while", "src": "V-masu stem / A-i / A-na / N + ながらも"}
+{"k": "A-na", "lv": "n2", "m": "Extremely; couldn't be more... (indescribable degree)", "src": "[A-i / A-na / N] + といったらない"}
+{"k": "A-na (+な)] + ことか", "lv": "n2", "m": "How...! (emphasis of emotion or degree)", "src": "[V-plain/A-i/A-na (+な)] + ことか"}
+{"k": "A-na (na", "lv": "n2", "m": "On the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (de aru) + 反面"}
+{"k": "A-na (na", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "A-na (na)", "lv": "n2", "m": "Far from; on the contrary", "src": "V-plain / A-i / A-na (na) / N + どころか"}
+{"k": "A-na (na)", "lv": "n2", "m": "Instead of; in exchange for", "src": "V-dict / A-i / A-na (na) / N (no) + かわりに"}
+{"k": "Adj", "lv": "n2", "m": "While; before (a change occurs)", "src": "V-辞書形 / V-ている / V-ない / Adj / N-の + うちに"}
+{"k": "Adj", "lv": "n2", "m": "No wonder; it's worth it", "src": "V/Adj/N (plain) + だけ（のことは）ある *Adj-na + な / N (no 'da')"}
+{"k": "Adj", "lv": "n2", "m": "For (considering specific standard)", "src": "V/Adj/N (plain) + にしては *Adj-na (no 'da') / N (no 'da')"}
+{"k": "Adj", "lv": "n2", "m": "Considering; for someone who...", "src": "V/Adj/N (plain) + わりに（は） *Adj-na + な / N + の"}
+{"k": "Adj-i (stem)", "lv": "n2", "m": "Appearing; looking like", "src": "Adj-i (stem) / Adj-na (stem) + げ"}
+{"k": "Adj-i (stem) + っぽい", "lv": "n2", "m": "-ish; like; frequent", "src": "N / V-masu (stem) / Adj-i (stem) + っぽい"}
+{"k": "Adj-na (stem) + げ", "lv": "n2", "m": "Appearing; looking like", "src": "Adj-i (stem) / Adj-na (stem) + げ"}
+{"k": "N", "lv": "n2", "m": "-ish; like; frequent", "src": "N / V-masu (stem) / Adj-i (stem) + っぽい"}
+{"k": "N", "lv": "n2", "m": "At most; roughly", "src": "N / V-dict + といったところだ"}
+{"k": "N", "lv": "n2", "m": "Regardless of", "src": "N / V（辞書形・ない形）＋ にかかわらず"}
+{"k": "N (de aru) + 反面", "lv": "n2", "m": "On the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (de aru) + 反面"}
+{"k": "N (no", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "N (no 'da')", "lv": "n2", "m": "No wonder; it's worth it", "src": "V/Adj/N (plain) + だけ（のことは）ある *Adj-na + な / N (no 'da')"}
+{"k": "N (no 'da')", "lv": "n2", "m": "For (considering specific standard)", "src": "V/Adj/N (plain) + にしては *Adj-na (no 'da') / N (no 'da')"}
+{"k": "N (no) + かわりに", "lv": "n2", "m": "Instead of; in exchange for", "src": "V-dict / A-i / A-na (na) / N (no) + かわりに"}
+{"k": "N (ordinary form) + わけがない (Na-adj: なわけがない", "lv": "n2", "m": "Impossible that; no way", "src": "V/A/N (ordinary form) + わけがない (Na-adj: なわけがない / N: であるわけがない)"}
+{"k": "N (ordinary form) + わけではない (Na-adj: なわけではない", "lv": "n2", "m": "It doesn't mean that; it's not the case that", "src": "V/A/N (ordinary form) + わけではない (Na-adj: なわけではない / N: というわけではない)"}
+{"k": "N (plain) + だけ（のことは）ある *Adj-na + な", "lv": "n2", "m": "No wonder; it's worth it", "src": "V/Adj/N (plain) + だけ（のことは）ある *Adj-na + な / N (no 'da')"}
+{"k": "N (plain) + にしては *Adj-na (no 'da')", "lv": "n2", "m": "For (considering specific standard)", "src": "V/Adj/N (plain) + にしては *Adj-na (no 'da') / N (no 'da')"}
+{"k": "N (plain) + わりに（は） *Adj-na + な", "lv": "n2", "m": "Considering; for someone who...", "src": "V/Adj/N (plain) + わりに（は） *Adj-na + な / N + の"}
+{"k": "N + きり", "lv": "n2", "m": "Only; since", "src": "V-ta + きり / N + きり"}
+{"k": "N + さえ + V-ba", "lv": "n2", "m": "If only", "src": "N + さえ + V-ba / V-masu + さえすれば"}
+{"k": "N + だらけ", "lv": "n2", "m": "Full of (negative items)"}
+{"k": "N + というものだ", "lv": "n2", "m": "It is truly; that's what you call; it's natural that", "src": "V-dictionary / Na-adj / N + というものだ"}
+{"k": "N + というものではない", "lv": "n2", "m": "It doesn't mean that; just because... doesn't mean...", "src": "V-ordinary / Na-adj / N + というものではない"}
+{"k": "N + というより", "lv": "n2", "m": "Rather than", "src": "V/A/N + というより"}
+{"k": "N + どころか", "lv": "n2", "m": "Far from; on the contrary", "src": "V-plain / A-i / A-na (na) / N + どころか"}
+{"k": "N + どころではない", "lv": "n2", "m": "Far from; not the time for", "src": "V-dict/N + どころではない"}
+{"k": "N + ながらも", "lv": "n2", "m": "Even though; while", "src": "V-masu stem / A-i / A-na / N + ながらも"}
+{"k": "N + にすぎない", "lv": "n2", "m": "Nothing more than; merely; just", "src": "V (ordinary form) / N + にすぎない"}
+{"k": "N + につけ", "lv": "n2", "m": "Whenever; every time", "src": "V-dictionary / N + につけ"}
+{"k": "N + にほかならない (or N + であるからにほかならない)", "lv": "n2", "m": "Nothing but; precisely; definitely that and nothing else"}
+{"k": "N + に代わって", "lv": "n2", "m": "On behalf of; replacing", "src": "N + に代わって / に代わり"}
+{"k": "N + に加えて", "lv": "n2", "m": "In addition to..."}
+{"k": "N + に際して・にあたって", "lv": "n2", "m": "On the occasion of; at the time of", "src": "V-辞書形 / N + に際して・にあたって"}
+{"k": "N + の", "lv": "n2", "m": "Considering; for someone who...", "src": "V/Adj/N (plain) + わりに（は） *Adj-na + な / N + の"}
+{"k": "N + の + おそれがある", "lv": "n2", "m": "There is a risk/fear that", "src": "V-plain / N + の + おそれがある"}
+{"k": "N + はもとより", "lv": "n2", "m": "Needless to say; let alone; of course... but also..."}
+{"k": "N + めく", "lv": "n2", "m": "Have an air of; seem like"}
+{"k": "N + をきっかけに（して）", "lv": "n2", "m": "With ... as a start/motivation"}
+{"k": "N + を通じて", "lv": "n2", "m": "Through; via; throughout", "src": "N + を通じて / を通して"}
+{"k": "N + 抜きで", "lv": "n2", "m": "Without; leaving out; cutting out...", "src": "N + 抜きで / 抜きにして / 抜きでは(～ない)"}
+{"k": "N ＋ である ＋ 限り（は）", "lv": "n2", "m": "As long as; to the extent", "src": "V（辞書形・ている形・ない形）＋ 限り（は） / N ＋ である ＋ 限り（は）"}
+{"k": "N ＋ にわたって", "lv": "n2", "m": "Throughout; over a period/area", "src": "N ＋ にわたって / にわたり / にわたる ＋ N"}
+{"k": "N ＋ に至るまで", "lv": "n2", "m": "Even until; as far as; down to"}
+{"k": "N ＋ に限らず", "lv": "n2", "m": "Not limited to; not only"}
+{"k": "N ＋ に限り", "lv": "n2", "m": "Only; particularly for", "src": "N ＋ に限り / に限って"}
+{"k": "N ＋ を問わず", "lv": "n2", "m": "Regardless of"}
+{"k": "N ＋ を皮切りに（して）", "lv": "n2", "m": "Starting with; beginning with", "src": "N ＋ を皮切りに（して） / を皮切りとして"}
+{"k": "N-の + あげく（に）", "lv": "n2", "m": "In the end (negative result)", "src": "V-た形 / N-の + あげく（に）"}
+{"k": "N-の + うちに", "lv": "n2", "m": "While; before (a change occurs)", "src": "V-辞書形 / V-ている / V-ない / Adj / N-の + うちに"}
+{"k": "N-の + 上で（は）", "lv": "n2", "m": "After; upon; when doing", "src": "V-た形 / N-の + 上で（は） / 上の"}
+{"k": "N-の + 最中に", "lv": "n2", "m": "In the middle of", "src": "V-ている / N-の + 最中に"}
+{"k": "N-の + 末（に）", "lv": "n2", "m": "After; at the end of (long process)", "src": "V-た形 / N-の + 末（に）"}
+{"k": "N-の + 際（に）", "lv": "n2", "m": "At the time of; when", "src": "V-辞書形 / V-た形 / N-の + 際（に）"}
+{"k": "N1 から N2 にかけて", "lv": "n2", "m": "From ... to ... (vague boundary)"}
+{"k": "N1も + A-kereba + N2も", "lv": "n2", "m": "Both... and...; not only... but also...", "src": "N1も + V-ba + N2も / N1も + A-kereba + N2も / N1も + Naなら + N2も"}
+{"k": "N1も + Naなら + N2も", "lv": "n2", "m": "Both... and...; not only... but also...", "src": "N1も + V-ba + N2も / N1も + A-kereba + N2も / N1も + Naなら + N2も"}
+{"k": "N1も + V-ba + N2も", "lv": "n2", "m": "Both... and...; not only... but also...", "src": "N1も + V-ba + N2も / N1も + A-kereba + N2も / N1も + Naなら + N2も"}
+{"k": "N2も", "lv": "n2", "m": "Both... and...; not only... but also...", "src": "N1も + V-ba + N2も / N1も + A-kereba + N2も / N1も + Naなら + N2も"}
+{"k": "N: であるわけがない)", "lv": "n2", "m": "Impossible that; no way", "src": "V/A/N (ordinary form) + わけがない (Na-adj: なわけがない / N: であるわけがない)"}
+{"k": "N: というわけではない)", "lv": "n2", "m": "It doesn't mean that; it's not the case that", "src": "V/A/N (ordinary form) + わけではない (Na-adj: なわけではない / N: というわけではない)"}
+{"k": "N: なものか)", "lv": "n2", "m": "Certainly not; as if; used to express strong denial", "src": "V/A (ordinary form) + ものか / もんか (Na-adj: なものか / N: なものか)"}
+{"k": "N] + といったらない", "lv": "n2", "m": "Extremely; couldn't be more... (indescribable degree)", "src": "[A-i / A-na / N] + といったらない"}
+{"k": "Na-adj", "lv": "n2", "m": "It is truly; that's what you call; it's natural that", "src": "V-dictionary / Na-adj / N + というものだ"}
+{"k": "Na-adj", "lv": "n2", "m": "It doesn't mean that; just because... doesn't mean...", "src": "V-ordinary / Na-adj / N + というものではない"}
+{"k": "Naである + のみならず", "lv": "n2", "m": "Not only... but also...", "src": "V・A・N (普通形) + のみならず / Naである + のみならず / Nである + のみならず"}
+{"k": "Naな", "lv": "n2", "m": "So much that (excessive)", "src": "V辞書形・た形 / Naな / Nの + あまり"}
+{"k": "Naな・である + ばかりか", "lv": "n2", "m": "Not only... but also (even)...", "src": "V・A・N (普通形) + ばかりか / Naな・である + ばかりか / Nである + ばかりか"}
+{"k": "Naな・である + 上に", "lv": "n2", "m": "In addition to; besides; on top of...", "src": "V・A (普通形) + 上に / Naな・である + 上に / Nの・である + 上に"}
+{"k": "Noun", "lv": "n2", "m": "From the viewpoint of; regarding; in terms of", "src": "Noun + 上の + Noun / Noun + 上 (じょう)"}
+{"k": "Noun + からいうと", "lv": "n2", "m": "From the standpoint of; considering from", "src": "Noun + からいうと / からいえば / からいったら"}
+{"k": "Noun + からして", "lv": "n2", "m": "Judging from; starting with"}
+{"k": "Noun + からみると", "lv": "n2", "m": "From the viewpoint of", "src": "Noun + からみると / からみれば / からみたら"}
+{"k": "Noun + 上 (じょう)", "lv": "n2", "m": "From the viewpoint of; regarding; in terms of", "src": "Noun + 上の + Noun / Noun + 上 (じょう)"}
+{"k": "Noun + 上の + Noun", "lv": "n2", "m": "From the viewpoint of; regarding; in terms of", "src": "Noun + 上の + Noun / Noun + 上 (じょう)"}
+{"k": "Nである + のみならず", "lv": "n2", "m": "Not only... but also...", "src": "V・A・N (普通形) + のみならず / Naである + のみならず / Nである + のみならず"}
+{"k": "Nである + ばかりか", "lv": "n2", "m": "Not only... but also (even)...", "src": "V・A・N (普通形) + ばかりか / Naな・である + ばかりか / Nである + ばかりか"}
+{"k": "Nの + あまり", "lv": "n2", "m": "So much that (excessive)", "src": "V辞書形・た形 / Naな / Nの + あまり"}
+{"k": "Nの・である + 上に", "lv": "n2", "m": "In addition to; besides; on top of...", "src": "V・A (普通形) + 上に / Naな・である + 上に / Nの・である + 上に"}
+{"k": "N・Na-adj (no だ) + に決まっている", "lv": "n2", "m": "Definitely; bound to", "src": "Plain form + に決まっている / N・Na-adj (no だ) + に決まっている"}
+{"k": "N・Na-adj (no だ) + に違いない", "lv": "n2", "m": "Must be; without doubt", "src": "Plain form + に違いない / N・Na-adj (no だ) + に違いない"}
+{"k": "Plain form + にしろ", "lv": "n2", "m": "Even if; regardless of", "src": "Plain form + にしろ / にせよ"}
+{"k": "Plain form + に決まっている", "lv": "n2", "m": "Definitely; bound to", "src": "Plain form + に決まっている / N・Na-adj (no だ) + に決まっている"}
+{"k": "Plain form + に違いない", "lv": "n2", "m": "Must be; without doubt", "src": "Plain form + に違いない / N・Na-adj (no だ) + に違いない"}
+{"k": "V", "lv": "n2", "m": "Certainly not; as if; used to express strong denial", "src": "V/A (ordinary form) + ものか / もんか (Na-adj: なものか / N: なものか)"}
+{"k": "V", "lv": "n2", "m": "It doesn't mean that; it's not the case that", "src": "V/A/N (ordinary form) + わけではない (Na-adj: なわけではない / N: というわけではない)"}
+{"k": "V", "lv": "n2", "m": "Impossible that; no way", "src": "V/A/N (ordinary form) + わけがない (Na-adj: なわけがない / N: であるわけがない)"}
+{"k": "V", "lv": "n2", "m": "No wonder; it's worth it", "src": "V/Adj/N (plain) + だけ（のことは）ある *Adj-na + な / N (no 'da')"}
+{"k": "V", "lv": "n2", "m": "For (considering specific standard)", "src": "V/Adj/N (plain) + にしては *Adj-na (no 'da') / N (no 'da')"}
+{"k": "V", "lv": "n2", "m": "Considering; for someone who...", "src": "V/Adj/N (plain) + わりに（は） *Adj-na + な / N + の"}
+{"k": "V", "lv": "n2", "m": "Rather than", "src": "V/A/N + というより"}
+{"k": "V (ordinary form)", "lv": "n2", "m": "Nothing more than; merely; just", "src": "V (ordinary form) / N + にすぎない"}
+{"k": "V-ba", "lv": "n2", "m": "If only", "src": "N + さえ + V-ba / V-masu + さえすれば"}
+{"k": "V-dict", "lv": "n2", "m": "Far from; not the time for", "src": "V-dict/N + どころではない"}
+{"k": "V-dict", "lv": "n2", "m": "Instead of; in exchange for", "src": "V-dict / A-i / A-na (na) / N (no) + かわりに"}
+{"k": "V-dict + といったところだ", "lv": "n2", "m": "At most; roughly", "src": "N / V-dict + といったところだ"}
+{"k": "V-dictionary", "lv": "n2", "m": "Should (used for giving direct advice)", "src": "V-dictionary / V-nai + ことだ"}
+{"k": "V-dictionary", "lv": "n2", "m": "Should; naturally; used to (social norms/nostalgia)", "src": "V-dictionary / V-nai + ものだ"}
+{"k": "V-dictionary", "lv": "n2", "m": "It is truly; that's what you call; it's natural that", "src": "V-dictionary / Na-adj / N + というものだ"}
+{"k": "V-dictionary", "lv": "n2", "m": "Cannot (for social, moral, or situational reasons)", "src": "V-dictionary / V-nai + わけにはいかない"}
+{"k": "V-dictionary", "lv": "n2", "m": "Whenever; every time", "src": "V-dictionary / N + につけ"}
+{"k": "V-dictionary + べきだ (suru -> すべき", "lv": "n2", "m": "Should; must (strong duty or obligation)", "src": "V-dictionary + べきだ (suru -> すべき / するべき)"}
+{"k": "V-masu (Group 2", "lv": "n2", "m": "Will not; probably not", "src": "V-plain + まい / V-masu (Group 2/3) + まい"}
+{"k": "V-masu (stem)", "lv": "n2", "m": "-ish; like; frequent", "src": "N / V-masu (stem) / Adj-i (stem) + っぽい"}
+{"k": "V-masu (stem) + っぱなし", "lv": "n2", "m": "Left as it is; kept doing"}
+{"k": "V-masu + かねない", "lv": "n2", "m": "Might happen (negative result)"}
+{"k": "V-masu + かねる", "lv": "n2", "m": "Unable to; difficult to"}
+{"k": "V-masu + がたい", "lv": "n2", "m": "Hard to; difficult to (psychologically)"}
+{"k": "V-masu + さえすれば", "lv": "n2", "m": "If only", "src": "N + さえ + V-ba / V-masu + さえすれば"}
+{"k": "V-masu + っこない", "lv": "n2", "m": "No way that; impossible"}
+{"k": "V-masu + 得る (うる", "lv": "n2", "m": "Can; possible / Cannot", "src": "V-masu + 得る (うる/える) / 得ない (えない)"}
+{"k": "V-masu stem", "lv": "n2", "m": "Even though; while", "src": "V-masu stem / A-i / A-na / N + ながらも"}
+{"k": "V-masu stem + つつも", "lv": "n2", "m": "Even though; while"}
+{"k": "V-nai (stem) + ざるを得ない (suru -> せざるを得ない)", "lv": "n2", "m": "Have no choice but to; cannot help but"}
+{"k": "V-nai + ことだ", "lv": "n2", "m": "Should (used for giving direct advice)", "src": "V-dictionary / V-nai + ことだ"}
+{"k": "V-nai + ことには", "lv": "n2", "m": "Unless; if not"}
+{"k": "V-nai + ものだ", "lv": "n2", "m": "Should; naturally; used to (social norms/nostalgia)", "src": "V-dictionary / V-nai + ものだ"}
+{"k": "V-nai + わけにはいかない", "lv": "n2", "m": "Cannot (for social, moral, or situational reasons)", "src": "V-dictionary / V-nai + わけにはいかない"}
+{"k": "V-ordinary", "lv": "n2", "m": "It doesn't mean that; just because... doesn't mean...", "src": "V-ordinary / Na-adj / N + というものではない"}
+{"k": "V-plain", "lv": "n2", "m": "Far from; on the contrary", "src": "V-plain / A-i / A-na (na) / N + どころか"}
+{"k": "V-plain", "lv": "n2", "m": "On the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (de aru) + 反面"}
+{"k": "V-plain", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "V-plain", "lv": "n2", "m": "There is a risk/fear that", "src": "V-plain / N + の + おそれがある"}
+{"k": "V-plain + まい", "lv": "n2", "m": "Will not; probably not", "src": "V-plain + まい / V-masu (Group 2/3) + まい"}
+{"k": "V-potential + ものなら", "lv": "n2", "m": "If (one) could; if it were possible"}
+{"k": "V-stem + きれる", "lv": "n2", "m": "Can finish / Cannot finish", "src": "V-stem + きれる / きれない"}
+{"k": "V-stem + ぬく", "lv": "n2", "m": "To do until the end; to do completely"}
+{"k": "V-ta + きり", "lv": "n2", "m": "Only; since", "src": "V-ta + きり / N + きり"}
+{"k": "V-ta + ところで", "lv": "n2", "m": "Even if (negative judgment)"}
+{"k": "V-te + こそ", "lv": "n2", "m": "Only after; only by"}
+{"k": "V-te + でも", "lv": "n2", "m": "Even if I have to"}
+{"k": "V-volitional + ではないか", "lv": "n2", "m": "Let's; why don't we (strong invitation/proposal)"}
+{"k": "V-volitional + ものなら", "lv": "n2", "m": "If one were to (awful result)"}
+{"k": "V-た形", "lv": "n2", "m": "In the end (negative result)", "src": "V-た形 / N-の + あげく（に）"}
+{"k": "V-た形", "lv": "n2", "m": "At the time of; when", "src": "V-辞書形 / V-た形 / N-の + 際（に）"}
+{"k": "V-た形", "lv": "n2", "m": "After; at the end of (long process)", "src": "V-た形 / N-の + 末（に）"}
+{"k": "V-た形", "lv": "n2", "m": "After; upon; when doing", "src": "V-た形 / N-の + 上で（は） / 上の"}
+{"k": "V-た形 + (か)と思うと", "lv": "n2", "m": "Just when; as soon as", "src": "V-た形 + (か)と思うと / (か)と思ったら"}
+{"k": "V-た形 + か + V-ない形 + かのうちに", "lv": "n2", "m": "No sooner than; right after", "src": "V-辞書形 / V-た形 + か + V-ない形 + かのうちに"}
+{"k": "V-た形 + ところ", "lv": "n2", "m": "When (result of an action); upon doing"}
+{"k": "V-た形 + とたん（に）", "lv": "n2", "m": "Just as; as soon as"}
+{"k": "V-ている", "lv": "n2", "m": "In the middle of", "src": "V-ている / N-の + 最中に"}
+{"k": "V-ている", "lv": "n2", "m": "While; before (a change occurs)", "src": "V-辞書形 / V-ている / V-ない / Adj / N-の + うちに"}
+{"k": "V-て形 + はじめて", "lv": "n2", "m": "Only after doing ... did I realize / did it happen"}
+{"k": "V-ない", "lv": "n2", "m": "While; before (a change occurs)", "src": "V-辞書形 / V-ている / V-ない / Adj / N-の + うちに"}
+{"k": "V-ない形 (stem) + ずじまいだ (する -> せずじまいだ)", "lv": "n2", "m": "Ended up not doing; never got to do"}
+{"k": "V-ます形 (stem) + 次第", "lv": "n2", "m": "As soon as (formal/business)"}
+{"k": "V-意向形 + としている", "lv": "n2", "m": "About to; is trying to; on the verge of"}
+{"k": "V-辞書形", "lv": "n2", "m": "No sooner than; right after", "src": "V-辞書形 / V-た形 + か + V-ない形 + かのうちに"}
+{"k": "V-辞書形", "lv": "n2", "m": "On the occasion of; at the time of", "src": "V-辞書形 / N + に際して・にあたって"}
+{"k": "V-辞書形", "lv": "n2", "m": "At the time of; when", "src": "V-辞書形 / V-た形 / N-の + 際（に）"}
+{"k": "V-辞書形", "lv": "n2", "m": "As soon as; right after (repeatedly/frustratingly)", "src": "V-辞書形 / た形 + そばから"}
+{"k": "V-辞書形", "lv": "n2", "m": "While; before (a change occurs)", "src": "V-辞書形 / V-ている / V-ない / Adj / N-の + うちに"}
+{"k": "V-辞書形 + なり", "lv": "n2", "m": "As soon as; the moment that"}
+{"k": "V・A (普通形) + 上に", "lv": "n2", "m": "In addition to; besides; on top of...", "src": "V・A (普通形) + 上に / Naな・である + 上に / Nの・である + 上に"}
+{"k": "V・A・N (普通形) + のみならず", "lv": "n2", "m": "Not only... but also...", "src": "V・A・N (普通形) + のみならず / Naである + のみならず / Nである + のみならず"}
+{"k": "V・A・N (普通形) + ばかりか", "lv": "n2", "m": "Not only... but also (even)...", "src": "V・A・N (普通形) + ばかりか / Naな・である + ばかりか / Nである + ばかりか"}
+{"k": "V・A・Naな・Nな + （もの）だから", "lv": "n2", "m": "Because (used for excuses)", "src": "V・A・Naな・Nな + （もの）だから / もの"}
+{"k": "V・A・Na・N（普）+ からといって", "lv": "n2", "m": "Just because"}
+{"k": "V・A・Na・N（普）+ だけに", "lv": "n2", "m": "Being the case; precisely because"}
+{"k": "V・A・Na・N（普）+ ばかりに", "lv": "n2", "m": "Simply because (negative result)"}
+{"k": "V辞書形・た形", "lv": "n2", "m": "So much that (excessive)", "src": "V辞書形・た形 / Naな / Nの + あまり"}
+{"k": "V（ない形）＋ までも", "lv": "n2", "m": "Even if not ... at least"}
+{"k": "V（ます形）＋つつある", "lv": "n2", "m": "In the process of; is doing"}
+{"k": "V（普）+ 次第だ", "lv": "n2", "m": "That is why; for that reason"}
+{"k": "V（普）・Nである + からには", "lv": "n2", "m": "Now that; since", "src": "V（普）・Nである + からには / 以上（は）"}
+{"k": "V（辞書形・ている形・ない形）＋ 限り（は）", "lv": "n2", "m": "As long as; to the extent", "src": "V（辞書形・ている形・ない形）＋ 限り（は） / N ＋ である ＋ 限り（は）"}
+{"k": "V（辞書形・ない形）＋ にかかわらず", "lv": "n2", "m": "Regardless of", "src": "N / V（辞書形・ない形）＋ にかかわらず"}
+{"k": "V（辞書形）＋ばかりだ", "lv": "n2", "m": "Continue to (tendency toward a direction)", "src": "V（辞書形）＋ばかりだ / 一方だ"}
+{"k": "[A-i", "lv": "n2", "m": "Extremely; couldn't be more... (indescribable degree)", "src": "[A-i / A-na / N] + といったらない"}
+{"k": "[V-plain", "lv": "n2", "m": "How...! (emphasis of emotion or degree)", "src": "[V-plain/A-i/A-na (+な)] + ことか"}
+{"k": "[動詞普通形 + の] + もかまわず", "lv": "n2", "m": "Without caring about; regardless of", "src": "名詞 / [動詞普通形 + の] + もかまわず"}
+{"k": "de aru)", "lv": "n2", "m": "On the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (de aru) + 反面"}
+{"k": "de aru)", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "de aru) + 一方（で）", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "あげく（に）", "lv": "n2", "m": "In the end (negative result)", "src": "V-た形 / N-の + あげく（に）"}
+{"k": "あまり", "lv": "n2", "m": "So much that (excessive)", "src": "V辞書形・た形 / Naな / Nの + あまり"}
+{"k": "うちに", "lv": "n2", "m": "While; before (a change occurs)", "src": "V-辞書形 / V-ている / V-ない / Adj / N-の + うちに"}
+{"k": "える)", "lv": "n2", "m": "Can; possible / Cannot", "src": "V-masu + 得る (うる/える) / 得ない (えない)"}
+{"k": "おそれがある", "lv": "n2", "m": "There is a risk/fear that", "src": "V-plain / N + の + おそれがある"}
+{"k": "かねない", "lv": "n2", "m": "Might happen (negative result)", "src": "V-masu + かねない"}
+{"k": "かねる", "lv": "n2", "m": "Unable to; difficult to", "src": "V-masu + かねる"}
+{"k": "かのうちに", "lv": "n2", "m": "No sooner than; right after", "src": "V-辞書形 / V-た形 + か + V-ない形 + かのうちに"}
+{"k": "からいうと", "lv": "n2", "m": "From the standpoint of; considering from", "src": "Noun + からいうと / からいえば / からいったら"}
+{"k": "からいえば", "lv": "n2", "m": "From the standpoint of; considering from", "src": "Noun + からいうと / からいえば / からいったら"}
+{"k": "からいったら", "lv": "n2", "m": "From the standpoint of; considering from", "src": "Noun + からいうと / からいえば / からいったら"}
+{"k": "からして", "lv": "n2", "m": "Judging from; starting with", "src": "Noun + からして"}
+{"k": "からといって", "lv": "n2", "m": "Just because", "src": "V・A・Na・N（普）+ からといって"}
+{"k": "からには", "lv": "n2", "m": "Now that; since", "src": "V（普）・Nである + からには / 以上（は）"}
+{"k": "からみたら", "lv": "n2", "m": "From the viewpoint of", "src": "Noun + からみると / からみれば / からみたら"}
+{"k": "からみると", "lv": "n2", "m": "From the viewpoint of", "src": "Noun + からみると / からみれば / からみたら"}
+{"k": "からみれば", "lv": "n2", "m": "From the viewpoint of", "src": "Noun + からみると / からみれば / からみたら"}
+{"k": "かわりに", "lv": "n2", "m": "Instead of; in exchange for", "src": "V-dict / A-i / A-na (na) / N (no) + かわりに"}
+{"k": "がたい", "lv": "n2", "m": "Hard to; difficult to (psychologically)", "src": "V-masu + がたい"}
+{"k": "きり", "lv": "n2", "m": "Only; since", "src": "V-ta + きり / N + きり"}
+{"k": "きれない", "lv": "n2", "m": "Can finish / Cannot finish", "src": "V-stem + きれる / きれない"}
+{"k": "きれる", "lv": "n2", "m": "Can finish / Cannot finish", "src": "V-stem + きれる / きれない"}
+{"k": "こそ", "lv": "n2", "m": "Only after; only by", "src": "V-te + こそ"}
+{"k": "ことか", "lv": "n2", "m": "How...! (emphasis of emotion or degree)", "src": "[V-plain/A-i/A-na (+な)] + ことか"}
+{"k": "ことだ", "lv": "n2", "m": "Should (used for giving direct advice)", "src": "V-dictionary / V-nai + ことだ"}
+{"k": "ことには", "lv": "n2", "m": "Unless; if not", "src": "V-nai + ことには"}
+{"k": "さえすれば", "lv": "n2", "m": "If only", "src": "N + さえ + V-ba / V-masu + さえすれば"}
+{"k": "ざるを得ない (suru -> せざるを得ない)", "lv": "n2", "m": "Have no choice but to; cannot help but", "src": "V-nai (stem) + ざるを得ない (suru -> せざるを得ない)"}
+{"k": "するべき)", "lv": "n2", "m": "Should; must (strong duty or obligation)", "src": "V-dictionary + べきだ (suru -> すべき / するべき)"}
+{"k": "ずじまいだ (する -> せずじまいだ)", "lv": "n2", "m": "Ended up not doing; never got to do", "src": "V-ない形 (stem) + ずじまいだ (する -> せずじまいだ)"}
+{"k": "ずにはいられない", "lv": "n2", "m": "Can't help but (formal/literary)", "src": "動詞ナイ形（ーない） + ずにはいられない"}
+{"k": "そばから", "lv": "n2", "m": "As soon as; right after (repeatedly/frustratingly)", "src": "V-辞書形 / た形 + そばから"}
+{"k": "た形 + そばから", "lv": "n2", "m": "As soon as; right after (repeatedly/frustratingly)", "src": "V-辞書形 / た形 + そばから"}
+{"k": "だけに", "lv": "n2", "m": "Being the case; precisely because", "src": "V・A・Na・N（普）+ だけに"}
+{"k": "だらけ", "lv": "n2", "m": "Full of (negative items)", "src": "N + だらけ"}
+{"k": "っこない", "lv": "n2", "m": "No way that; impossible", "src": "V-masu + っこない"}
+{"k": "っぱなし", "lv": "n2", "m": "Left as it is; kept doing", "src": "V-masu (stem) + っぱなし"}
+{"k": "っぽい", "lv": "n2", "m": "-ish; like; frequent", "src": "N / V-masu (stem) / Adj-i (stem) + っぽい"}
+{"k": "つつも", "lv": "n2", "m": "Even though; while", "src": "V-masu stem + つつも"}
+{"k": "であるからにほかならない)", "lv": "n2", "m": "Nothing but; precisely; definitely that and nothing else", "src": "N + にほかならない (or N + であるからにほかならない)"}
+{"k": "ではいられない", "lv": "n2", "m": "Can't help but; cannot stop doing", "src": "動詞ナイ形 + ではいられない"}
+{"k": "ではないか", "lv": "n2", "m": "Let's; why don't we (strong invitation/proposal)", "src": "V-volitional + ではないか"}
+{"k": "でも", "lv": "n2", "m": "Even if I have to", "src": "V-te + でも"}
+{"k": "というものだ", "lv": "n2", "m": "It is truly; that's what you call; it's natural that", "src": "V-dictionary / Na-adj / N + というものだ"}
+{"k": "というものではない", "lv": "n2", "m": "It doesn't mean that; just because... doesn't mean...", "src": "V-ordinary / Na-adj / N + というものではない"}
+{"k": "というより", "lv": "n2", "m": "Rather than", "src": "V/A/N + というより"}
+{"k": "といったところだ", "lv": "n2", "m": "At most; roughly", "src": "N / V-dict + といったところだ"}
+{"k": "といったらない", "lv": "n2", "m": "Extremely; couldn't be more... (indescribable degree)", "src": "[A-i / A-na / N] + といったらない"}
+{"k": "ところ", "lv": "n2", "m": "When (result of an action); upon doing", "src": "V-た形 + ところ"}
+{"k": "ところで", "lv": "n2", "m": "Even if (negative judgment)", "src": "V-ta + ところで"}
+{"k": "としている", "lv": "n2", "m": "About to; is trying to; on the verge of", "src": "V-意向形 + としている"}
+{"k": "とたん（に）", "lv": "n2", "m": "Just as; as soon as", "src": "V-た形 + とたん（に）"}
+{"k": "どころか", "lv": "n2", "m": "Far from; on the contrary", "src": "V-plain / A-i / A-na (na) / N + どころか"}
+{"k": "どころではない", "lv": "n2", "m": "Far from; not the time for", "src": "V-dict/N + どころではない"}
+{"k": "ながらも", "lv": "n2", "m": "Even though; while", "src": "V-masu stem / A-i / A-na / N + ながらも"}
+{"k": "なり", "lv": "n2", "m": "As soon as; the moment that", "src": "V-辞書形 + なり"}
+{"k": "にしては *Adj-na (no 'da')", "lv": "n2", "m": "For (considering specific standard)", "src": "V/Adj/N (plain) + にしては *Adj-na (no 'da') / N (no 'da')"}
+{"k": "にしろ", "lv": "n2", "m": "Even if; regardless of", "src": "Plain form + にしろ / にせよ"}
+{"k": "にすぎない", "lv": "n2", "m": "Nothing more than; merely; just", "src": "V (ordinary form) / N + にすぎない"}
+{"k": "にせよ", "lv": "n2", "m": "Even if; regardless of", "src": "Plain form + にしろ / にせよ"}
+{"k": "につけ", "lv": "n2", "m": "Whenever; every time", "src": "V-dictionary / N + につけ"}
+{"k": "にわたり", "lv": "n2", "m": "Throughout; over a period/area", "src": "N ＋ にわたって / にわたり / にわたる ＋ N"}
+{"k": "にわたる ＋ N", "lv": "n2", "m": "Throughout; over a period/area", "src": "N ＋ にわたって / にわたり / にわたる ＋ N"}
+{"k": "に代わって", "lv": "n2", "m": "On behalf of; replacing", "src": "N + に代わって / に代わり"}
+{"k": "に代わり", "lv": "n2", "m": "On behalf of; replacing", "src": "N + に代わって / に代わり"}
+{"k": "に加えて", "lv": "n2", "m": "In addition to...", "src": "N + に加えて"}
+{"k": "に決まっている", "lv": "n2", "m": "Definitely; bound to", "src": "Plain form + に決まっている / N・Na-adj (no だ) + に決まっている"}
+{"k": "に違いない", "lv": "n2", "m": "Must be; without doubt", "src": "Plain form + に違いない / N・Na-adj (no だ) + に違いない"}
+{"k": "に限って", "lv": "n2", "m": "Only; particularly for", "src": "N ＋ に限り / に限って"}
+{"k": "に際して・にあたって", "lv": "n2", "m": "On the occasion of; at the time of", "src": "V-辞書形 / N + に際して・にあたって"}
+{"k": "ぬく", "lv": "n2", "m": "To do until the end; to do completely", "src": "V-stem + ぬく"}
+{"k": "のみならず", "lv": "n2", "m": "Not only... but also...", "src": "V・A・N (普通形) + のみならず / Naである + のみならず / Nである + のみならず"}
+{"k": "はじめて", "lv": "n2", "m": "Only after doing ... did I realize / did it happen", "src": "V-て形 + はじめて"}
+{"k": "はもとより", "lv": "n2", "m": "Needless to say; let alone; of course... but also...", "src": "N + はもとより"}
+{"k": "ばかりか", "lv": "n2", "m": "Not only... but also (even)...", "src": "V・A・N (普通形) + ばかりか / Naな・である + ばかりか / Nである + ばかりか"}
+{"k": "ばかりに", "lv": "n2", "m": "Simply because (negative result)", "src": "V・A・Na・N（普）+ ばかりに"}
+{"k": "べきだ (suru -> すべき", "lv": "n2", "m": "Should; must (strong duty or obligation)", "src": "V-dictionary + べきだ (suru -> すべき / するべき)"}
+{"k": "まい", "lv": "n2", "m": "Will not; probably not", "src": "V-plain + まい / V-masu (Group 2/3) + まい"}
+{"k": "めく", "lv": "n2", "m": "Have an air of; seem like", "src": "N + めく"}
+{"k": "もかまわず", "lv": "n2", "m": "Without caring about; regardless of", "src": "名詞 / [動詞普通形 + の] + もかまわず"}
+{"k": "もの", "lv": "n2", "m": "Because (used for excuses)", "src": "V・A・Naな・Nな + （もの）だから / もの"}
+{"k": "ものか", "lv": "n2", "m": "Certainly not; as if; used to express strong denial", "src": "V/A (ordinary form) + ものか / もんか (Na-adj: なものか / N: なものか)"}
+{"k": "ものだ", "lv": "n2", "m": "Should; naturally; used to (social norms/nostalgia)", "src": "V-dictionary / V-nai + ものだ"}
+{"k": "ものなら", "lv": "n2", "m": "If (one) could; if it were possible", "src": "V-potential + ものなら"}
+{"k": "ものなら", "lv": "n2", "m": "If one were to (awful result)", "src": "V-volitional + ものなら"}
+{"k": "もんか (Na-adj: なものか", "lv": "n2", "m": "Certainly not; as if; used to express strong denial", "src": "V/A (ordinary form) + ものか / もんか (Na-adj: なものか / N: なものか)"}
+{"k": "わけがない (Na-adj: なわけがない", "lv": "n2", "m": "Impossible that; no way", "src": "V/A/N (ordinary form) + わけがない (Na-adj: なわけがない / N: であるわけがない)"}
+{"k": "わけではない (Na-adj: なわけではない", "lv": "n2", "m": "It doesn't mean that; it's not the case that", "src": "V/A/N (ordinary form) + わけではない (Na-adj: なわけではない / N: というわけではない)"}
+{"k": "わけにはいかない", "lv": "n2", "m": "Cannot (for social, moral, or situational reasons)", "src": "V-dictionary / V-nai + わけにはいかない"}
+{"k": "をきっかけに（して）", "lv": "n2", "m": "With ... as a start/motivation", "src": "N + をきっかけに（して）"}
+{"k": "を皮切りとして", "lv": "n2", "m": "Starting with; beginning with", "src": "N ＋ を皮切りに（して） / を皮切りとして"}
+{"k": "を込めて", "lv": "n2", "m": "Filled with; with (feelings/heart)", "src": "名詞 + を込めて"}
+{"k": "を通して", "lv": "n2", "m": "Through; via; throughout", "src": "N + を通じて / を通して"}
+{"k": "を通じて", "lv": "n2", "m": "Through; via; throughout", "src": "N + を通じて / を通して"}
+{"k": "一方だ", "lv": "n2", "m": "Continue to (tendency toward a direction)", "src": "V（辞書形）＋ばかりだ / 一方だ"}
+{"k": "一方（で）", "lv": "n2", "m": "While; on the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (no/de aru) + 一方（で）"}
+{"k": "上 (じょう)", "lv": "n2", "m": "From the viewpoint of; regarding; in terms of", "src": "Noun + 上の + Noun / Noun + 上 (じょう)"}
+{"k": "上で（は）", "lv": "n2", "m": "After; upon; when doing", "src": "V-た形 / N-の + 上で（は） / 上の"}
+{"k": "上に", "lv": "n2", "m": "In addition to; besides; on top of...", "src": "V・A (普通形) + 上に / Naな・である + 上に / Nの・である + 上に"}
+{"k": "上の", "lv": "n2", "m": "After; upon; when doing", "src": "V-た形 / N-の + 上で（は） / 上の"}
+{"k": "以上（は）", "lv": "n2", "m": "Now that; since", "src": "V（普）・Nである + からには / 以上（は）"}
+{"k": "動詞ます形 ＋ がてら", "lv": "n2", "m": "While doing (conveniently); at the same time as", "src": "名詞 ＋ がてら / 動詞ます形 ＋ がてら"}
+{"k": "動詞ます形 ＋ つつ", "lv": "n2", "m": "While doing (formal version of ながら)"}
+{"k": "動詞ナイ形 + ではいられない", "lv": "n2", "m": "Can't help but; cannot stop doing"}
+{"k": "動詞ナイ形（ーない） + ずにはいられない", "lv": "n2", "m": "Can't help but (formal/literary)"}
+{"k": "動詞辞書形 ＋ かたわら", "lv": "n2", "m": "While doing (at the same time as main job)", "src": "動詞辞書形 ＋ かたわら / 名詞 ＋ の ＋ かたわら"}
+{"k": "動詞辞書形・た形 ＋ ついでに", "lv": "n2", "m": "While you are at it; incidentally", "src": "動詞辞書形・た形 ＋ ついでに / 名詞 ＋ のついでに"}
+{"k": "反面", "lv": "n2", "m": "On the other hand", "src": "V-plain / A-i / A-na (na/de aru) / N (de aru) + 反面"}
+{"k": "名詞", "lv": "n2", "m": "Without caring about; regardless of", "src": "名詞 / [動詞普通形 + の] + もかまわず"}
+{"k": "名詞 + を込めて", "lv": "n2", "m": "Filled with; with (feelings/heart)"}
+{"k": "名詞 ＋ かたがた", "lv": "n2", "m": "While doing (with two purposes); serving as"}
+{"k": "名詞 ＋ がてら", "lv": "n2", "m": "While doing (conveniently); at the same time as", "src": "名詞 ＋ がてら / 動詞ます形 ＋ がてら"}
+{"k": "名詞 ＋ の ＋ かたわら", "lv": "n2", "m": "While doing (at the same time as main job)", "src": "動詞辞書形 ＋ かたわら / 名詞 ＋ の ＋ かたわら"}
+{"k": "名詞 ＋ のついでに", "lv": "n2", "m": "While you are at it; incidentally", "src": "動詞辞書形・た形 ＋ ついでに / 名詞 ＋ のついでに"}
+{"k": "名詞＋に基づいて／名詞＋に基づいた＋名詞", "lv": "n2", "m": "Based on"}
+{"k": "名詞＋に対して／文＋の＋に対して", "lv": "n2", "m": "Towards; against; in contrast to"}
+{"k": "名詞＋に応えて／名詞＋に応える＋名詞", "lv": "n2", "m": "In response to"}
+{"k": "名詞＋に沿って／名詞＋に沿った＋名詞", "lv": "n2", "m": "Along with; in accordance with"}
+{"k": "名詞＋に関して（は）／名詞＋に関する＋名詞", "lv": "n2", "m": "Regarding; in relation to"}
+{"k": "名詞＋をめぐって／名詞＋をめぐる＋名詞", "lv": "n2", "m": "Concerning; surrounding (a dispute/issue)"}
+{"k": "名詞＋をもとに（して）／名詞＋をもとにした＋名詞", "lv": "n2", "m": "Based on (as a source/material)"}
+{"k": "得ない (えない)", "lv": "n2", "m": "Can; possible / Cannot", "src": "V-masu + 得る (うる/える) / 得ない (えない)"}
+{"k": "得る (うる", "lv": "n2", "m": "Can; possible / Cannot", "src": "V-masu + 得る (うる/える) / 得ない (えない)"}
+{"k": "抜きで", "lv": "n2", "m": "Without; leaving out; cutting out...", "src": "N + 抜きで / 抜きにして / 抜きでは(～ない)"}
+{"k": "抜きでは(〜ない)", "lv": "n2", "m": "Without; leaving out; cutting out...", "src": "N + 抜きで / 抜きにして / 抜きでは(～ない)"}
+{"k": "抜きでは(～ない)", "lv": "n2", "m": "Without; leaving out; cutting out...", "src": "N + 抜きで / 抜きにして / 抜きでは(～ない)"}
+{"k": "抜きにして", "lv": "n2", "m": "Without; leaving out; cutting out...", "src": "N + 抜きで / 抜きにして / 抜きでは(～ない)"}
+{"k": "最中に", "lv": "n2", "m": "In the middle of", "src": "V-ている / N-の + 最中に"}
+{"k": "末（に）", "lv": "n2", "m": "After; at the end of (long process)", "src": "V-た形 / N-の + 末（に）"}
+{"k": "次第", "lv": "n2", "m": "As soon as (formal/business)", "src": "V-ます形 (stem) + 次第"}
+{"k": "次第だ", "lv": "n2", "m": "That is why; for that reason", "src": "V（普）+ 次第だ"}
+{"k": "際（に）", "lv": "n2", "m": "At the time of; when", "src": "V-辞書形 / V-た形 / N-の + 際（に）"}
+{"k": "（もの）だから", "lv": "n2", "m": "Because (used for excuses)", "src": "V・A・Naな・Nな + （もの）だから / もの"}
+{"k": "A", "lv": "n3", "m": "far from/anything but", "src": "V/A/N + どころか"}
+{"k": "A", "lv": "n3", "m": "rather than", "src": "V/A/N + というより"}
+{"k": "A-い", "lv": "n3", "m": "on the other hand", "src": "V/A-い/A-な (な)/N (である) + 反面"}
+{"k": "A-い", "lv": "n3", "m": "on the other hand/at the same time", "src": "V/A-い/A-な (な)/N (である) + 一方で"}
+{"k": "A-い", "lv": "n3", "m": "for/considering (specific standard)", "src": "V/A-い/A-な/N + にしては"}
+{"k": "A-い", "lv": "n3", "m": "considering/despite", "src": "V/A-い/A-な (な)/N (の) + わりに(は)"}
+{"k": "A-な", "lv": "n3", "m": "for/considering (specific standard)", "src": "V/A-い/A-な/N + にしては"}
+{"k": "A-な (な)", "lv": "n3", "m": "on the other hand", "src": "V/A-い/A-な (な)/N (である) + 反面"}
+{"k": "A-な (な)", "lv": "n3", "m": "on the other hand/at the same time", "src": "V/A-い/A-な (な)/N (である) + 一方で"}
+{"k": "A-な (な)", "lv": "n3", "m": "considering/despite", "src": "V/A-い/A-な (な)/N (の) + わりに(は)"}
+{"k": "Adj + ものか", "lv": "n3", "m": "definitely not / as if", "src": "Verb-plain + ものか / Adj + ものか / Noun + なものか"}
+{"k": "Adj-i + うちに", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "Adj-i + ことに", "lv": "n3", "m": "to my (surprise/regret etc.)", "src": "Verb-past + ことに / Adj-i + ことに / Adj-na + な + ことに"}
+{"k": "Adj-i + 間に", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "Adj-i stem + がる", "lv": "n3", "m": "to show signs of (third person emotion)", "src": "Adj-i stem + がる / Adj-na stem + がる"}
+{"k": "Adj-i stem + げ", "lv": "n3", "m": "seems / looks like (emotional state)", "src": "Adj-i stem + げ / Adj-na stem + げ"}
+{"k": "Adj-na + な + うちに", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "Adj-na + な + ことに", "lv": "n3", "m": "to my (surprise/regret etc.)", "src": "Verb-past + ことに / Adj-i + ことに / Adj-na + な + ことに"}
+{"k": "Adj-na + な + 間に", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "Adj-na stem + がる", "lv": "n3", "m": "to show signs of (third person emotion)", "src": "Adj-i stem + がる / Adj-na stem + がる"}
+{"k": "Adj-na stem + げ", "lv": "n3", "m": "seems / looks like (emotional state)", "src": "Adj-i stem + げ / Adj-na stem + げ"}
+{"k": "Adj-plain + みたいだ", "lv": "n3", "m": "looks like / similar to", "src": "Noun + みたいだ / Verb-plain + みたいだ / Adj-plain + みたいだ"}
+{"k": "Adj-plain + ものだ", "lv": "n3", "m": "social expectation / it is natural", "src": "Verb-plain + ものだ / Adj-plain + ものだ"}
+{"k": "Adj-plain + らしい", "lv": "n3", "m": "seems like / typical of", "src": "Noun + らしい / Verb-plain + らしい / Adj-plain + らしい"}
+{"k": "Adj-stem + っぽい", "lv": "n3", "m": "-ish / like / prone to", "src": "Noun + っぽい / Verb-stem + っぽい / Adj-stem + っぽい"}
+{"k": "N (である) + 一方で", "lv": "n3", "m": "on the other hand/at the same time", "src": "V/A-い/A-な (な)/N (である) + 一方で"}
+{"k": "N (である) + 反面", "lv": "n3", "m": "on the other hand", "src": "V/A-い/A-な (な)/N (である) + 反面"}
+{"k": "N (の) + わりに(は)", "lv": "n3", "m": "considering/despite", "src": "V/A-い/A-な (な)/N (の) + わりに(は)"}
+{"k": "N + きり", "lv": "n3", "m": "only/since then", "src": "V-ta form + きり / N + きり"}
+{"k": "N + というより", "lv": "n3", "m": "rather than", "src": "V/A/N + というより"}
+{"k": "N + どころか", "lv": "n3", "m": "far from/anything but", "src": "V/A/N + どころか"}
+{"k": "N + なんだって)", "lv": "n3", "m": "I heard that... (casual emphasis)", "src": "普通形 + んだって (Na/N + なんだって)"}
+{"k": "N + にしては", "lv": "n3", "m": "for/considering (specific standard)", "src": "V/A-い/A-な/N + にしては"}
+{"k": "N + に比べて", "lv": "n3", "m": "compared to"}
+{"k": "N + ぬきで", "lv": "n3", "m": "without / leaving out", "src": "N + ぬきで / ぬきに / ぬきの"}
+{"k": "N + の + うちに", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "N + の + たびに", "lv": "n3", "m": "every time", "src": "V(辞書形) + たびに / N + の + たびに"}
+{"k": "N + の + ついでに", "lv": "n3", "m": "while you are at it/incidentally", "src": "V(辞書形/た形) + ついでに / N + の + ついでに"}
+{"k": "N + の + 最中に", "lv": "n3", "m": "in the middle of", "src": "V(ている形) + 最中に / N + の + 最中に"}
+{"k": "N + の + 間に", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "N + のために", "lv": "n3", "m": "for the purpose of", "src": "V(辞書形) + ために / N + のために"}
+{"k": "N + のように", "lv": "n3", "m": "as / like / in the manner of", "src": "V(Plain) + ように / N + のように"}
+{"k": "N という", "lv": "n3", "m": "no wonder/that's why", "src": "V(plain) / い-adj / な-adj な / N という/な + わけだ"}
+{"k": "N という", "lv": "n3", "m": "it doesn't mean that/not necessarily", "src": "V(plain) / い-adj / な-adj な / N という/の + わけではない"}
+{"k": "N という", "lv": "n3", "m": "impossible that/no way", "src": "V(plain) / い-adj / な-adj な / N という/の + わけがない"}
+{"k": "N の + はずがない", "lv": "n3", "m": "cannot be/impossible", "src": "V(plain) / い-adj / な-adj な / N の + はずがない"}
+{"k": "N の + はずだ", "lv": "n3", "m": "expected to/should be", "src": "V(plain) / い-adj / な-adj な / N の + はずだ"}
+{"k": "Noun + ぎみ", "lv": "n3", "m": "tending to / leaning towards", "src": "Verb-stem + ぎみ / Noun + ぎみ"}
+{"k": "Noun + さえ + Verb (ば形)", "lv": "n3", "m": "if only / as long as", "src": "Noun + さえ + Verb (ば形) / Noun + さえ + い形容詞 (ければ) / Noun + さえ + な形容詞・名詞 (であれば)"}
+{"k": "Noun + さえ + い形容詞 (ければ)", "lv": "n3", "m": "if only / as long as", "src": "Noun + さえ + Verb (ば形) / Noun + さえ + い形容詞 (ければ) / Noun + さえ + な形容詞・名詞 (であれば)"}
+{"k": "Noun + さえ + な形容詞・名詞 (であれば)", "lv": "n3", "m": "if only / as long as", "src": "Noun + さえ + Verb (ば形) / Noun + さえ + い形容詞 (ければ) / Noun + さえ + な形容詞・名詞 (であれば)"}
+{"k": "Noun + だっけ", "lv": "n3", "m": "used to confirm/recall information", "src": "Plain form + っけ / Noun + だっけ"}
+{"k": "Noun + っぽい", "lv": "n3", "m": "-ish / like / prone to", "src": "Noun + っぽい / Verb-stem + っぽい / Adj-stem + っぽい"}
+{"k": "Noun + でないことには", "lv": "n3", "m": "unless", "src": "Verb (ない形) + ことには / Noun + でないことには / な形容詞 + でないことには"}
+{"k": "Noun + なものか", "lv": "n3", "m": "definitely not / as if", "src": "Verb-plain + ものか / Adj + ものか / Noun + なものか"}
+{"k": "Noun + みたいだ", "lv": "n3", "m": "looks like / similar to", "src": "Noun + みたいだ / Verb-plain + みたいだ / Adj-plain + みたいだ"}
+{"k": "Noun + らしい", "lv": "n3", "m": "seems like / typical of", "src": "Noun + らしい / Verb-plain + らしい / Adj-plain + らしい"}
+{"k": "Number + Counter + おきに", "lv": "n3", "m": "at intervals of / every other"}
+{"k": "Nの", "lv": "n3", "m": "left as it is / while remaining in the state", "src": "V(た/ない) / Nの / な-adjな / い-adjい + まま"}
+{"k": "Plain Form + としたら", "lv": "n3", "m": "assuming / if it were the case that"}
+{"k": "Plain Form + とすれば", "lv": "n3", "m": "if / assuming / from the standpoint of", "src": "Plain Form + とすれば / とすると"}
+{"k": "Plain form + っけ", "lv": "n3", "m": "used to confirm/recall information", "src": "Plain form + っけ / Noun + だっけ"}
+{"k": "Time Period + ぶりに", "lv": "n3", "m": "after an interval of / for the first time in..."}
+{"k": "V", "lv": "n3", "m": "far from/anything but", "src": "V/A/N + どころか"}
+{"k": "V", "lv": "n3", "m": "on the other hand", "src": "V/A-い/A-な (な)/N (である) + 反面"}
+{"k": "V", "lv": "n3", "m": "on the other hand/at the same time", "src": "V/A-い/A-な (な)/N (である) + 一方で"}
+{"k": "V", "lv": "n3", "m": "for/considering (specific standard)", "src": "V/A-い/A-な/N + にしては"}
+{"k": "V", "lv": "n3", "m": "rather than", "src": "V/A/N + というより"}
+{"k": "V", "lv": "n3", "m": "considering/despite", "src": "V/A-い/A-な (な)/N (の) + わりに(は)"}
+{"k": "V(Plain) + ように", "lv": "n3", "m": "as / like / in the manner of", "src": "V(Plain) + ように / N + のように"}
+{"k": "V(Stem) + つつ", "lv": "n3", "m": "while / although"}
+{"k": "V(dictionary)", "lv": "n3", "m": "cannot/must not (social/moral)", "src": "V(dictionary) / V(ない) + わけにはいかない"}
+{"k": "V(dictionary) + ことはない", "lv": "n3", "m": "no need to"}
+{"k": "V(dictionary) + べきだ", "lv": "n3", "m": "should/ought to", "src": "V(dictionary) + べきだ / する -> すべき"}
+{"k": "V(dictionary) + べきではない", "lv": "n3", "m": "should not"}
+{"k": "V(plain)", "lv": "n3", "m": "expected to/should be", "src": "V(plain) / い-adj / な-adj な / N の + はずだ"}
+{"k": "V(plain)", "lv": "n3", "m": "cannot be/impossible", "src": "V(plain) / い-adj / な-adj な / N の + はずがない"}
+{"k": "V(plain)", "lv": "n3", "m": "no wonder/that's why", "src": "V(plain) / い-adj / な-adj な / N という/な + わけだ"}
+{"k": "V(plain)", "lv": "n3", "m": "it doesn't mean that/not necessarily", "src": "V(plain) / い-adj / な-adj な / N という/の + わけではない"}
+{"k": "V(plain)", "lv": "n3", "m": "impossible that/no way", "src": "V(plain) / い-adj / な-adj な / N という/の + わけがない"}
+{"k": "V(た", "lv": "n3", "m": "left as it is / while remaining in the state", "src": "V(た/ない) / Nの / な-adjな / い-adjい + まま"}
+{"k": "V(た形) + とたん(に)", "lv": "n3", "m": "just as/the moment that"}
+{"k": "V(た形) + ばかり(だ", "lv": "n3", "m": "just finished doing", "src": "V(た形) + ばかり(だ/です)"}
+{"k": "V(ている形) + 最中に", "lv": "n3", "m": "in the middle of", "src": "V(ている形) + 最中に / N + の + 最中に"}
+{"k": "V(て形) + 以来", "lv": "n3", "m": "ever since"}
+{"k": "V(ない) + わけにはいかない", "lv": "n3", "m": "cannot/must not (social/moral)", "src": "V(dictionary) / V(ない) + わけにはいかない"}
+{"k": "V(ます形) + 次第", "lv": "n3", "m": "as soon as"}
+{"k": "V(辞書形", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "V(辞書形", "lv": "n3", "m": "about to/in the middle of/just finished", "src": "V(辞書形/ている形/た形) + ところ(だ/です)"}
+{"k": "V(辞書形", "lv": "n3", "m": "while you are at it/incidentally", "src": "V(辞書形/た形) + ついでに / N + の + ついでに"}
+{"k": "V(辞書形", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "V(辞書形) + たびに", "lv": "n3", "m": "every time", "src": "V(辞書形) + たびに / N + の + たびに"}
+{"k": "V(辞書形) + ために", "lv": "n3", "m": "for the purpose of", "src": "V(辞書形) + ために / N + のために"}
+{"k": "V(辞書形・ない形) + ように", "lv": "n3", "m": "so that / in order to"}
+{"k": "V(辞書形・ない形) + ように(と)言う", "lv": "n3", "m": "to tell/ask someone to do something", "src": "V(辞書形・ない形) + ように(と)言う/頼む"}
+{"k": "V(辞書形・ない形) + ようにしている", "lv": "n3", "m": "to try to / to make an effort to"}
+{"k": "V-dictionary", "lv": "n3", "m": "it has been decided that", "src": "V-dictionary/V-nai + ことになる"}
+{"k": "V-dictionary", "lv": "n3", "m": "it is the rule/custom that", "src": "V-dictionary/V-nai + ことになっている"}
+{"k": "V-dictionary", "lv": "n3", "m": "to make it a rule to", "src": "V-dictionary/V-nai + ことにしている"}
+{"k": "V-dictionary", "lv": "n3", "m": "to decide to", "src": "V-dictionary/V-nai + ことにする"}
+{"k": "V-nai + ことにしている", "lv": "n3", "m": "to make it a rule to", "src": "V-dictionary/V-nai + ことにしている"}
+{"k": "V-nai + ことにする", "lv": "n3", "m": "to decide to", "src": "V-dictionary/V-nai + ことにする"}
+{"k": "V-nai + ことになっている", "lv": "n3", "m": "it is the rule/custom that", "src": "V-dictionary/V-nai + ことになっている"}
+{"k": "V-nai + ことになる", "lv": "n3", "m": "it has been decided that", "src": "V-dictionary/V-nai + ことになる"}
+{"k": "V-plain + からには", "lv": "n3", "m": "now that/since"}
+{"k": "V-plain・Naな・Nの + あまり", "lv": "n3", "m": "so much that/excessively"}
+{"k": "V-stem + かける", "lv": "n3", "m": "start and stop/about to"}
+{"k": "V-stem + っぱなし", "lv": "n3", "m": "leave something as it is/keep doing"}
+{"k": "V-stem + 出す", "lv": "n3", "m": "to start/burst out"}
+{"k": "V-stem + 切る", "lv": "n3", "m": "to finish/completely"}
+{"k": "V-stem + 合う", "lv": "n3", "m": "to do together/each other"}
+{"k": "V-stem + 抜く", "lv": "n3", "m": "to do until the end/exhaustively"}
+{"k": "V-stem + 直す", "lv": "n3", "m": "to redo"}
+{"k": "V-stem + 続ける", "lv": "n3", "m": "to continue doing"}
+{"k": "V-stem + 込む", "lv": "n3", "m": "into/deeply"}
+{"k": "V-ta form + きり", "lv": "n3", "m": "only/since then", "src": "V-ta form + きり / N + きり"}
+{"k": "Verb (causative) + ていただく", "lv": "n3", "m": "humbly allowed to do"}
+{"k": "Verb (ない形) + ことには", "lv": "n3", "m": "unless", "src": "Verb (ない形) + ことには / Noun + でないことには / な形容詞 + でないことには"}
+{"k": "Verb (ば形)", "lv": "n3", "m": "if only / as long as", "src": "Noun + さえ + Verb (ば形) / Noun + さえ + い形容詞 (ければ) / Noun + さえ + な形容詞・名詞 (であれば)"}
+{"k": "Verb-past + ことに", "lv": "n3", "m": "to my (surprise/regret etc.)", "src": "Verb-past + ことに / Adj-i + ことに / Adj-na + な + ことに"}
+{"k": "Verb-past + ものだ", "lv": "n3", "m": "used to (nostalgic memory)"}
+{"k": "Verb-plain + みたいだ", "lv": "n3", "m": "looks like / similar to", "src": "Noun + みたいだ / Verb-plain + みたいだ / Adj-plain + みたいだ"}
+{"k": "Verb-plain + ものか", "lv": "n3", "m": "definitely not / as if", "src": "Verb-plain + ものか / Adj + ものか / Noun + なものか"}
+{"k": "Verb-plain + ものだ", "lv": "n3", "m": "social expectation / it is natural", "src": "Verb-plain + ものだ / Adj-plain + ものだ"}
+{"k": "Verb-plain + らしい", "lv": "n3", "m": "seems like / typical of", "src": "Noun + らしい / Verb-plain + らしい / Adj-plain + らしい"}
+{"k": "Verb-stem + ぎみ", "lv": "n3", "m": "tending to / leaning towards", "src": "Verb-stem + ぎみ / Noun + ぎみ"}
+{"k": "Verb-stem + っぽい", "lv": "n3", "m": "-ish / like / prone to", "src": "Noun + っぽい / Verb-stem + っぽい / Adj-stem + っぽい"}
+{"k": "V・A・Naな", "lv": "n3", "m": "from the fact that/because", "src": "V・A・Naな/である・Nである + ことから"}
+{"k": "V・A・Naなんだ・Nなんだ + もん", "lv": "n3", "m": "because (casual/excuse)"}
+{"k": "V・A・Naな・Nの + おかげで", "lv": "n3", "m": "thanks to"}
+{"k": "V・A・Naな・Nの + せいで", "lv": "n3", "m": "due to/because of (negative)"}
+{"k": "【動詞辞書形", "lv": "n3", "m": "the more... the more/to the extent", "src": "【動詞辞書形/い形/な形＋な/名詞】＋ほど"}
+{"k": "【名詞", "lv": "n3", "m": "only/just", "src": "【名詞/動詞て形】＋ばかり"}
+{"k": "【名詞", "lv": "n3", "m": "not only... but also", "src": "【名詞/動詞・形容詞普通形】＋ばかりでなく"}
+{"k": "【名詞", "lv": "n3", "m": "precisely/definitely", "src": "【名詞/動詞て形/〜から】＋こそ"}
+{"k": "【名詞", "lv": "n3", "m": "at least/to the extent of", "src": "【名詞/動詞/い形容詞/な形容詞】＋くらい/ぐらい"}
+{"k": "【名詞", "lv": "n3", "m": "even/as far as", "src": "【名詞/動詞て形】＋まで"}
+{"k": "【名詞(＋助詞)", "lv": "n3", "m": "even", "src": "【名詞(＋助詞)/動詞て形】＋さえ"}
+{"k": "【名詞】＋に限らず", "lv": "n3", "m": "not limited to"}
+{"k": "【名詞】＋ほど＋【否定形】", "lv": "n3", "m": "not as... as..."}
+{"k": "〜から】＋こそ", "lv": "n3", "m": "precisely/definitely", "src": "【名詞/動詞て形/〜から】＋こそ"}
+{"k": "あまり", "lv": "n3", "m": "so much that/excessively", "src": "V-plain・Naな・Nの + あまり"}
+{"k": "い-adj", "lv": "n3", "m": "expected to/should be", "src": "V(plain) / い-adj / な-adj な / N の + はずだ"}
+{"k": "い-adj", "lv": "n3", "m": "cannot be/impossible", "src": "V(plain) / い-adj / な-adj な / N の + はずがない"}
+{"k": "い-adj", "lv": "n3", "m": "no wonder/that's why", "src": "V(plain) / い-adj / な-adj な / N という/な + わけだ"}
+{"k": "い-adj", "lv": "n3", "m": "it doesn't mean that/not necessarily", "src": "V(plain) / い-adj / な-adj な / N という/の + わけではない"}
+{"k": "い-adj", "lv": "n3", "m": "impossible that/no way", "src": "V(plain) / い-adj / な-adj な / N という/の + わけがない"}
+{"k": "い-adjい + まま", "lv": "n3", "m": "left as it is / while remaining in the state", "src": "V(た/ない) / Nの / な-adjな / い-adjい + まま"}
+{"k": "いたす", "lv": "n3", "m": "humble form of do", "src": "いたす / お + Verb (masu-stem) + いたす"}
+{"k": "い形", "lv": "n3", "m": "the more... the more/to the extent", "src": "【動詞辞書形/い形/な形＋な/名詞】＋ほど"}
+{"k": "い形容詞", "lv": "n3", "m": "at least/to the extent of", "src": "【名詞/動詞/い形容詞/な形容詞】＋くらい/ぐらい"}
+{"k": "い形容詞 (くて) + も", "lv": "n3", "m": "even if", "src": "たとえ + Verb (て形) + も / い形容詞 (くて) + も / な形容詞・名詞 (で) + も"}
+{"k": "い形容詞 (ければ)", "lv": "n3", "m": "if only / as long as", "src": "Noun + さえ + Verb (ば形) / Noun + さえ + い形容詞 (ければ) / Noun + さえ + な形容詞・名詞 (であれば)"}
+{"k": "うちに", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "お + Verb (masu-stem) + いたす", "lv": "n3", "m": "humble form of do", "src": "いたす / お + Verb (masu-stem) + いたす"}
+{"k": "お + Verb (masu-stem) + ください", "lv": "n3", "m": "please (respectful)", "src": "お + Verb (masu-stem) + ください / ご + Noun + ください"}
+{"k": "お + Verb (masu-stem) + する", "lv": "n3", "m": "humble form of verb", "src": "お + Verb (masu-stem) + する / ご + Noun + する"}
+{"k": "お + Verb (masu-stem) + になる", "lv": "n3", "m": "respectful form of verb"}
+{"k": "おかげで", "lv": "n3", "m": "thanks to", "src": "V・A・Naな・Nの + おかげで"}
+{"k": "おきに", "lv": "n3", "m": "at intervals of / every other", "src": "Number + Counter + おきに"}
+{"k": "かける", "lv": "n3", "m": "start and stop/about to", "src": "V-stem + かける"}
+{"k": "からには", "lv": "n3", "m": "now that/since", "src": "V-plain + からには"}
+{"k": "がる", "lv": "n3", "m": "to show signs of (third person emotion)", "src": "Adj-i stem + がる / Adj-na stem + がる"}
+{"k": "きり", "lv": "n3", "m": "only/since then", "src": "V-ta form + きり / N + きり"}
+{"k": "ぎみ", "lv": "n3", "m": "tending to / leaning towards", "src": "Verb-stem + ぎみ / Noun + ぎみ"}
+{"k": "ください", "lv": "n3", "m": "please (respectful)", "src": "お + Verb (masu-stem) + ください / ご + Noun + ください"}
+{"k": "ぐらい", "lv": "n3", "m": "at least/to the extent of", "src": "【名詞/動詞/い形容詞/な形容詞】＋くらい/ぐらい"}
+{"k": "ことから", "lv": "n3", "m": "from the fact that/because", "src": "V・A・Naな/である・Nである + ことから"}
+{"k": "ことに", "lv": "n3", "m": "to my (surprise/regret etc.)", "src": "Verb-past + ことに / Adj-i + ことに / Adj-na + な + ことに"}
+{"k": "ことにしている", "lv": "n3", "m": "to make it a rule to", "src": "V-dictionary/V-nai + ことにしている"}
+{"k": "ことにする", "lv": "n3", "m": "to decide to", "src": "V-dictionary/V-nai + ことにする"}
+{"k": "ことになっている", "lv": "n3", "m": "it is the rule/custom that", "src": "V-dictionary/V-nai + ことになっている"}
+{"k": "ことになる", "lv": "n3", "m": "it has been decided that", "src": "V-dictionary/V-nai + ことになる"}
+{"k": "ことには", "lv": "n3", "m": "unless", "src": "Verb (ない形) + ことには / Noun + でないことには / な形容詞 + でないことには"}
+{"k": "ことはない", "lv": "n3", "m": "no need to", "src": "V(dictionary) + ことはない"}
+{"k": "ご + Noun + ください", "lv": "n3", "m": "please (respectful)", "src": "お + Verb (masu-stem) + ください / ご + Noun + ください"}
+{"k": "ご + Noun + する", "lv": "n3", "m": "humble form of verb", "src": "お + Verb (masu-stem) + する / ご + Noun + する"}
+{"k": "する", "lv": "n3", "m": "humble form of verb", "src": "お + Verb (masu-stem) + する / ご + Noun + する"}
+{"k": "する -> すべき", "lv": "n3", "m": "should/ought to", "src": "V(dictionary) + べきだ / する -> すべき"}
+{"k": "せいで", "lv": "n3", "m": "due to/because of (negative)", "src": "V・A・Naな・Nの + せいで"}
+{"k": "たとえ + Verb (て形) + も", "lv": "n3", "m": "even if", "src": "たとえ + Verb (て形) + も / い形容詞 (くて) + も / な形容詞・名詞 (で) + も"}
+{"k": "たびに", "lv": "n3", "m": "every time", "src": "V(辞書形) + たびに / N + の + たびに"}
+{"k": "ために", "lv": "n3", "m": "for the purpose of", "src": "V(辞書形) + ために / N + のために"}
+{"k": "た形) + ついでに", "lv": "n3", "m": "while you are at it/incidentally", "src": "V(辞書形/た形) + ついでに / N + の + ついでに"}
+{"k": "た形) + ところ(だ", "lv": "n3", "m": "about to/in the middle of/just finished", "src": "V(辞書形/ている形/た形) + ところ(だ/です)"}
+{"k": "だっけ", "lv": "n3", "m": "used to confirm/recall information", "src": "Plain form + っけ / Noun + だっけ"}
+{"k": "っけ", "lv": "n3", "m": "used to confirm/recall information", "src": "Plain form + っけ / Noun + だっけ"}
+{"k": "って", "lv": "n3", "m": "I heard that... / (topic marker)", "src": "普通形 + って"}
+{"k": "っぱなし", "lv": "n3", "m": "leave something as it is/keep doing", "src": "V-stem + っぱなし"}
+{"k": "っぽい", "lv": "n3", "m": "-ish / like / prone to", "src": "Noun + っぽい / Verb-stem + っぽい / Adj-stem + っぽい"}
+{"k": "ついでに", "lv": "n3", "m": "while you are at it/incidentally", "src": "V(辞書形/た形) + ついでに / N + の + ついでに"}
+{"k": "つつ", "lv": "n3", "m": "while / although", "src": "V(Stem) + つつ"}
+{"k": "ていただく", "lv": "n3", "m": "humbly allowed to do", "src": "Verb (causative) + ていただく"}
+{"k": "ている形", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "ている形", "lv": "n3", "m": "about to/in the middle of/just finished", "src": "V(辞書形/ている形/た形) + ところ(だ/です)"}
+{"k": "ている形) + うちに", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "である・Nである + ことから", "lv": "n3", "m": "from the fact that/because", "src": "V・A・Naな/である・Nである + ことから"}
+{"k": "です)", "lv": "n3", "m": "just finished doing", "src": "V(た形) + ばかり(だ/です)"}
+{"k": "です)", "lv": "n3", "m": "about to/in the middle of/just finished", "src": "V(辞書形/ている形/た形) + ところ(だ/です)"}
+{"k": "でないことには", "lv": "n3", "m": "unless", "src": "Verb (ない形) + ことには / Noun + でないことには / な形容詞 + でないことには"}
+{"k": "ということだ", "lv": "n3", "m": "I heard that... / It means that...", "src": "普通形 + ということだ"}
+{"k": "というより", "lv": "n3", "m": "rather than", "src": "V/A/N + というより"}
+{"k": "とか", "lv": "n3", "m": "I heard that... (uncertain hearsay)", "src": "普通形 + とか"}
+{"k": "ところ(だ", "lv": "n3", "m": "about to/in the middle of/just finished", "src": "V(辞書形/ている形/た形) + ところ(だ/です)"}
+{"k": "としたら", "lv": "n3", "m": "assuming / if it were the case that", "src": "Plain Form + としたら"}
+{"k": "とすると", "lv": "n3", "m": "if / assuming / from the standpoint of", "src": "Plain Form + とすれば / とすると"}
+{"k": "とすれば", "lv": "n3", "m": "if / assuming / from the standpoint of", "src": "Plain Form + とすれば / とすると"}
+{"k": "とたん(に)", "lv": "n3", "m": "just as/the moment that", "src": "V(た形) + とたん(に)"}
+{"k": "ととのことだ", "lv": "n3", "m": "I heard that... (Formal)", "src": "普通形 + ととのことだ"}
+{"k": "と言われている", "lv": "n3", "m": "It is said that... / People say that...", "src": "普通形 + と言われている"}
+{"k": "どころか", "lv": "n3", "m": "far from/anything but", "src": "V/A/N + どころか"}
+{"k": "な + わけだ", "lv": "n3", "m": "no wonder/that's why", "src": "V(plain) / い-adj / な-adj な / N という/な + わけだ"}
+{"k": "な-adj な", "lv": "n3", "m": "expected to/should be", "src": "V(plain) / い-adj / な-adj な / N の + はずだ"}
+{"k": "な-adj な", "lv": "n3", "m": "cannot be/impossible", "src": "V(plain) / い-adj / な-adj な / N の + はずがない"}
+{"k": "な-adj な", "lv": "n3", "m": "no wonder/that's why", "src": "V(plain) / い-adj / な-adj な / N という/な + わけだ"}
+{"k": "な-adj な", "lv": "n3", "m": "it doesn't mean that/not necessarily", "src": "V(plain) / い-adj / な-adj な / N という/の + わけではない"}
+{"k": "な-adj な", "lv": "n3", "m": "impossible that/no way", "src": "V(plain) / い-adj / な-adj な / N という/の + わけがない"}
+{"k": "な-adjな", "lv": "n3", "m": "left as it is / while remaining in the state", "src": "V(た/ない) / Nの / な-adjな / い-adjい + まま"}
+{"k": "ない)", "lv": "n3", "m": "left as it is / while remaining in the state", "src": "V(た/ない) / Nの / な-adjな / い-adjい + まま"}
+{"k": "ない形", "lv": "n3", "m": "while/before something changes", "src": "V(辞書形/ない形/ている形) + うちに / Adj-i + うちに / Adj-na + な + うちに / N + の + うちに"}
+{"k": "ない形) + 間に", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "なものか", "lv": "n3", "m": "definitely not / as if", "src": "Verb-plain + ものか / Adj + ものか / Noun + なものか"}
+{"k": "なんだって)", "lv": "n3", "m": "I heard that... (casual emphasis)", "src": "普通形 + んだって (Na/N + なんだって)"}
+{"k": "な形容詞 + でないことには", "lv": "n3", "m": "unless", "src": "Verb (ない形) + ことには / Noun + でないことには / な形容詞 + でないことには"}
+{"k": "な形容詞】＋くらい", "lv": "n3", "m": "at least/to the extent of", "src": "【名詞/動詞/い形容詞/な形容詞】＋くらい/ぐらい"}
+{"k": "な形容詞・名詞 (で) + も", "lv": "n3", "m": "even if", "src": "たとえ + Verb (て形) + も / い形容詞 (くて) + も / な形容詞・名詞 (で) + も"}
+{"k": "な形容詞・名詞 (であれば)", "lv": "n3", "m": "if only / as long as", "src": "Noun + さえ + Verb (ば形) / Noun + さえ + い形容詞 (ければ) / Noun + さえ + な形容詞・名詞 (であれば)"}
+{"k": "な形＋な", "lv": "n3", "m": "the more... the more/to the extent", "src": "【動詞辞書形/い形/な形＋な/名詞】＋ほど"}
+{"k": "にしては", "lv": "n3", "m": "for/considering (specific standard)", "src": "V/A-い/A-な/N + にしては"}
+{"k": "について", "lv": "n3", "m": "about / concerning", "src": "名詞 + について"}
+{"k": "にとって", "lv": "n3", "m": "for / from the standpoint of", "src": "名詞 + にとって"}
+{"k": "になる", "lv": "n3", "m": "respectful form of verb", "src": "お + Verb (masu-stem) + になる"}
+{"k": "にわたって", "lv": "n3", "m": "over / throughout (a range of time or space)", "src": "名詞 + にわたって"}
+{"k": "に対して", "lv": "n3", "m": "towards / regarding / in contrast to", "src": "名詞 + に対して"}
+{"k": "に比べて", "lv": "n3", "m": "compared to", "src": "N + に比べて"}
+{"k": "に関して", "lv": "n3", "m": "regarding / related to", "src": "名詞 + に関して"}
+{"k": "ぬきで", "lv": "n3", "m": "without / leaving out", "src": "N + ぬきで / ぬきに / ぬきの"}
+{"k": "ぬきに", "lv": "n3", "m": "without / leaving out", "src": "N + ぬきで / ぬきに / ぬきの"}
+{"k": "ぬきの", "lv": "n3", "m": "without / leaving out", "src": "N + ぬきで / ぬきに / ぬきの"}
+{"k": "の + わけがない", "lv": "n3", "m": "impossible that/no way", "src": "V(plain) / い-adj / な-adj な / N という/の + わけがない"}
+{"k": "の + わけではない", "lv": "n3", "m": "it doesn't mean that/not necessarily", "src": "V(plain) / い-adj / な-adj な / N という/の + わけではない"}
+{"k": "のために", "lv": "n3", "m": "for the purpose of", "src": "V(辞書形) + ために / N + のために"}
+{"k": "のように", "lv": "n3", "m": "as / like / in the manner of", "src": "V(Plain) + ように / N + のように"}
+{"k": "はずがない", "lv": "n3", "m": "cannot be/impossible", "src": "V(plain) / い-adj / な-adj な / N の + はずがない"}
+{"k": "はずだ", "lv": "n3", "m": "expected to/should be", "src": "V(plain) / い-adj / な-adj な / N の + はずだ"}
+{"k": "ばかり(だ", "lv": "n3", "m": "just finished doing", "src": "V(た形) + ばかり(だ/です)"}
+{"k": "ぶりに", "lv": "n3", "m": "after an interval of / for the first time in...", "src": "Time Period + ぶりに"}
+{"k": "べきだ", "lv": "n3", "m": "should/ought to", "src": "V(dictionary) + べきだ / する -> すべき"}
+{"k": "べきではない", "lv": "n3", "m": "should not", "src": "V(dictionary) + べきではない"}
+{"k": "まま", "lv": "n3", "m": "left as it is / while remaining in the state", "src": "V(た/ない) / Nの / な-adjな / い-adjい + まま"}
+{"k": "みたいだ", "lv": "n3", "m": "looks like / similar to", "src": "Noun + みたいだ / Verb-plain + みたいだ / Adj-plain + みたいだ"}
+{"k": "ものか", "lv": "n3", "m": "definitely not / as if", "src": "Verb-plain + ものか / Adj + ものか / Noun + なものか"}
+{"k": "ものだ", "lv": "n3", "m": "social expectation / it is natural", "src": "Verb-plain + ものだ / Adj-plain + ものだ"}
+{"k": "ものだ", "lv": "n3", "m": "used to (nostalgic memory)", "src": "Verb-past + ものだ"}
+{"k": "もん", "lv": "n3", "m": "because (casual/excuse)", "src": "V・A・Naなんだ・Nなんだ + もん"}
+{"k": "ように", "lv": "n3", "m": "as / like / in the manner of", "src": "V(Plain) + ように / N + のように"}
+{"k": "ように", "lv": "n3", "m": "so that / in order to", "src": "V(辞書形・ない形) + ように"}
+{"k": "ように(と)言う", "lv": "n3", "m": "to tell/ask someone to do something", "src": "V(辞書形・ない形) + ように(と)言う/頼む"}
+{"k": "ようにしている", "lv": "n3", "m": "to try to / to make an effort to", "src": "V(辞書形・ない形) + ようにしている"}
+{"k": "らしい", "lv": "n3", "m": "seems like / typical of", "src": "Noun + らしい / Verb-plain + らしい / Adj-plain + らしい"}
+{"k": "わけがない", "lv": "n3", "m": "impossible that/no way", "src": "V(plain) / い-adj / な-adj な / N という/の + わけがない"}
+{"k": "わけだ", "lv": "n3", "m": "no wonder/that's why", "src": "V(plain) / い-adj / な-adj な / N という/な + わけだ"}
+{"k": "わけではない", "lv": "n3", "m": "it doesn't mean that/not necessarily", "src": "V(plain) / い-adj / な-adj な / N という/の + わけではない"}
+{"k": "わけにはいかない", "lv": "n3", "m": "cannot/must not (social/moral)", "src": "V(dictionary) / V(ない) + わけにはいかない"}
+{"k": "わりに(は)", "lv": "n3", "m": "considering/despite", "src": "V/A-い/A-な (な)/N (の) + わりに(は)"}
+{"k": "をはじめ (として)", "lv": "n3", "m": "starting with / for example", "src": "名詞 + をはじめ (として)"}
+{"k": "をめぐって", "lv": "n3", "m": "concerning / surrounding (a dispute or discussion)", "src": "名詞 + をめぐって"}
+{"k": "を中心に", "lv": "n3", "m": "centering on / focused on", "src": "名詞 + を中心に"}
+{"k": "を通して", "lv": "n3", "m": "through / via / by means of", "src": "名詞 + を通して"}
+{"k": "を通じて", "lv": "n3", "m": "throughout / via", "src": "名詞 + を通じて"}
+{"k": "んだって (Na", "lv": "n3", "m": "I heard that... (casual emphasis)", "src": "普通形 + んだって (Na/N + なんだって)"}
+{"k": "一方で", "lv": "n3", "m": "on the other hand/at the same time", "src": "V/A-い/A-な (な)/N (である) + 一方で"}
+{"k": "以来", "lv": "n3", "m": "ever since", "src": "V(て形) + 以来"}
+{"k": "出す", "lv": "n3", "m": "to start/burst out", "src": "V-stem + 出す"}
+{"k": "切る", "lv": "n3", "m": "to finish/completely", "src": "V-stem + 切る"}
+{"k": "動詞", "lv": "n3", "m": "at least/to the extent of", "src": "【名詞/動詞/い形容詞/な形容詞】＋くらい/ぐらい"}
+{"k": "動詞て形", "lv": "n3", "m": "precisely/definitely", "src": "【名詞/動詞て形/〜から】＋こそ"}
+{"k": "動詞て形】＋さえ", "lv": "n3", "m": "even", "src": "【名詞(＋助詞)/動詞て形】＋さえ"}
+{"k": "動詞て形】＋ばかり", "lv": "n3", "m": "only/just", "src": "【名詞/動詞て形】＋ばかり"}
+{"k": "動詞て形】＋まで", "lv": "n3", "m": "even/as far as", "src": "【名詞/動詞て形】＋まで"}
+{"k": "動詞・形容詞普通形】＋ばかりでなく", "lv": "n3", "m": "not only... but also", "src": "【名詞/動詞・形容詞普通形】＋ばかりでなく"}
+{"k": "反面", "lv": "n3", "m": "on the other hand", "src": "V/A-い/A-な (な)/N (である) + 反面"}
+{"k": "合う", "lv": "n3", "m": "to do together/each other", "src": "V-stem + 合う"}
+{"k": "名詞 + について", "lv": "n3", "m": "about / concerning"}
+{"k": "名詞 + にとって", "lv": "n3", "m": "for / from the standpoint of"}
+{"k": "名詞 + にわたって", "lv": "n3", "m": "over / throughout (a range of time or space)"}
+{"k": "名詞 + に対して", "lv": "n3", "m": "towards / regarding / in contrast to"}
+{"k": "名詞 + に関して", "lv": "n3", "m": "regarding / related to"}
+{"k": "名詞 + をはじめ (として)", "lv": "n3", "m": "starting with / for example"}
+{"k": "名詞 + をめぐって", "lv": "n3", "m": "concerning / surrounding (a dispute or discussion)"}
+{"k": "名詞 + を中心に", "lv": "n3", "m": "centering on / focused on"}
+{"k": "名詞 + を通して", "lv": "n3", "m": "through / via / by means of"}
+{"k": "名詞 + を通じて", "lv": "n3", "m": "throughout / via"}
+{"k": "名詞】＋ほど", "lv": "n3", "m": "the more... the more/to the extent", "src": "【動詞辞書形/い形/な形＋な/名詞】＋ほど"}
+{"k": "抜く", "lv": "n3", "m": "to do until the end/exhaustively", "src": "V-stem + 抜く"}
+{"k": "普通形 + って", "lv": "n3", "m": "I heard that... / (topic marker)"}
+{"k": "普通形 + ということだ", "lv": "n3", "m": "I heard that... / It means that..."}
+{"k": "普通形 + とか", "lv": "n3", "m": "I heard that... (uncertain hearsay)"}
+{"k": "普通形 + ととのことだ", "lv": "n3", "m": "I heard that... (Formal)"}
+{"k": "普通形 + と言われている", "lv": "n3", "m": "It is said that... / People say that..."}
+{"k": "普通形 + んだって (Na", "lv": "n3", "m": "I heard that... (casual emphasis)", "src": "普通形 + んだって (Na/N + なんだって)"}
+{"k": "最中に", "lv": "n3", "m": "in the middle of", "src": "V(ている形) + 最中に / N + の + 最中に"}
+{"k": "次第", "lv": "n3", "m": "as soon as", "src": "V(ます形) + 次第"}
+{"k": "直す", "lv": "n3", "m": "to redo", "src": "V-stem + 直す"}
+{"k": "続ける", "lv": "n3", "m": "to continue doing", "src": "V-stem + 続ける"}
+{"k": "込む", "lv": "n3", "m": "into/deeply", "src": "V-stem + 込む"}
+{"k": "間に", "lv": "n3", "m": "while/during", "src": "V(辞書形/ている形/ない形) + 間に / Adj-i + 間に / Adj-na + な + 間に / N + の + 間に"}
+{"k": "頼む", "lv": "n3", "m": "to tell/ask someone to do something", "src": "V(辞書形・ない形) + ように(と)言う/頼む"}
+{"k": "A-い", "lv": "n4", "m": "as it is; remaining", "src": "V-た/V-ない/A-い/Na-な/N-の + まま"}
+{"k": "Adj", "lv": "n4", "m": "while; during", "src": "V-ている / Adj / N-の + 間"}
+{"k": "Adj", "lv": "n4", "m": "while; during (specific point)", "src": "V-ている / Adj / N-の + 間に"}
+{"k": "Adj", "lv": "n4", "m": "Like / In the manner of...", "src": "N ＋ のような ＋ N ／ N ＋ のように ＋ V/Adj"}
+{"k": "Adj + かもしれない", "lv": "n4", "m": "might; perhaps", "src": "Plain Form / N / Adj + かもしれない"}
+{"k": "Adj + でしょう", "lv": "n4", "m": "probably; right?", "src": "Plain Form / N / Adj + でしょう"}
+{"k": "Adj + らしい", "lv": "n4", "m": "it seems that; I heard that; typical of", "src": "Plain Form / N / Adj + らしい"}
+{"k": "Adj-stem + すぎる", "lv": "n4", "m": "too much", "src": "V-ます / Adj-stem + すぎる"}
+{"k": "N", "lv": "n4", "m": "probably; right?", "src": "Plain Form / N / Adj + でしょう"}
+{"k": "N", "lv": "n4", "m": "might; perhaps", "src": "Plain Form / N / Adj + かもしれない"}
+{"k": "N", "lv": "n4", "m": "like; similar to; seems like", "src": "Plain Form / N / Na-adj + みたいだ"}
+{"k": "N", "lv": "n4", "m": "it seems that; I heard that; typical of", "src": "Plain Form / N / Adj + らしい"}
+{"k": "N + なので)", "lv": "n4", "m": "because; since", "src": "Plain form + ので (Na/N + なので)"}
+{"k": "N + なのに)", "lv": "n4", "m": "although; despite", "src": "Plain form + のに (Na/N + なのに)"}
+{"k": "N + なんです)", "lv": "n4", "m": "explanation; emphasis", "src": "Plain form + んです (Na/N + なんです)"}
+{"k": "N + のはずだ", "lv": "n4", "m": "it should be; I expect that", "src": "Plain Form + はずだ / N + のはずだ / Na-adj + なはずだ"}
+{"k": "N + のようだ", "lv": "n4", "m": "it seems like; looks like", "src": "Plain Form + ようだ / N + のようだ / Na-adj + なようだ"}
+{"k": "N + までに", "lv": "n4", "m": "by (deadline)", "src": "V-る / N + までに"}
+{"k": "N ＋ のような ＋ N ／ N ＋ のように ＋ V", "lv": "n4", "m": "Like / In the manner of...", "src": "N ＋ のような ＋ N ／ N ＋ のように ＋ V/Adj"}
+{"k": "N-の + まま", "lv": "n4", "m": "as it is; remaining", "src": "V-た/V-ない/A-い/Na-な/N-の + まま"}
+{"k": "N-の + 間", "lv": "n4", "m": "while; during", "src": "V-ている / Adj / N-の + 間"}
+{"k": "N-の + 間に", "lv": "n4", "m": "while; during (specific point)", "src": "V-ている / Adj / N-の + 間に"}
+{"k": "Na-adj + なはずだ", "lv": "n4", "m": "it should be; I expect that", "src": "Plain Form + はずだ / N + のはずだ / Na-adj + なはずだ"}
+{"k": "Na-adj + なようだ", "lv": "n4", "m": "it seems like; looks like", "src": "Plain Form + ようだ / N + のようだ / Na-adj + なようだ"}
+{"k": "Na-adj + みたいだ", "lv": "n4", "m": "like; similar to; seems like", "src": "Plain Form / N / Na-adj + みたいだ"}
+{"k": "Na-な", "lv": "n4", "m": "as it is; remaining", "src": "V-た/V-ない/A-い/Na-な/N-の + まま"}
+{"k": "Plain Form", "lv": "n4", "m": "probably; right?", "src": "Plain Form / N / Adj + でしょう"}
+{"k": "Plain Form", "lv": "n4", "m": "might; perhaps", "src": "Plain Form / N / Adj + かもしれない"}
+{"k": "Plain Form", "lv": "n4", "m": "like; similar to; seems like", "src": "Plain Form / N / Na-adj + みたいだ"}
+{"k": "Plain Form", "lv": "n4", "m": "it seems that; I heard that; typical of", "src": "Plain Form / N / Adj + らしい"}
+{"k": "Plain Form + そうだ", "lv": "n4", "m": "I heard that; they say that"}
+{"k": "Plain Form + はずがない", "lv": "n4", "m": "it cannot be; impossible"}
+{"k": "Plain Form + はずだ", "lv": "n4", "m": "it should be; I expect that", "src": "Plain Form + はずだ / N + のはずだ / Na-adj + なはずだ"}
+{"k": "Plain Form + ようだ", "lv": "n4", "m": "it seems like; looks like", "src": "Plain Form + ようだ / N + のようだ / Na-adj + なようだ"}
+{"k": "Plain form + かどうか", "lv": "n4", "m": "whether or not"}
+{"k": "Plain form + し", "lv": "n4", "m": "and; what's more (listing reasons)"}
+{"k": "Plain form + ので (Na", "lv": "n4", "m": "because; since", "src": "Plain form + ので (Na/N + なので)"}
+{"k": "Plain form + のに (Na", "lv": "n4", "m": "although; despite", "src": "Plain form + のに (Na/N + なのに)"}
+{"k": "Plain form + んです (Na", "lv": "n4", "m": "explanation; emphasis", "src": "Plain form + んです (Na/N + なんです)"}
+{"k": "V-た", "lv": "n4", "m": "as it is; remaining", "src": "V-た/V-ない/A-い/Na-な/N-の + まま"}
+{"k": "V-た + ところだ", "lv": "n4", "m": "just about to; in the middle of; just finished", "src": "V-る / V-ている / V-た + ところだ"}
+{"k": "V-た + ばかり", "lv": "n4", "m": "just finished doing"}
+{"k": "V-て + ある", "lv": "n4", "m": "something has been done (state)"}
+{"k": "V-て + いく", "lv": "n4", "m": "to go on; to continue"}
+{"k": "V-て + おく", "lv": "n4", "m": "to do in advance"}
+{"k": "V-て + くる", "lv": "n4", "m": "to come to; to start to"}
+{"k": "V-て + しまう", "lv": "n4", "m": "to do completely; regrettably"}
+{"k": "V-て + みる", "lv": "n4", "m": "to try doing something"}
+{"k": "V-ている", "lv": "n4", "m": "while; during", "src": "V-ている / Adj / N-の + 間"}
+{"k": "V-ている", "lv": "n4", "m": "while; during (specific point)", "src": "V-ている / Adj / N-の + 間に"}
+{"k": "V-ている", "lv": "n4", "m": "just about to; in the middle of; just finished", "src": "V-る / V-ている / V-た + ところだ"}
+{"k": "V-ない", "lv": "n4", "m": "as it is; remaining", "src": "V-た/V-ない/A-い/Na-な/N-の + まま"}
+{"k": "V-ない + で", "lv": "n4", "m": "without doing"}
+{"k": "V-ます", "lv": "n4", "m": "too much", "src": "V-ます / Adj-stem + すぎる"}
+{"k": "V-ます + にくい", "lv": "n4", "m": "difficult to do"}
+{"k": "V-ます + やすい", "lv": "n4", "m": "easy to do"}
+{"k": "V-ます + 出す", "lv": "n4", "m": "to suddenly begin"}
+{"k": "V-ます + 始める", "lv": "n4", "m": "to start doing"}
+{"k": "V-ます + 方", "lv": "n4", "m": "how to; way of doing"}
+{"k": "V-ます + 終わる", "lv": "n4", "m": "to finish doing"}
+{"k": "V-ます + 続ける", "lv": "n4", "m": "to continue doing"}
+{"k": "V-ます stem + そうだ", "lv": "n4", "m": "it looks like; seems like", "src": "V-ます stem + そうだ / い-Adj (-い) + そうだ / な-Adj (-な) + そうだ"}
+{"k": "V-ます(stem) + ながら", "lv": "n4", "m": "while doing (simultaneous actions)"}
+{"k": "V-る", "lv": "n4", "m": "by (deadline)", "src": "V-る / N + までに"}
+{"k": "V-る", "lv": "n4", "m": "just about to; in the middle of; just finished", "src": "V-る / V-ている / V-た + ところだ"}
+{"k": "V（使役形）＋てください", "lv": "n4", "m": "Please let me do..."}
+{"k": "V（辞書形／ない形）＋ことがある", "lv": "n4", "m": "There are times when..."}
+{"k": "V（辞書形／ない形）＋ことにしている", "lv": "n4", "m": "I make it a rule to..."}
+{"k": "V（辞書形／ない形）＋ことになっている", "lv": "n4", "m": "It has been arranged/decided that..."}
+{"k": "kikoeru)", "lv": "n4", "m": "to be visible; to be audible (spontaneous perception)", "src": "見える/聞こえる (mieru/kikoeru)"}
+{"k": "〜あまり〜ない (amari〜nai)", "lv": "n4", "m": "not very; not much"}
+{"k": "〜おかげで (okage de)", "lv": "n4", "m": "thanks to"}
+{"k": "〜がする (ga suru)", "lv": "n4", "m": "to perceive a smell, sound, taste, or sensation"}
+{"k": "〜がる (garu)", "lv": "n4", "m": "to show signs of; to appear to be"}
+{"k": "〜ことにする", "lv": "n4", "m": "to decide to"}
+{"k": "〜ことになる", "lv": "n4", "m": "it has been decided that"}
+{"k": "〜させられる", "lv": "n4", "m": "be made to do"}
+{"k": "〜させる", "lv": "n4", "m": "make/let someone do"}
+{"k": "〜しか〜ない (shika〜nai)", "lv": "n4", "m": "only; nothing but (negative)"}
+{"k": "〜せいで (sei de)", "lv": "n4", "m": "because of; due to (negative result)"}
+{"k": "〜ぜんぜん〜ない (zenzen〜nai)", "lv": "n4", "m": "not at all"}
+{"k": "〜ために (tame ni)", "lv": "n4", "m": "for the sake of; in order to"}
+{"k": "〜たら (tara)", "lv": "n4", "m": "if; when"}
+{"k": "〜たらどうですか (tara dou desu ka)", "lv": "n4", "m": "why don't you...?"}
+{"k": "〜てあげる", "lv": "n4", "m": "to do something for someone"}
+{"k": "〜ていただく", "lv": "n4", "m": "to receive a favor (humble)"}
+{"k": "〜ていただけませんか", "lv": "n4", "m": "could you please...?"}
+{"k": "〜てくださる", "lv": "n4", "m": "someone (superior) does something for me"}
+{"k": "〜てくれる", "lv": "n4", "m": "someone does something for me"}
+{"k": "〜てさしあげる", "lv": "n4", "m": "to do something for someone (superior)"}
+{"k": "〜てほしい (te hoshii)", "lv": "n4", "m": "want someone to do something"}
+{"k": "〜ても (temo)", "lv": "n4", "m": "even if; even though"}
+{"k": "〜てもらう", "lv": "n4", "m": "to receive a favor"}
+{"k": "〜てやる", "lv": "n4", "m": "to do something for someone (inferior/animal)"}
+{"k": "〜と (to)", "lv": "n4", "m": "whenever; if (natural consequence)"}
+{"k": "〜という (to iu)", "lv": "n4", "m": "called; named"}
+{"k": "〜とおりに (toori ni)", "lv": "n4", "m": "in the way; as..."}
+{"k": "〜なかなか〜ない (nakanaka〜nai)", "lv": "n4", "m": "not easily; not readily"}
+{"k": "〜なくてもいい", "lv": "n4", "m": "don't have to"}
+{"k": "〜なければならない", "lv": "n4", "m": "must do"}
+{"k": "〜なさい", "lv": "n4", "m": "do... (command)"}
+{"k": "〜なら (nara)", "lv": "n4", "m": "if (contextual conditional)"}
+{"k": "〜にする", "lv": "n4", "m": "to decide on"}
+{"k": "〜ば (ba)", "lv": "n4", "m": "if (conditional)"}
+{"k": "〜ばよかった (ba yokatta)", "lv": "n4", "m": "should have; would have been better"}
+{"k": "〜ほど (hodo)", "lv": "n4", "m": "to the extent of; as much as"}
+{"k": "〜ようとする", "lv": "n4", "m": "to try to; to be about to"}
+{"k": "〜ようと思う", "lv": "n4", "m": "I think I will"}
+{"k": "〜ように (you ni - purpose)", "lv": "n4", "m": "in order to; so that"}
+{"k": "〜ようにする", "lv": "n4", "m": "to make an effort to"}
+{"k": "〜ようになる", "lv": "n4", "m": "to reach the point where"}
+{"k": "〜られる", "lv": "n4", "m": "passive voice"}
+{"k": "〜られる／〜れる", "lv": "n4", "m": "can do"}
+{"k": "〜予定だ", "lv": "n4", "m": "it is scheduled to"}
+{"k": "〜場合は (baai wa)", "lv": "n4", "m": "in the event of; in case of"}
+{"k": "ある", "lv": "n4", "m": "something has been done (state)", "src": "V-て + ある"}
+{"k": "い-Adj (-い) + そうだ", "lv": "n4", "m": "it looks like; seems like", "src": "V-ます stem + そうだ / い-Adj (-い) + そうだ / な-Adj (-な) + そうだ"}
+{"k": "い-Adj（-い）＋さ ／ な-Adj（-な）＋さ", "lv": "n4", "m": "-ness (nominalizing suffix)"}
+{"k": "いく", "lv": "n4", "m": "to go on; to continue", "src": "V-て + いく"}
+{"k": "いたす (itasu)", "lv": "n4", "m": "to do (humble)"}
+{"k": "いらっしゃる (irassharu)", "lv": "n4", "m": "to be; to go; to come (honorific)"}
+{"k": "お + V-ます stem + する", "lv": "n4", "m": "to do (humble)"}
+{"k": "お + V-ます stem + になる", "lv": "n4", "m": "to do (honorific)"}
+{"k": "おく", "lv": "n4", "m": "to do in advance", "src": "V-て + おく"}
+{"k": "かどうか", "lv": "n4", "m": "whether or not", "src": "Plain form + かどうか"}
+{"k": "かもしれない", "lv": "n4", "m": "might; perhaps", "src": "Plain Form / N / Adj + かもしれない"}
+{"k": "くる", "lv": "n4", "m": "to come to; to start to", "src": "V-て + くる"}
+{"k": "しまう", "lv": "n4", "m": "to do completely; regrettably", "src": "V-て + しまう"}
+{"k": "すぎる", "lv": "n4", "m": "too much", "src": "V-ます / Adj-stem + すぎる"}
+{"k": "する", "lv": "n4", "m": "to do (humble)", "src": "お + V-ます stem + する"}
+{"k": "そうだ", "lv": "n4", "m": "it looks like; seems like", "src": "V-ます stem + そうだ / い-Adj (-い) + そうだ / な-Adj (-な) + そうだ"}
+{"k": "そうだ", "lv": "n4", "m": "I heard that; they say that", "src": "Plain Form + そうだ"}
+{"k": "でございます (de gozaimasu)", "lv": "n4", "m": "to be (polite)"}
+{"k": "でしょう", "lv": "n4", "m": "probably; right?", "src": "Plain Form / N / Adj + でしょう"}
+{"k": "ところだ", "lv": "n4", "m": "just about to; in the middle of; just finished", "src": "V-る / V-ている / V-た + ところだ"}
+{"k": "な-Adj (-な) + そうだ", "lv": "n4", "m": "it looks like; seems like", "src": "V-ます stem + そうだ / い-Adj (-い) + そうだ / な-Adj (-な) + そうだ"}
+{"k": "ながら", "lv": "n4", "m": "while doing (simultaneous actions)", "src": "V-ます(stem) + ながら"}
+{"k": "なさる (nasaru)", "lv": "n4", "m": "to do (honorific)"}
+{"k": "なので)", "lv": "n4", "m": "because; since", "src": "Plain form + ので (Na/N + なので)"}
+{"k": "なのに)", "lv": "n4", "m": "although; despite", "src": "Plain form + のに (Na/N + なのに)"}
+{"k": "なはずだ", "lv": "n4", "m": "it should be; I expect that", "src": "Plain Form + はずだ / N + のはずだ / Na-adj + なはずだ"}
+{"k": "なようだ", "lv": "n4", "m": "it seems like; looks like", "src": "Plain Form + ようだ / N + のようだ / Na-adj + なようだ"}
+{"k": "なんです)", "lv": "n4", "m": "explanation; emphasis", "src": "Plain form + んです (Na/N + なんです)"}
+{"k": "にくい", "lv": "n4", "m": "difficult to do", "src": "V-ます + にくい"}
+{"k": "になる", "lv": "n4", "m": "to do (honorific)", "src": "お + V-ます stem + になる"}
+{"k": "ので (Na", "lv": "n4", "m": "because; since", "src": "Plain form + ので (Na/N + なので)"}
+{"k": "のに (Na", "lv": "n4", "m": "although; despite", "src": "Plain form + のに (Na/N + なのに)"}
+{"k": "のはずだ", "lv": "n4", "m": "it should be; I expect that", "src": "Plain Form + はずだ / N + のはずだ / Na-adj + なはずだ"}
+{"k": "のようだ", "lv": "n4", "m": "it seems like; looks like", "src": "Plain Form + ようだ / N + のようだ / Na-adj + なようだ"}
+{"k": "はずがない", "lv": "n4", "m": "it cannot be; impossible", "src": "Plain Form + はずがない"}
+{"k": "はずだ", "lv": "n4", "m": "it should be; I expect that", "src": "Plain Form + はずだ / N + のはずだ / Na-adj + なはずだ"}
+{"k": "ばかり", "lv": "n4", "m": "just finished doing", "src": "V-た + ばかり"}
+{"k": "までに", "lv": "n4", "m": "by (deadline)", "src": "V-る / N + までに"}
+{"k": "まま", "lv": "n4", "m": "as it is; remaining", "src": "V-た/V-ない/A-い/Na-な/N-の + まま"}
+{"k": "みたいだ", "lv": "n4", "m": "like; similar to; seems like", "src": "Plain Form / N / Na-adj + みたいだ"}
+{"k": "みる", "lv": "n4", "m": "to try doing something", "src": "V-て + みる"}
+{"k": "やすい", "lv": "n4", "m": "easy to do", "src": "V-ます + やすい"}
+{"k": "ようだ", "lv": "n4", "m": "it seems like; looks like", "src": "Plain Form + ようだ / N + のようだ / Na-adj + なようだ"}
+{"k": "らしい", "lv": "n4", "m": "it seems that; I heard that; typical of", "src": "Plain Form / N / Adj + らしい"}
+{"k": "んです (Na", "lv": "n4", "m": "explanation; emphasis", "src": "Plain form + んです (Na/N + なんです)"}
+{"k": "出す", "lv": "n4", "m": "to suddenly begin", "src": "V-ます + 出す"}
+{"k": "命令形", "lv": "n4", "m": "imperative form"}
+{"k": "始める", "lv": "n4", "m": "to start doing", "src": "V-ます + 始める"}
+{"k": "禁止形", "lv": "n4", "m": "prohibitive form (~na)"}
+{"k": "終わる", "lv": "n4", "m": "to finish doing", "src": "V-ます + 終わる"}
+{"k": "続ける", "lv": "n4", "m": "to continue doing", "src": "V-ます + 続ける"}
+{"k": "聞こえる (mieru", "lv": "n4", "m": "to be visible; to be audible (spontaneous perception)", "src": "見える/聞こえる (mieru/kikoeru)"}
+{"k": "見える", "lv": "n4", "m": "to be visible; to be audible (spontaneous perception)", "src": "見える/聞こえる (mieru/kikoeru)"}
+{"k": "間に", "lv": "n4", "m": "while; during (specific point)", "src": "V-ている / Adj / N-の + 間に"}
+{"k": "～あまり～ない (amari~nai)", "lv": "n4", "m": "not very; not much"}
+{"k": "～おかげで (okage de)", "lv": "n4", "m": "thanks to"}
+{"k": "～がする (ga suru)", "lv": "n4", "m": "to perceive a smell, sound, taste, or sensation"}
+{"k": "～がる (garu)", "lv": "n4", "m": "to show signs of; to appear to be"}
+{"k": "～ことにする", "lv": "n4", "m": "to decide to"}
+{"k": "～ことになる", "lv": "n4", "m": "it has been decided that"}
+{"k": "～させられる", "lv": "n4", "m": "be made to do"}
+{"k": "～させる", "lv": "n4", "m": "make/let someone do"}
+{"k": "～しか～ない (shika~nai)", "lv": "n4", "m": "only; nothing but (negative)"}
+{"k": "～せいで (sei de)", "lv": "n4", "m": "because of; due to (negative result)"}
+{"k": "～ぜんぜん～ない (zenzen~nai)", "lv": "n4", "m": "not at all"}
+{"k": "～ために (tame ni)", "lv": "n4", "m": "for the sake of; in order to"}
+{"k": "～たら (tara)", "lv": "n4", "m": "if; when"}
+{"k": "～たらどうですか (tara dou desu ka)", "lv": "n4", "m": "why don't you...?"}
+{"k": "～てあげる", "lv": "n4", "m": "to do something for someone"}
+{"k": "～ていただく", "lv": "n4", "m": "to receive a favor (humble)"}
+{"k": "～ていただけませんか", "lv": "n4", "m": "could you please...?"}
+{"k": "～てくださる", "lv": "n4", "m": "someone (superior) does something for me"}
+{"k": "～てくれる", "lv": "n4", "m": "someone does something for me"}
+{"k": "～てさしあげる", "lv": "n4", "m": "to do something for someone (superior)"}
+{"k": "～てほしい (te hoshii)", "lv": "n4", "m": "want someone to do something"}
+{"k": "～ても (temo)", "lv": "n4", "m": "even if; even though"}
+{"k": "～てもらう", "lv": "n4", "m": "to receive a favor"}
+{"k": "～てやる", "lv": "n4", "m": "to do something for someone (inferior/animal)"}
+{"k": "～と (to)", "lv": "n4", "m": "whenever; if (natural consequence)"}
+{"k": "～という (to iu)", "lv": "n4", "m": "called; named"}
+{"k": "～とおりに (toori ni)", "lv": "n4", "m": "in the way; as..."}
+{"k": "～なかなか～ない (nakanaka~nai)", "lv": "n4", "m": "not easily; not readily"}
+{"k": "～なくてもいい", "lv": "n4", "m": "don't have to"}
+{"k": "～なければならない", "lv": "n4", "m": "must do"}
+{"k": "～なさい", "lv": "n4", "m": "do... (command)"}
+{"k": "～なら (nara)", "lv": "n4", "m": "if (contextual conditional)"}
+{"k": "～にする", "lv": "n4", "m": "to decide on"}
+{"k": "～ば (ba)", "lv": "n4", "m": "if (conditional)"}
+{"k": "～ばよかった (ba yokatta)", "lv": "n4", "m": "should have; would have been better"}
+{"k": "～ほど (hodo)", "lv": "n4", "m": "to the extent of; as much as"}
+{"k": "～ようとする", "lv": "n4", "m": "to try to; to be about to"}
+{"k": "～ようと思う", "lv": "n4", "m": "I think I will"}
+{"k": "～ように (you ni - purpose)", "lv": "n4", "m": "in order to; so that"}
+{"k": "～ようにする", "lv": "n4", "m": "to make an effort to"}
+{"k": "～ようになる", "lv": "n4", "m": "to reach the point where"}
+{"k": "～られる", "lv": "n4", "m": "passive voice"}
+{"k": "～られる／～れる", "lv": "n4", "m": "can do"}
+{"k": "～予定だ", "lv": "n4", "m": "it is scheduled to"}
+{"k": "～場合は (baai wa)", "lv": "n4", "m": "in the event of; in case of"}
+{"k": "〜か", "lv": "n5", "m": "Question marker"}
+{"k": "〜から", "lv": "n5", "m": "Because / from"}
+{"k": "〜が", "lv": "n5", "m": "Subject marker / new information"}
+{"k": "〜くなる", "lv": "n5", "m": "To become", "src": "〜くなる / 〜になる"}
+{"k": "〜けど", "lv": "n5", "m": "But / however", "src": "〜けど / 〜けれども"}
+{"k": "〜けれども", "lv": "n5", "m": "But / however", "src": "〜けど / 〜けれども"}
+{"k": "〜すぎる", "lv": "n5", "m": "Too much / excessively"}
+{"k": "〜たい", "lv": "n5", "m": "Want to do"}
+{"k": "〜たくない", "lv": "n5", "m": "Don't want to do"}
+{"k": "〜たことがある", "lv": "n5", "m": "Have done before / have the experience of"}
+{"k": "〜たり〜たりする", "lv": "n5", "m": "Do things like... and..."}
+{"k": "〜つもり", "lv": "n5", "m": "Intend to / plan to"}
+{"k": "〜てある", "lv": "n5", "m": "Resultant state (something has been done)"}
+{"k": "〜ている", "lv": "n5", "m": "Ongoing action / habitual state"}
+{"k": "〜てから", "lv": "n5", "m": "After doing..."}
+{"k": "〜てください", "lv": "n5", "m": "Please do..."}
+{"k": "〜てはいけない", "lv": "n5", "m": "Must not / may not"}
+{"k": "〜てもいい", "lv": "n5", "m": "May / it's okay to"}
+{"k": "〜で", "lv": "n5", "m": "Location of action / means"}
+{"k": "〜と", "lv": "n5", "m": "And / with"}
+{"k": "〜ない", "lv": "n5", "m": "Plain negative"}
+{"k": "〜ないでください", "lv": "n5", "m": "Please don't do..."}
+{"k": "〜なかった", "lv": "n5", "m": "Plain past negative"}
+{"k": "〜に", "lv": "n5", "m": "Location/time/direction"}
+{"k": "〜になる", "lv": "n5", "m": "To become", "src": "〜くなる / 〜になる"}
+{"k": "〜に行く", "lv": "n5", "m": "Go to do"}
+{"k": "〜の", "lv": "n5", "m": "Possessive / modifier"}
+{"k": "〜のが上手", "lv": "n5", "m": "Good at doing"}
+{"k": "〜のが下手", "lv": "n5", "m": "Bad at doing"}
+{"k": "〜のが好き", "lv": "n5", "m": "Like doing"}
+{"k": "〜ので", "lv": "n5", "m": "Because (softer / more polite)"}
+{"k": "〜は", "lv": "n5", "m": "Topic marker"}
+{"k": "〜へ", "lv": "n5", "m": "Direction of movement"}
+{"k": "〜ほうがいい", "lv": "n5", "m": "Had better / should"}
+{"k": "〜ました", "lv": "n5", "m": "Polite past"}
+{"k": "〜ましょう", "lv": "n5", "m": "Let's do"}
+{"k": "〜ましょうか", "lv": "n5", "m": "Shall I?"}
+{"k": "〜ます", "lv": "n5", "m": "Polite present/future"}
+{"k": "〜ません", "lv": "n5", "m": "Polite negative"}
+{"k": "〜ませんか", "lv": "n5", "m": "Won't you? / Would you like to?"}
+{"k": "〜も", "lv": "n5", "m": "Also / too"}
+{"k": "〜や", "lv": "n5", "m": "And / etc. (non-exhaustive)"}
+{"k": "〜より〜のほうが", "lv": "n5", "m": "More ... than"}
+{"k": "〜を", "lv": "n5", "m": "Object marker"}
+{"k": "〜前に", "lv": "n5", "m": "Before"}
+{"k": "〜後で", "lv": "n5", "m": "After / later"}
+{"k": "い-adjective", "lv": "n5", "m": "い-adjective conjugation"}
+{"k": "がある", "lv": "n5", "m": "There is / exists (inanimate)"}
+{"k": "がいる", "lv": "n5", "m": "There is / exists (animate)"}
+{"k": "がほしい", "lv": "n5", "m": "Want something"}
+{"k": "くらい", "lv": "n5", "m": "About / approximately", "src": "くらい / ぐらい"}
+{"k": "ぐらい", "lv": "n5", "m": "About / approximately", "src": "くらい / ぐらい"}
+{"k": "じゃない", "lv": "n5", "m": "To not be (negative copula)", "src": "じゃない / ではない"}
+{"k": "だ", "lv": "n5", "m": "To be (copula)", "src": "です / だ"}
+{"k": "だけ", "lv": "n5", "m": "Only / just"}
+{"k": "できる", "lv": "n5", "m": "Can do / able to"}
+{"k": "でした", "lv": "n5", "m": "Was / Were (past copula)"}
+{"k": "です", "lv": "n5", "m": "To be (copula)", "src": "です / だ"}
+{"k": "ではない", "lv": "n5", "m": "To not be (negative copula)", "src": "じゃない / ではない"}
+{"k": "でも", "lv": "n5", "m": "But / however (sentence-initial)"}
+{"k": "な-adjective", "lv": "n5", "m": "な-adjective conjugation"}
+{"k": "まだ", "lv": "n5", "m": "Still / not yet"}
+{"k": "まで", "lv": "n5", "m": "Until / as far as"}
+{"k": "もう", "lv": "n5", "m": "Already / not anymore"}
+{"k": "一番", "lv": "n5", "m": "The most / number one"}

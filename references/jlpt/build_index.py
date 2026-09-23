@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Build references/jlpt/index.jsonl from the per-level markdown tables.
+"""Build JLPT vocabulary/grammar JSONL indexes from per-level markdown tables.
 
-One JSON object per line. Look up a word or grammar point with the key field:
-
-    grep '"k": "会う"' references/jlpt/index.jsonl
+    grep '"k": "会う"' references/jlpt/vocabulary.jsonl
+    grep '"k": "だに"' references/jlpt/grammar.jsonl
 """
 import json
 import re
@@ -11,7 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 LEVELS = ["n5", "n4", "n3", "n2", "n1"]
-OUT = ROOT / "index.jsonl"
+OUT_VOCAB = ROOT / "vocabulary.jsonl"
+OUT_GRAMMAR = ROOT / "grammar.jsonl"
 
 
 def table_rows(path: Path):
@@ -46,68 +46,90 @@ def grammar_keys(pattern: str):
     return seen
 
 
-def main():
-    records = []
-    seen = set()
+def write_jsonl(path: Path, meta: dict, records: list):
+    lines = [json.dumps(meta, ensure_ascii=False)]
+    lines.extend(json.dumps(r, ensure_ascii=False) for r in records)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"wrote {path} lines={len(lines)}")
 
-    def add(record):
-        ident = (record["t"], record["k"], record["lv"], record.get("w", ""), record.get("r", ""), record["m"])
-        if ident in seen:
+
+def main():
+    vocab = []
+    grammar = []
+    seen_v = set()
+    seen_g = set()
+
+    def add_vocab(record):
+        ident = (record["k"], record["lv"], record.get("w", ""), record.get("r", ""), record["m"])
+        if ident in seen_v:
             return
-        seen.add(ident)
-        records.append(record)
+        seen_v.add(ident)
+        vocab.append(record)
+
+    def add_grammar(record):
+        ident = (record["k"], record["lv"], record.get("src", ""), record["m"])
+        if ident in seen_g:
+            return
+        seen_g.add(ident)
+        grammar.append(record)
 
     for level in LEVELS:
-        vocab = ROOT / level / "vocabulary.md"
-        for cells in table_rows(vocab):
+        for cells in table_rows(ROOT / level / "vocabulary.md"):
             if len(cells) < 4:
                 continue
             _n, word, reading, meaning = cells[:4]
             word = norm_tilde(word)
             reading = norm_tilde(reading)
             if word:
-                add({"t": "v", "k": word, "lv": level, "r": reading, "m": meaning})
+                add_vocab({"k": word, "lv": level, "r": reading, "m": meaning})
             key = reading or word
             if key and key != word:
-                rec = {"t": "v", "k": key, "lv": level, "m": meaning}
+                rec = {"k": key, "lv": level, "m": meaning}
                 if word:
                     rec["w"] = word
-                add(rec)
+                add_vocab(rec)
             elif not word and key:
-                add({"t": "v", "k": key, "lv": level, "m": meaning})
+                add_vocab({"k": key, "lv": level, "m": meaning})
 
-        grammar = ROOT / level / "grammar.md"
-        for cells in table_rows(grammar):
+        for cells in table_rows(ROOT / level / "grammar.md"):
             if len(cells) < 3:
                 continue
             _n, pattern, meaning = cells[:3]
             pattern = pattern.strip()
             if not pattern:
                 continue
-            keys = grammar_keys(pattern)
-            for key in keys:
-                rec = {"t": "g", "k": key, "lv": level, "m": meaning}
+            for key in grammar_keys(pattern):
+                rec = {"k": key, "lv": level, "m": meaning}
                 if key != pattern and key != norm_tilde(pattern):
                     rec["src"] = pattern
-                add(rec)
+                add_grammar(rec)
 
-    records.sort(key=lambda r: (r["t"], r["lv"], r["k"]))
-    vocab_entries = sum(1 for r in records if r["t"] == "v" and "w" not in r)
-    grammar_entries = sum(1 for r in records if r["t"] == "g" and "src" not in r)
-    lines = [
-        json.dumps(
-            {
-                "t": "meta",
-                "vocab": vocab_entries,
-                "grammar": grammar_entries,
-                "note": "t=v 词汇, t=g 语法; k 查找键; lv 为 n5–n1; r 读音; w 词形(按读音查到时); src 语法原条目",
-            },
-            ensure_ascii=False,
-        )
-    ]
-    lines.extend(json.dumps(r, ensure_ascii=False) for r in records)
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"wrote {OUT} lines={len(lines)} vocab={vocab_entries} grammar_keys={sum(1 for r in records if r['t']=='g')}")
+    vocab.sort(key=lambda r: (r["lv"], r["k"]))
+    grammar.sort(key=lambda r: (r["lv"], r["k"]))
+
+    vocab_entries = sum(1 for r in vocab if "w" not in r)
+    grammar_entries = sum(1 for r in grammar if "src" not in r)
+
+    write_jsonl(
+        OUT_VOCAB,
+        {
+            "meta": True,
+            "entries": vocab_entries,
+            "note": "k 查找键; lv 为 n5–n1; r 读音; w 词形(按读音查到时); m 英文释义",
+        },
+        vocab,
+    )
+    write_jsonl(
+        OUT_GRAMMAR,
+        {
+            "meta": True,
+            "entries": grammar_entries,
+            "note": "k 查找键(句型或核心); lv 为 n5–n1; src 完整原条目(核心行时); m 英文释义",
+        },
+        grammar,
+    )
+    print(f"vocab_entries={vocab_entries} grammar_entries={grammar_entries} "
+          f"vocab_keys={len(vocab)} grammar_keys={len(grammar)}")
 
 
 if __name__ == "__main__":

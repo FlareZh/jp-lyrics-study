@@ -48,8 +48,9 @@ jp-lyrics-study/
 └── references/
     ├── data-guide.md                # S / POS 数据结构与填表规则
     └── jlpt/
-        ├── index.jsonl              # 词汇/语法 JLPT 分级索引（检索用）
-        ├── build_index.py           # 从各级 md 重建 index.jsonl
+        ├── vocabulary.jsonl         # 词汇 JLPT 分级索引
+        ├── grammar.jsonl            # 语法 JLPT 分级索引
+        ├── build_index.py           # 从各级 md 重建上述索引
         └── n5…n1/                   # vocabulary.md · grammar.md
 ```
 
@@ -58,7 +59,8 @@ jp-lyrics-study/
 | `SKILL.md` | 触发条件、工作流、硬性规则、索引检索方式 |
 | `assets/lyric-page-template.html` | 复制后替换 `S`、`POS` 与 hero 占位即可出页 |
 | `references/data-guide.md` | 歌词数组 `S`、词性表 `POS`、读音与分级规则 |
-| `references/jlpt/index.jsonl` | 唯一 JLPT 分级源；未命中则不分级（NX） |
+| `references/jlpt/vocabulary.jsonl` | 词汇 JLPT 分级源；未命中则不分级（NX） |
+| `references/jlpt/grammar.jsonl` | 语法 JLPT 分级源；未命中则不标注等级 |
 
 ## 生成产物概要
 
