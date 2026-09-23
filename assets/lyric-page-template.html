@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>[歌名]｜[歌手名] 歌词逐句学习</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='10' fill='%23E8874C'/%3E%3Ccircle cx='22' cy='10' r='4' fill='%23AFC4D9' opacity='.9'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --night:#0E1B2C;
+  --night-2:#16263C;
+  --ink:#22303f;
+  --muted:#6b7686;
+  --paper:#F4F6F9;
+  --card:#ffffff;
+  --line:#dfe5ee;
+  --orange:#E8874C;
+  --orange-deep:#C9652F;
+  --l5:#1e8a4e; --b5:#e4f5eb;
+  --l4:#a86a1a; --b4:#fbeecb;
+  --l3:#c2410c; --b3:#ffead9;
+  --l2:#4338ca; --b2:#e4e7fb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans SC",system-ui,-apple-system,"PingFang SC",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.9;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+/* ===== Hero ===== */
+.hero{
+  /* ===== hero 氛围：配色 + 特效都按本首歌定制 =====
+     hero 背景渐变（本段）与下面的动画特效（.snow 段）一起，
+     按歌词意象与情绪设计。示例：
+     - 《あぶく》：夜蓝 + 橙色泡沫上升（暖）
+     - 《僕が死のうと思ったのは》：深夜→破晓微光 + 飘雪（冷→救赎）
+     可选项：泡沫/飘雪/花瓣/星光/光尘/涟漪 × 冷色/暖色/渐变走向。 */
+  background:
+    radial-gradient(900px 320px at 50% 100%, rgba(255,226,180,.30) 0%, transparent 58%),
+    radial-gradient(700px 400px at 88% -18%, #2c4a63 0%, transparent 60%),
+    linear-gradient(180deg, #0a141f 0%, #16263a 52%, #263a50 100%);
+  color:#e9eef5;
+  padding:52px 20px 44px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:34px;
+  background:var(--paper);
+  border-radius:100% 100% 0 0 / 26px 26px 0 0;
+}
+/* ===== hero 氛围特效 =====
+   这是本首歌的头部背景动画，每首歌按歌词意象设计独特特效。
+   示例：《あぶく》用泡沫上升，《僕が死のうと思ったのは》用飘雪。
+   生成时按这首歌的氛围替换整段（类名、HTML 子元素、keyframes 一起换），
+   可选方向：泡沫上升 / 飘雪 / 花瓣飘落 / 星光闪烁 / 光尘漂浮 / 水面涟漪。 */
+.snow{position:absolute; inset:0; pointer-events:none;}
+.snow span{
+  position:absolute; top:-26px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.96), rgba(214,233,255,.5));
+  opacity:.85; animation:fall linear infinite;
+}
+.snow span:nth-child(1){left:10%; width:5px; height:5px; animation-duration:13s;}
+.snow span:nth-child(2){left:25%; width:8px; height:8px; animation-duration:17s; opacity:.55;}
+.snow span:nth-child(3){left:42%; width:4px; height:4px; animation-duration:11s;}
+.snow span:nth-child(4){left:58%; width:7px; height:7px; animation-duration:15s; opacity:.6;}
+.snow span:nth-child(5){left:72%; width:5px; height:5px; animation-duration:12s;}
+.snow span:nth-child(6){left:85%; width:9px; height:9px; animation-duration:18s; opacity:.5;}
+.snow span:nth-child(7){left:94%; width:4px; height:4px; animation-duration:10s;}
+.snow span:nth-child(8){left:33%; width:14px; height:14px; animation-duration:21s; opacity:.32; filter:blur(1.5px);}
+.snow span:nth-child(9){left:66%; width:12px; height:12px; animation-duration:23s; opacity:.28; filter:blur(1.5px);}
+@keyframes fall{
+  0%{transform:translateY(0) translateX(0) rotate(0deg); opacity:0;}
+  10%{opacity:.85;}
+  90%{opacity:.55;}
+  100%{transform:translateY(620px) translateX(26px) rotate(320deg); opacity:0;}
+}
+.hero h1{
+  font-family:"Noto Serif JP",serif;
+  font-size:44px; font-weight:900; letter-spacing:.06em;
+  position:relative; z-index:2;
+}
+.hero .song{font-family:"Noto Serif JP",serif; font-size:16px; letter-spacing:.35em; opacity:.75; margin-top:8px; position:relative; z-index:2;}
+.hero .tagline{font-size:13.5px; opacity:.85; margin-top:14px; color:#b9c6d6; position:relative; z-index:2;}
+.legend{
+  display:inline-flex; flex-wrap:wrap; gap:8px; justify-content:center;
+  margin-top:16px; position:relative; z-index:2;
+}
+.lg{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#c7d2e0;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
+.dot.d5{background:var(--b5);border:1px solid var(--l5);}
+.dot.d4{background:var(--b4);border:1px solid var(--l4);}
+.dot.d3{background:var(--b3);border:1px solid var(--l3);}
+.dot.d2{background:var(--b2);border:1px solid var(--l2);}
+
+/* ===== Layout ===== */
+.wrap{max-width:760px; margin:0 auto; padding:0 18px 60px;}
+.controls{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin:22px 0 18px; justify-content:space-between;
+}
+.cbtns{display:flex; gap:10px;}
+.btn{
+  border:1px solid var(--line); background:#fff; color:var(--ink);
+  border-radius:999px; padding:7px 16px; font-size:13.5px; cursor:pointer;
+  transition:all .18s ease;
+}
+.btn:hover{border-color:var(--orange); color:var(--orange-deep);}
+.btn.primary{background:var(--orange); border-color:var(--orange); color:#fff;}
+.btn.primary:hover{background:var(--orange-deep);}
+.stat{
+  display:flex; gap:6px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--muted);
+}
+.stat b{font-weight:700; color:var(--ink); margin-right:1px;}
+.pill{
+  display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:999px; font-size:12px;
+}
+.pill.n5{background:var(--b5);color:var(--l5);}
+.pill.n4{background:var(--b4);color:var(--l4);}
+.pill.n3{background:var(--b3);color:var(--l3);}
+.pill.n2{background:var(--b2);color:var(--l2);}
+
+/* ===== Sentence cards ===== */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  margin-bottom:12px; overflow:hidden; box-shadow:0 1px 2px rgba(15,27,44,.04);
+}
+.card.open{border-color:#cfd9e6;}
+.sline{
+  padding:15px 18px; cursor:pointer; user-select:none; display:flex; align-items:flex-start; gap:12px;
+}
+.sline .num{
+  font-family:"Noto Serif JP",serif; font-size:12px; color:#a8b2c0; margin-top:6px; min-width:20px; text-align:center;
+}
+.sline .jp{
+  flex:1; font-family:"Noto Serif JP",serif; font-size:19px; line-height:1.65; color:#1c2733;
+}
+ruby{ruby-position:over;}
+rt{font-size:.52em; color:#8a94a3; font-weight:500;}
+.sline .chev{color:#9aa5b4; width:20px; height:20px; margin-top:5px; transition:transform .25s ease, color .25s ease; flex-shrink:0;}
+.card.open .chev{transform:rotate(180deg); color:var(--orange);}
+.detail{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+.card.open .detail{max-height:none;}
+.detail-inner{padding:4px 18px 18px; border-top:1px solid #eef2f7;}
+.sec{margin-top:12px;}
+.sec h4{
+  font-size:12px; font-weight:700; letter-spacing:.08em; color:#7a8494; margin-bottom:6px;
+  display:flex; align-items:center; gap:6px;
+}
+.sec h4::before{content:""; width:3px; height:12px; background:var(--orange); border-radius:2px;}
+.seg{font-size:14.5px; color:#38434f; line-height:1.8;}
+.seg .sep{color:#c3ccd8; margin:0 2px;}
+.wlist{display:flex; flex-direction:column; gap:6px;}
+.witem{
+  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; font-size:13.5px;
+}
+.wtag{
+  border:none; border-radius:6px; padding:2px 8px; font-size:12px; cursor:pointer;
+  font-family:"Noto Sans SC",sans-serif; transition:filter .15s ease; text-align:left; line-height:1.7;
+}
+.wtag:hover{filter:brightness(.97);}
+.wtag.n5{background:var(--b5);color:var(--l5);}
+.wtag.n4{background:var(--b4);color:var(--l4);}
+.wtag.n3{background:var(--b3);color:var(--l3);}
+.wtag.n2{background:var(--b2);color:var(--l2);}
+.wtag .w-ja{font-family:"Noto Serif JP",serif; font-weight:700;}
+.wtag .w-mean{color:inherit; opacity:.8;}
+.rep{font-size:11px; color:#a3acba; background:#f2f5f9; border-radius:999px; padding:1px 8px; white-space:nowrap;}
+.pos{font-size:11px; color:#8a94a3; background:#eef1f6; border-radius:4px; padding:0 6px; white-space:nowrap;}
+.pos-f{font-size:11px; color:#b06a3c; background:#fdf0e5; border-radius:4px; padding:0 6px; white-space:nowrap;}
+.w-mean{color:inherit; opacity:.82;}
+.otherforms{display:flex; flex-wrap:wrap; gap:4px;}
+#popForms{display:flex; flex-wrap:wrap; gap:4px;}
+.wtag .wpos{font-size:10.5px; opacity:.72; margin-left:5px; font-weight:500;}
+.wtag .wform{font-size:10.5px; opacity:.92; margin-left:4px; font-weight:600;}
+.of{background:#f2f5f9; border:1px solid #e2e9f2; border-radius:5px; padding:1px 7px; font-size:12px; color:#38434f; white-space:nowrap;}
+.of b{color:#b06a3c; font-weight:600; margin-right:3px;}
+.sent-item{font-size:12.5px; color:#38434f; margin-bottom:3px; line-height:1.6;}
+.sent-item b{color:#b06a3c; font-weight:600; margin-right:4px;}
+.grammar{font-size:14px; color:#38434f; line-height:1.9;}
+.grammar code{background:#eef3f9; border:1px solid #e2e9f2; border-radius:5px; padding:1px 6px; font-size:13px; color:#1d4d6b;}
+.tr{font-size:15px; color:#2a3644; font-weight:500; line-height:1.85;}
+.tr::before{content:"「";color:var(--orange);} .tr::after{content:"」";color:var(--orange);}
+
+/* ===== Vocab summary ===== */
+.vocab-panel{background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px; margin-top:26px;}
+.vocab-panel h3{font-size:16px; margin-bottom:4px;}
+.vocab-panel .sub{font-size:12.5px; color:var(--muted); margin-bottom:14px;}
+.vocab-groups{display:grid; gap:16px;}
+.vg h5{font-size:13px; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+.vg .tags{display:flex; flex-wrap:wrap; gap:6px;}
+.vg .tags .wtag{font-size:12px;}
+.vg .tags .rep{font-size:10.5px;}
+
+/* ===== Popover ===== */
+.pop-mask{position:fixed; inset:0; background:rgba(14,27,44,.42); z-index:40; opacity:0; pointer-events:none; transition:opacity .2s ease;}
+.pop-mask.show{opacity:1; pointer-events:auto;}
+.pop{
+  position:fixed; left:50%; top:44%; transform:translate(-50%,-50%) scale(.96);
+  background:#fff; border-radius:14px; width:min(88vw,360px); z-index:41;
+  box-shadow:0 18px 50px rgba(14,27,44,.3); opacity:0; pointer-events:none; transition:all .2s ease;
+}
+.pop.show{opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1);}
+.pop .head{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #eef2f7;}
+.pop .head .jp{font-family:"Noto Serif JP",serif; font-size:19px; font-weight:700;}
+.pop .close{border:none; background:#f1f4f8; color:#5c6775; width:26px;height:26px;border-radius:50%;cursor:pointer; font-size:15px; line-height:1;}
+.pop .body{padding:16px 18px; font-size:14px; color:#2a3644;}
+.pop .body .lv{display:inline-flex; margin-bottom:10px;}
+.pop .body .row{margin-bottom:8px; display:flex; gap:8px;}
+.pop .body .k{color:#8a94a3; min-width:44px; flex-shrink:0;}
+.pop .body .v{flex:1;}
+
+footer{margin-top:34px; text-align:center; color:#9aa5b3; font-size:12px; line-height:1.9;}
+footer a{color:#b06a3c; text-decoration:none;}
+
+@media (max-width:520px){
+  .hero h1{font-size:34px;}
+  .sline .jp{font-size:17px;}
+  .controls{flex-direction:column; align-items:stretch;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="snow">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <h1>[歌名]</h1>
+  <div class="song">[歌手名] / [歌名中文译名]</div>
+  <p class="tagline">作詞・作曲 [作词人] ｜ 点击每一句展开语法讲解，点击每个单词查看释义</p>
+  <div class="legend">
+    <span class="lg"><span class="dot d5"></span>N5</span>
+    <span class="lg"><span class="dot d4"></span>N4</span>
+    <span class="lg"><span class="dot d3"></span>N3</span>
+    <span class="lg"><span class="dot d2"></span>N2</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="controls">
+    <div class="stat" id="statBar"></div>
+    <div class="cbtns">
+      <button class="btn" id="btnAll">全部展开</button>
+      <button class="btn" id="btnCollapse">全部收起</button>
+    </div>
+  </div>
+
+  <div id="lyrics"></div>
+
+  <section class="vocab-panel" id="vocabPanel">
+    <h3>生词总表</h3>
+    <p class="sub">按等级分组，去重统计；点击单词查看释义与出处</p>
+    <div class="vocab-groups" id="vocabGroups"></div>
+  </section>
+
+  <footer>
+    <p>[歌名] —— [一句歌词主题/简介]。<br>练习歌词阅读 · 由 [作词人] 作词，仅作学习用途。</p>
+  </footer>
+</main>
+
+<!-- ===== Popover ===== -->
+<div class="pop-mask" id="popMask"></div>
+<div class="pop" id="pop">
+  <div class="head">
+    <span class="jp" id="popJp"></span>
+    <button class="close" id="popClose">×</button>
+  </div>
+  <div class="body">
+    <span class="lv" id="popLv"></span>
+    <div class="row"><span class="k">词性</span><span class="v" id="popPos"></span></div>
+    <div class="row" id="popFormRow" style="display:none"><span class="k">形态</span><span class="v" id="popForm"></span></div>
+    <div class="row" id="popBaseRow" style="display:none"><span class="k">原形</span><span class="v" id="popBase"></span></div>
+    <div class="row" id="popFormsRow" style="display:none"><span class="k">其他形态</span><span class="v" id="popForms"></span></div>
+    <div class="row" id="popReadRow"><span class="k">读音</span><span class="v" id="popRead"></span></div>
+    <div class="row"><span class="k">释义</span><span class="v" id="popMean"></span></div>
+    <div class="row"><span class="k">出处</span><span class="v" id="popSrc"></span></div>
+    <div class="row" id="popNoteRow" style="display:none"><span class="k">说明</span><span class="v" id="popNote"></span></div>
+  </div>
+</div>
+
+<script>
+/* ===== 歌词数据 =====
+   ws 每项: [词形, 读音, 释义, 等级, 语法说明]
+   jp 为带 <ruby> 的歌词 HTML */
+const S=[/* TODO: 填充歌词数据。每句结构见 references/data-guide.md 的「S 数组」章节。
+  每项: { jp(带<ruby>的歌词HTML), seg(分词用｜分隔), tr(中文翻译), gram(语法说明), ws([[词形,读音,释义,等级n5/n4/n3/n2,说明],...]) }
+  示例见 references/data-guide.md。*/];
+
+
+
+/* ===== 渲染逻辑 ===== */
+const LVL={n5:['N5','pill n5','wtag n5'],n4:['N4','pill n4','wtag n4'],n3:['N3','pill n3','wtag n3'],n2:['N2','pill n2','wtag n2']};
+
+// 重复词检测：记录词形首次出现位置
+const firstSeen={};
+function wordKey(w){return w[0];}
+
+/* ===== 词性与活用（按词形索引）=====
+   pos:词性  form:当前形态  base:原形(变体时)  forms:其他形态 */
+const POS={/* TODO: 填充词性与活用。按词形索引，见 references/data-guide.md 的「POS 表」章节。
+  结构: 词形: { pos(词性), form(当前形态), base(原形,仅变体), forms([[形态名,词形],...]完整清单) }
+  词性类型: 名词/代词/数词/动词/动词短语/动词(敬语)/动词(使役形)/イ形容词/ナ形容词/助词/助动词/句型/惯用短语/副词/接续词/拟声词/外来语·名词/名词(サ变)/名词(四字成语)
+  只有 动词/形容词/助动词/句型 才需要 form 与 forms。*/};
+
+
+
+// 词性：所有词都显示；只有四类词（动词/形容词/助动词/句型）标注形态
+function isFormWord(pos){
+  if(!pos) return false;
+  return pos.includes('动词')||pos.includes('形容词')||pos.includes('助动词')||pos.includes('句型');
+}
+
+// 记录每个词出现过的所有句子（用于多出处）
+const wordSents={};
+// 每句纯文本（去除ruby标签，供出处显示）
+const sentPlain={};
+const stripRuby=h=>h.replace(/<ruby>([^<]*)<rt>[\s\S]*?<\/rt><\/ruby>/g,'$1').replace(/<[^>]+>/g,'');
+
+// 生词总表（去重）
+const vocabMap=new Map();
+S.forEach((s,si)=>{
+  s.ws.forEach(w=>{
+    const k=w[0];
+    const wobj={ja:w[0],read:w[1],mean:w[2],lv:w[3],note:w[4]||'',sent:si+1};
+    if(!vocabMap.has(k)) vocabMap.set(k,wobj);
+  });
+});
+
+function renderLyrics(){
+  const box=document.getElementById('lyrics');
+  box.innerHTML='';
+  S.forEach((s,si)=>{
+    const num=si+1;
+    sentPlain[num]=stripRuby(s.jp);
+    // 每个词的重复标记
+    let whtml='';
+    s.ws.forEach(w=>{
+      const k=w[0];
+      const lv=LVL[w[3]][2];
+      const isRep=firstSeen[k]!==undefined;
+      const repTag=isRep?`<span class="rep">重复·第${firstSeen[k]}处</span>`:'';
+      if(!isRep) firstSeen[k]=num;
+      const readHtml=`<span class="w-ja">${w[0]}</span>`;
+      const p=POS[k]||{pos:'',form:''};
+      const posHtml=`<span class="pos">${p.pos||''}</span>`;
+      const formTag=(isFormWord(p.pos)&&p.form)?`<span class="pos-f">${p.form}</span>`:'';
+      (wordSents[k]=wordSents[k]||[]).push(num);
+      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${w[0]}" data-read="${w[1]}" data-mean="${w[2]}" data-lv="${w[3]}" data-note="${w[4]||''}">${readHtml}</button>${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
+    });
+    const card=document.createElement('div');
+    card.className='card';
+    card.id='sent-'+num;
+    card.innerHTML=`
+      <div class="sline" data-s="${num}">
+        <span class="num">${num}</span>
+        <div class="jp">${s.jp}</div>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="detail"><div class="detail-inner">
+        <div class="sec"><h4>分词</h4><div class="seg">${s.seg.split('｜').join('<span class="sep">·</span>')}</div></div>
+        <div class="sec"><h4>词汇与等级</h4><div class="wlist">${whtml}</div></div>
+        <div class="sec"><h4>语法</h4><div class="grammar">${s.gram}</div></div>
+        <div class="sec"><h4>中文翻译</h4><div class="tr">${s.tr}</div></div>
+      </div></div>`;
+    box.appendChild(card);
+  });
+}
+
+function renderStats(){
+  const counts={n5:0,n4:0,n3:0,n2:0};
+  vocabMap.forEach(v=>{counts[v.lv]++;});
+  const total=vocabMap.size;
+  const el=document.getElementById('statBar');
+  el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词 ·
+    <span class="pill n5">N5 ${counts.n5}</span>
+    <span class="pill n4">N4 ${counts.n4}</span>
+    <span class="pill n3">N3 ${counts.n3}</span>
+    <span class="pill n2">N2 ${counts.n2}</span>`;
+}
+
+function renderVocabGroups(){
+  const groups={n5:[],n4:[],n3:[],n2:[]};
+  vocabMap.forEach(v=>groups[v.lv].push(v));
+  const el=document.getElementById('vocabGroups');
+  const names={n5:'N5',n4:'N4',n3:'N3',n2:'N2'};
+  el.innerHTML='';
+  ['n5','n4','n3','n2'].forEach(lv=>{
+    const arr=groups[lv];
+    if(!arr.length) return;
+    const h=document.createElement('div');
+    h.className='vg';
+    h.innerHTML=`<h5><span class="pill ${LVL[lv][1]}">${names[lv]}</span><span style="color:var(--muted);font-size:12px">${arr.length} 词</span></h5>`;
+    const t=document.createElement('div'); t.className='tags';
+    arr.forEach(v=>{
+      const p=POS[v.ja]||{pos:''};
+      const formTag=(isFormWord(p.pos)&&p.form)?`<span class="wform">${p.form}</span>`:'';
+      t.innerHTML+=`<button class="wtag ${LVL[v.lv][2]}" data-ja="${v.ja}" data-read="${v.read}" data-mean="${v.mean}" data-lv="${v.lv}" data-note="${v.note}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>`;
+    });
+    h.appendChild(t);
+    el.appendChild(h);
+  });
+}
+
+/* ===== 交互 ===== */
+const popMask=document.getElementById('popMask'), pop=document.getElementById('pop');
+const pJp=document.getElementById('popJp'), pLv=document.getElementById('popLv'), pRead=document.getElementById('popRead'),
+      pMean=document.getElementById('popMean'), pSrc=document.getElementById('popSrc'), pNote=document.getElementById('popNote');
+
+document.addEventListener('click',e=>{
+  // 词汇标签 → 弹窗
+  const w=e.target.closest('.wtag');
+  if(w){
+    const ja=w.dataset.ja;
+    pJp.textContent=ja;
+    const lv=w.dataset.lv.toUpperCase();
+    pLv.innerHTML=`<span class="pill ${LVL[w.dataset.lv][1]}">${lv}</span>`;
+    const p=POS[ja]||{pos:'',form:''};
+    document.getElementById('popPos').textContent=p.pos||'—';
+    // 形态：仅四类词
+    const fw=isFormWord(p.pos);
+    const formRow=document.getElementById('popFormRow');
+    formRow.style.display=fw?'':'none';
+    document.getElementById('popForm').textContent=fw?(p.form||'—'):'';
+    // 原形：仅变体
+    const baseRow=document.getElementById('popBaseRow');
+    baseRow.style.display=p.base?'':'none';
+    document.getElementById('popBase').textContent=p.base||'';
+    // 其他形态：四类词且有 forms，排除当前形态
+    const formsRow=document.getElementById('popFormsRow');
+    const others=(fw&&Array.isArray(p.forms))?p.forms.filter(f=>f[0]!==p.form):[];
+    formsRow.style.display=others.length?'':'none';
+    document.getElementById('popForms').innerHTML=others.map(f=>`<span class="of"><b>${f[0]}</b>${f[1]}</span>`).join('');
+    // 读音：纯平假名/符号隐藏；含汉字或片假名时显示（片假名已转平假名）
+    const readRow=document.getElementById('popReadRow');
+    const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
+    if((hasCJK||hasKata)&&w.dataset.read){
+      readRow.style.display='';
+      pRead.textContent=w.dataset.read;
+    }else{
+      readRow.style.display='none';
+    }
+    pMean.textContent=w.dataset.mean||'—';
+    // 出处：所有出现句，直接写明句子内容
+    const sents=(wordSents[ja]||[w.dataset.sent]);
+    pSrc.innerHTML=sents.map(n=>`<div class="sent-item"><b>第${n}句</b>${sentPlain[n]||''}</div>`).join('');
+    // 说明：与词性/形态/原形重复的不显示；无说明时隐藏该行
+    const note=w.dataset.note||'';
+    const noteRow=document.getElementById('popNoteRow');
+    const dupNote=/^(て形|た形|ない形|命令形|～たい|名词|副词|イ形容词|ナ形容词)/.test(note);
+    const showNote=note&&!dupNote;
+    noteRow.style.display=showNote?'':'none';
+    pNote.textContent=showNote?note:'';
+    pop.classList.add('show'); popMask.classList.add('show');
+    return;
+  }
+  // 句子展开
+  const line=e.target.closest('.sline');
+  if(line){
+    const card=line.closest('.card');
+    card.classList.toggle('open');
+    return;
+  }
+});
+
+function closePop(){pop.classList.remove('show');popMask.classList.remove('show');}
+document.getElementById('popClose').addEventListener('click',closePop);
+popMask.addEventListener('click',closePop);
+
+document.getElementById('btnAll').addEventListener('click',()=>{
+  document.querySelectorAll('.card').forEach(c=>c.classList.add('open'));
+});
+document.getElementById('btnCollapse').addEventListener('click',()=>{
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'));
+});
+
+renderLyrics();
+renderStats();
+renderVocabGroups();
+</script>
+</body>
+</html>
