@@ -21,6 +21,8 @@
   --l4:#a86a1a; --b4:#fbeecb;
   --l3:#c2410c; --b3:#ffead9;
   --l2:#4338ca; --b2:#e4e7fb;
+  --l1:#6b21a8; --b1:#f3e8ff;
+  --lx:#5b6573; --bx:#e8edf3;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -126,6 +128,8 @@ body{
 .pill.n4{background:var(--b4);color:var(--l4);}
 .pill.n3{background:var(--b3);color:var(--l3);}
 .pill.n2{background:var(--b2);color:var(--l2);}
+.pill.n1{background:var(--b1);color:var(--l1);}
+.pill.nx{background:var(--bx);color:var(--lx);}
 
 /* ===== Sentence cards ===== */
 .card{
@@ -170,6 +174,8 @@ rt{font-size:.52em; color:#8a94a3; font-weight:500;}
 .wtag.n4{background:var(--b4);color:var(--l4);}
 .wtag.n3{background:var(--b3);color:var(--l3);}
 .wtag.n2{background:var(--b2);color:var(--l2);}
+.wtag.n1{background:var(--b1);color:var(--l1);}
+.wtag.nx{background:var(--bx);color:var(--lx);}
 .wtag .w-ja{font-family:"Noto Serif JP",serif; font-weight:700;}
 .wtag .w-mean{color:inherit; opacity:.8;}
 .rep{font-size:11px; color:#a3acba; background:#f2f5f9; border-radius:999px; padding:1px 8px; white-space:nowrap;}
@@ -292,13 +298,21 @@ footer a{color:#b06a3c; text-decoration:none;}
    ws 每项: [词形, 读音, 释义, 等级, 语法说明]
    jp 为带 <ruby> 的歌词 HTML */
 const S=[/* TODO: 填充歌词数据。每句结构见 references/data-guide.md 的「S 数组」章节。
-  每项: { jp(带<ruby>的歌词HTML), seg(分词用｜分隔), tr(中文翻译), gram(语法说明), ws([[词形,读音,释义,等级n5/n4/n3/n2,说明],...]) }
-  示例见 references/data-guide.md。*/];
+  每项: { jp(带<ruby>的歌词HTML), seg(分词用｜分隔), tr(中文翻译), gram(语法说明), ws([[词形,读音,释义,等级n5–n1或空串,说明],...]) }
+  等级只来自 references/jlpt/index.jsonl；未命中填 ''。示例见 references/data-guide.md。*/];
 
 
 
 /* ===== 渲染逻辑 ===== */
-const LVL={n5:['N5','pill n5','wtag n5'],n4:['N4','pill n4','wtag n4'],n3:['N3','pill n3','wtag n3'],n2:['N2','pill n2','wtag n2']};
+const LVL={
+  n5:['N5','pill n5','wtag n5'],
+  n4:['N4','pill n4','wtag n4'],
+  n3:['N3','pill n3','wtag n3'],
+  n2:['N2','pill n2','wtag n2'],
+  n1:['N1','pill n1','wtag n1'],
+  '':['未分级','pill nx','wtag nx']
+};
+function lvMeta(lv){return LVL[lv]||LVL[''];}
 
 // 重复词检测：记录词形首次出现位置
 const firstSeen={};
@@ -345,7 +359,8 @@ function renderLyrics(){
     let whtml='';
     s.ws.forEach(w=>{
       const k=w[0];
-      const lv=LVL[w[3]][2];
+      const meta=lvMeta(w[3]);
+      const lv=meta[2];
       const isRep=firstSeen[k]!==undefined;
       const repTag=isRep?`<span class="rep">重复·第${firstSeen[k]}处</span>`:'';
       if(!isRep) firstSeen[k]=num;
@@ -354,7 +369,7 @@ function renderLyrics(){
       const posHtml=`<span class="pos">${p.pos||''}</span>`;
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="pos-f">${p.form}</span>`:'';
       (wordSents[k]=wordSents[k]||[]).push(num);
-      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${w[0]}" data-read="${w[1]}" data-mean="${w[2]}" data-lv="${w[3]}" data-note="${w[4]||''}">${readHtml}</button>${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
+      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${w[0]}" data-read="${w[1]}" data-mean="${w[2]}" data-lv="${w[3]||''}" data-note="${w[4]||''}">${readHtml}</button>${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
     });
     const card=document.createElement('div');
     card.className='card';
@@ -376,34 +391,38 @@ function renderLyrics(){
 }
 
 function renderStats(){
-  const counts={n5:0,n4:0,n3:0,n2:0};
-  vocabMap.forEach(v=>{counts[v.lv]++;});
+  const counts={n5:0,n4:0,n3:0,n2:0,n1:0,'':0};
+  vocabMap.forEach(v=>{counts[v.lv in counts?v.lv:'']++;});
   const total=vocabMap.size;
   const el=document.getElementById('statBar');
-  el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词 ·
-    <span class="pill n5">N5 ${counts.n5}</span>
-    <span class="pill n4">N4 ${counts.n4}</span>
-    <span class="pill n3">N3 ${counts.n3}</span>
-    <span class="pill n2">N2 ${counts.n2}</span>`;
+  const bits=[
+    ['n5','N5'],['n4','N4'],['n3','N3'],['n2','N2'],['n1','N1'],['','未分级']
+  ].filter(([k])=>counts[k]>0)
+   .map(([k,label])=>`<span class="pill ${lvMeta(k)[1]}">${label} ${counts[k]}</span>`);
+  el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词 · ${bits.join(' ')}`;
 }
 
 function renderVocabGroups(){
-  const groups={n5:[],n4:[],n3:[],n2:[]};
-  vocabMap.forEach(v=>groups[v.lv].push(v));
+  const order=['n5','n4','n3','n2','n1',''];
+  const groups={n5:[],n4:[],n3:[],n2:[],n1:[],'':[]};
+  vocabMap.forEach(v=>{
+    const lv=v.lv in groups?v.lv:'';
+    groups[lv].push(v);
+  });
   const el=document.getElementById('vocabGroups');
-  const names={n5:'N5',n4:'N4',n3:'N3',n2:'N2'};
   el.innerHTML='';
-  ['n5','n4','n3','n2'].forEach(lv=>{
+  order.forEach(lv=>{
     const arr=groups[lv];
     if(!arr.length) return;
+    const meta=lvMeta(lv);
     const h=document.createElement('div');
     h.className='vg';
-    h.innerHTML=`<h5><span class="pill ${LVL[lv][1]}">${names[lv]}</span><span style="color:var(--muted);font-size:12px">${arr.length} 词</span></h5>`;
+    h.innerHTML=`<h5><span class="pill ${meta[1]}">${meta[0]}</span><span style="color:var(--muted);font-size:12px">${arr.length} 词</span></h5>`;
     const t=document.createElement('div'); t.className='tags';
     arr.forEach(v=>{
       const p=POS[v.ja]||{pos:''};
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="wform">${p.form}</span>`:'';
-      t.innerHTML+=`<button class="wtag ${LVL[v.lv][2]}" data-ja="${v.ja}" data-read="${v.read}" data-mean="${v.mean}" data-lv="${v.lv}" data-note="${v.note}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>`;
+      t.innerHTML+=`<button class="wtag ${lvMeta(v.lv)[2]}" data-ja="${v.ja}" data-read="${v.read}" data-mean="${v.mean}" data-lv="${v.lv||''}" data-note="${v.note}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>`;
     });
     h.appendChild(t);
     el.appendChild(h);
@@ -421,8 +440,8 @@ document.addEventListener('click',e=>{
   if(w){
     const ja=w.dataset.ja;
     pJp.textContent=ja;
-    const lv=w.dataset.lv.toUpperCase();
-    pLv.innerHTML=`<span class="pill ${LVL[w.dataset.lv][1]}">${lv}</span>`;
+    const meta=lvMeta(w.dataset.lv||'');
+    pLv.innerHTML=`<span class="pill ${meta[1]}">${meta[0]}</span>`;
     const p=POS[ja]||{pos:'',form:''};
     document.getElementById('popPos').textContent=p.pos||'—';
     // 形态：仅四类词
