@@ -150,6 +150,23 @@ ruby{ruby-position:over;}
 rt{font-size:.52em; color:#8a94a3; font-weight:500;}
 .sline .chev{color:#9aa5b4; width:20px; height:20px; margin-top:5px; transition:transform .25s ease, color .25s ease; flex-shrink:0;}
 .card.open .chev{transform:rotate(180deg); color:var(--orange);}
+.speak{
+  border:none; background:#f2f5f9; color:#7a8494; width:28px; height:28px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  padding:0; transition:background .15s ease, color .15s ease;
+}
+.speak svg{width:15px; height:15px; display:block;}
+.speak:hover,.speak.playing{background:#fdf0e5; color:var(--orange-deep);}
+.sline .speak{margin-top:2px;}
+.sec h4 .speak{width:22px; height:22px; margin-left:2px;}
+.sec h4 .speak svg{width:12px; height:12px;}
+.witem .speak{width:22px; height:22px; align-self:center;}
+.witem .speak svg{width:12px; height:12px;}
+.grammar code{cursor:pointer;}
+.grammar code:hover{border-color:var(--orange); color:var(--orange-deep);}
+.pop .head .jp-wrap{display:flex; align-items:center; gap:8px; min-width:0;}
+.pop .head .speak{width:26px; height:26px;}
+.pop .head .speak svg{width:13px; height:13px;}
 .detail{max-height:0; overflow:hidden; transition:max-height .35s ease;}
 .card.open .detail{max-height:none;}
 .detail-inner{padding:4px 18px 18px; border-top:1px solid #eef2f7;}
@@ -201,7 +218,8 @@ rt{font-size:.52em; color:#8a94a3; font-weight:500;}
 .vocab-panel .sub{font-size:12.5px; color:var(--muted); margin-bottom:14px;}
 .vocab-groups{display:grid; gap:16px;}
 .vg h5{font-size:13px; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
-.vg .tags{display:flex; flex-wrap:wrap; gap:6px;}
+.vg .tags{display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+.vg .tags .witem{display:inline-flex; align-items:center; gap:4px;}
 .vg .tags .wtag{font-size:12px;}
 .vg .tags .rep{font-size:10.5px;}
 
@@ -242,7 +260,7 @@ footer a{color:#b06a3c; text-decoration:none;}
   </div>
   <h1>[歌名]</h1>
   <div class="song">[歌手名] / [歌名中文译名]</div>
-  <p class="tagline">作詞・作曲 [作词人] ｜ 点击每一句展开语法讲解，点击每个单词查看释义</p>
+  <p class="tagline">作詞・作曲 [作词人] ｜ 点击展开讲解 · 喇叭图标朗读日语</p>
   <div class="legend">
     <span class="lg"><span class="dot d5"></span>N5</span>
     <span class="lg"><span class="dot d4"></span>N4</span>
@@ -264,7 +282,7 @@ footer a{color:#b06a3c; text-decoration:none;}
 
   <section class="vocab-panel" id="vocabPanel">
     <h3>生词总表</h3>
-    <p class="sub">按等级分组，去重统计；点击单词查看释义与出处</p>
+    <p class="sub">按等级分组，去重统计；点击单词查看释义，喇叭朗读发音</p>
     <div class="vocab-groups" id="vocabGroups"></div>
   </section>
 
@@ -277,7 +295,10 @@ footer a{color:#b06a3c; text-decoration:none;}
 <div class="pop-mask" id="popMask"></div>
 <div class="pop" id="pop">
   <div class="head">
-    <span class="jp" id="popJp"></span>
+    <div class="jp-wrap">
+      <span class="jp" id="popJp"></span>
+      <button type="button" class="speak" id="popSpeak" aria-label="发音" title="发音"></button>
+    </div>
     <button class="close" id="popClose">×</button>
   </div>
   <div class="body">
@@ -338,6 +359,59 @@ const wordSents={};
 // 每句纯文本（去除ruby标签，供出处显示）
 const sentPlain={};
 const stripRuby=h=>h.replace(/<ruby>([^<]*)<rt>[\s\S]*?<\/rt><\/ruby>/g,'$1').replace(/<[^>]+>/g,'');
+const escAttr=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const SPEAK_ICON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>`;
+function speakBtn(text, extraClass=''){
+  const t=(text||'').trim();
+  if(!t) return '';
+  return `<button type="button" class="speak${extraClass?' '+extraClass:''}" aria-label="发音" title="发音" data-speak="${escAttr(t)}">${SPEAK_ICON}</button>`;
+}
+function gramSpeakText(html){
+  const tmp=document.createElement('div');
+  tmp.innerHTML=html||'';
+  const codes=[...tmp.querySelectorAll('code')].map(c=>c.textContent.trim()).filter(Boolean);
+  if(codes.length) return codes.join('、');
+  return (tmp.textContent||'').replace(/[^\u3040-\u30ff\u3400-\u9fff\u30fc\u3005〜～・]+/g,' ').replace(/\s+/g,' ').trim();
+}
+function wordSpeakText(ja, read){
+  return (read&&String(read).trim())||(ja&&String(ja).trim())||'';
+}
+
+/* ===== 日语朗读（Web Speech API）===== */
+let speakVoice=null;
+function pickJaVoice(){
+  if(!window.speechSynthesis) return null;
+  const voices=speechSynthesis.getVoices()||[];
+  return voices.find(v=>v.lang==='ja-JP')||voices.find(v=>v.lang.startsWith('ja'))||null;
+}
+if(window.speechSynthesis){
+  speakVoice=pickJaVoice();
+  speechSynthesis.addEventListener('voiceschanged',()=>{speakVoice=pickJaVoice();});
+}
+function clearSpeakingUI(){
+  document.querySelectorAll('.speak.playing').forEach(el=>el.classList.remove('playing'));
+}
+function speak(text, btn){
+  const t=(text||'').trim();
+  if(!t) return;
+  if(!window.speechSynthesis){
+    alert('当前浏览器不支持语音朗读（Web Speech API）');
+    return;
+  }
+  speechSynthesis.cancel();
+  clearSpeakingUI();
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang='ja-JP';
+  u.rate=0.92;
+  if(!speakVoice) speakVoice=pickJaVoice();
+  if(speakVoice) u.voice=speakVoice;
+  if(btn){
+    btn.classList.add('playing');
+    u.onend=()=>btn.classList.remove('playing');
+    u.onerror=()=>btn.classList.remove('playing');
+  }
+  speechSynthesis.speak(u);
+}
 
 // 生词总表（去重）
 const vocabMap=new Map();
@@ -369,8 +443,11 @@ function renderLyrics(){
       const posHtml=`<span class="pos">${p.pos||''}</span>`;
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="pos-f">${p.form}</span>`:'';
       (wordSents[k]=wordSents[k]||[]).push(num);
-      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${w[0]}" data-read="${w[1]}" data-mean="${w[2]}" data-lv="${w[3]||''}" data-note="${w[4]||''}">${readHtml}</button>${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
+      const say=wordSpeakText(w[0], w[1]);
+      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(w[1]||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
     });
+    const plain=sentPlain[num];
+    const gSay=gramSpeakText(s.gram);
     const card=document.createElement('div');
     card.className='card';
     card.id='sent-'+num;
@@ -378,12 +455,13 @@ function renderLyrics(){
       <div class="sline" data-s="${num}">
         <span class="num">${num}</span>
         <div class="jp">${s.jp}</div>
+        ${speakBtn(plain)}
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="detail"><div class="detail-inner">
         <div class="sec"><h4>分词</h4><div class="seg">${s.seg.split('｜').join('<span class="sep">·</span>')}</div></div>
         <div class="sec"><h4>词汇与等级</h4><div class="wlist">${whtml}</div></div>
-        <div class="sec"><h4>语法</h4><div class="grammar">${s.gram}</div></div>
+        <div class="sec"><h4>语法 ${speakBtn(gSay)}</h4><div class="grammar">${s.gram}</div></div>
         <div class="sec"><h4>中文翻译</h4><div class="tr">${s.tr}</div></div>
       </div></div>`;
     box.appendChild(card);
@@ -422,7 +500,7 @@ function renderVocabGroups(){
     arr.forEach(v=>{
       const p=POS[v.ja]||{pos:''};
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="wform">${p.form}</span>`:'';
-      t.innerHTML+=`<button class="wtag ${lvMeta(v.lv)[2]}" data-ja="${v.ja}" data-read="${v.read}" data-mean="${v.mean}" data-lv="${v.lv||''}" data-note="${v.note}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>`;
+      t.innerHTML+=`<span class="witem"><button class="wtag ${lvMeta(v.lv)[2]}" data-ja="${escAttr(v.ja)}" data-read="${escAttr(v.read||'')}" data-mean="${escAttr(v.mean)}" data-lv="${v.lv||''}" data-note="${escAttr(v.note||'')}" data-speak="${escAttr(wordSpeakText(v.ja,v.read))}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>${speakBtn(wordSpeakText(v.ja,v.read))}</span>`;
     });
     h.appendChild(t);
     el.appendChild(h);
@@ -435,11 +513,32 @@ const pJp=document.getElementById('popJp'), pLv=document.getElementById('popLv')
       pMean=document.getElementById('popMean'), pSrc=document.getElementById('popSrc'), pNote=document.getElementById('popNote');
 
 document.addEventListener('click',e=>{
+  // 发音按钮（句子 / 单词旁 / 语法标题）
+  const sp=e.target.closest('.speak');
+  if(sp){
+    e.preventDefault();
+    e.stopPropagation();
+    speak(sp.dataset.speak||'', sp);
+    return;
+  }
+  // 语法里的 <code> 句型 → 朗读该句型
+  const code=e.target.closest('.grammar code');
+  if(code){
+    e.preventDefault();
+    e.stopPropagation();
+    speak(code.textContent||'');
+    return;
+  }
   // 词汇标签 → 弹窗
   const w=e.target.closest('.wtag');
   if(w){
     const ja=w.dataset.ja;
     pJp.textContent=ja;
+    const popSpeak=document.getElementById('popSpeak');
+    const say=wordSpeakText(ja, w.dataset.read);
+    popSpeak.dataset.speak=say;
+    popSpeak.innerHTML=SPEAK_ICON;
+    popSpeak.style.display=say?'':'none';
     const meta=lvMeta(w.dataset.lv||'');
     pLv.innerHTML=`<span class="pill ${meta[1]}">${meta[0]}</span>`;
     const p=POS[ja]||{pos:'',form:''};
@@ -490,7 +589,12 @@ document.addEventListener('click',e=>{
   }
 });
 
-function closePop(){pop.classList.remove('show');popMask.classList.remove('show');}
+function closePop(){
+  pop.classList.remove('show');
+  popMask.classList.remove('show');
+  speechSynthesis.cancel();
+  clearSpeakingUI();
+}
 document.getElementById('popClose').addEventListener('click',closePop);
 popMask.addEventListener('click',closePop);
 
@@ -504,6 +608,7 @@ document.getElementById('btnCollapse').addEventListener('click',()=>{
 renderLyrics();
 renderStats();
 renderVocabGroups();
+document.getElementById('popSpeak').innerHTML=SPEAK_ICON;
 </script>
 </body>
 </html>
