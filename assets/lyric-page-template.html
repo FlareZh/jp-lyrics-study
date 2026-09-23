@@ -101,6 +101,8 @@ body{
 .dot.d4{background:var(--b4);border:1px solid var(--l4);}
 .dot.d3{background:var(--b3);border:1px solid var(--l3);}
 .dot.d2{background:var(--b2);border:1px solid var(--l2);}
+.dot.d1{background:var(--b1);border:1px solid var(--l1);}
+.dot.dx{background:var(--bx);border:1px solid var(--lx);}
 
 /* ===== Layout ===== */
 .wrap{max-width:760px; margin:0 auto; padding:0 18px 60px;}
@@ -266,6 +268,8 @@ footer a{color:#b06a3c; text-decoration:none;}
     <span class="lg"><span class="dot d4"></span>N4</span>
     <span class="lg"><span class="dot d3"></span>N3</span>
     <span class="lg"><span class="dot d2"></span>N2</span>
+    <span class="lg"><span class="dot d1"></span>N1</span>
+    <span class="lg"><span class="dot dx"></span>NX 未收录</span>
   </div>
 </header>
 
@@ -331,7 +335,7 @@ const LVL={
   n3:['N3','pill n3','wtag n3'],
   n2:['N2','pill n2','wtag n2'],
   n1:['N1','pill n1','wtag n1'],
-  '':['未分级','pill nx','wtag nx']
+  '':['NX','pill nx','wtag nx']
 };
 function lvMeta(lv){return LVL[lv]||LVL[''];}
 
@@ -474,7 +478,7 @@ function renderStats(){
   const total=vocabMap.size;
   const el=document.getElementById('statBar');
   const bits=[
-    ['n5','N5'],['n4','N4'],['n3','N3'],['n2','N2'],['n1','N1'],['','未分级']
+    ['n5','N5'],['n4','N4'],['n3','N3'],['n2','N2'],['n1','N1'],['','NX']
   ].filter(([k])=>counts[k]>0)
    .map(([k,label])=>`<span class="pill ${lvMeta(k)[1]}">${label} ${counts[k]}</span>`);
   el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词 · ${bits.join(' ')}`;
