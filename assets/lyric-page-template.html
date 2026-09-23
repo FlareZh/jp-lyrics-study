@@ -160,12 +160,8 @@ rt{font-size:.52em; color:#8a94a3; font-weight:500;}
 .speak svg{width:15px; height:15px; display:block;}
 .speak:hover,.speak.playing{background:#fdf0e5; color:var(--orange-deep);}
 .sline .speak{margin-top:2px;}
-.sec h4 .speak{width:22px; height:22px; margin-left:2px;}
-.sec h4 .speak svg{width:12px; height:12px;}
 .witem .speak{width:22px; height:22px; align-self:center;}
 .witem .speak svg{width:12px; height:12px;}
-.grammar code{cursor:pointer;}
-.grammar code:hover{border-color:var(--orange); color:var(--orange-deep);}
 .pop .head .jp-wrap{display:flex; align-items:center; gap:8px; min-width:0;}
 .pop .head .speak{width:26px; height:26px;}
 .pop .head .speak svg{width:13px; height:13px;}
@@ -370,13 +366,6 @@ function speakBtn(text, extraClass=''){
   if(!t) return '';
   return `<button type="button" class="speak${extraClass?' '+extraClass:''}" aria-label="发音" title="发音" data-speak="${escAttr(t)}">${SPEAK_ICON}</button>`;
 }
-function gramSpeakText(html){
-  const tmp=document.createElement('div');
-  tmp.innerHTML=html||'';
-  const codes=[...tmp.querySelectorAll('code')].map(c=>c.textContent.trim()).filter(Boolean);
-  if(codes.length) return codes.join('、');
-  return (tmp.textContent||'').replace(/[^\u3040-\u30ff\u3400-\u9fff\u30fc\u3005〜～・]+/g,' ').replace(/\s+/g,' ').trim();
-}
 function wordSpeakText(ja, read){
   return (read&&String(read).trim())||(ja&&String(ja).trim())||'';
 }
@@ -451,7 +440,6 @@ function renderLyrics(){
       whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(w[1]||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
     });
     const plain=sentPlain[num];
-    const gSay=gramSpeakText(s.gram);
     const card=document.createElement('div');
     card.className='card';
     card.id='sent-'+num;
@@ -465,7 +453,7 @@ function renderLyrics(){
       <div class="detail"><div class="detail-inner">
         <div class="sec"><h4>分词</h4><div class="seg">${s.seg.split('｜').join('<span class="sep">·</span>')}</div></div>
         <div class="sec"><h4>词汇与等级</h4><div class="wlist">${whtml}</div></div>
-        <div class="sec"><h4>语法 ${speakBtn(gSay)}</h4><div class="grammar">${s.gram}</div></div>
+        <div class="sec"><h4>语法</h4><div class="grammar">${s.gram}</div></div>
         <div class="sec"><h4>中文翻译</h4><div class="tr">${s.tr}</div></div>
       </div></div>`;
     box.appendChild(card);
@@ -517,20 +505,12 @@ const pJp=document.getElementById('popJp'), pLv=document.getElementById('popLv')
       pMean=document.getElementById('popMean'), pSrc=document.getElementById('popSrc'), pNote=document.getElementById('popNote');
 
 document.addEventListener('click',e=>{
-  // 发音按钮（句子 / 单词旁 / 语法标题）
+  // 发音按钮（句子 / 单词旁）
   const sp=e.target.closest('.speak');
   if(sp){
     e.preventDefault();
     e.stopPropagation();
     speak(sp.dataset.speak||'', sp);
-    return;
-  }
-  // 语法里的 <code> 句型 → 朗读该句型
-  const code=e.target.closest('.grammar code');
-  if(code){
-    e.preventDefault();
-    e.stopPropagation();
-    speak(code.textContent||'');
     return;
   }
   // 词汇标签 → 弹窗
