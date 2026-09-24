@@ -1,5 +1,5 @@
 import { PiperPlus } from 'piper-plus';
-import { S, POS } from './lyric-data.js';
+import { S, POS, SONG_ID } from './lyric-data.js';
 
 /* ===== 渲染逻辑 ===== */
 const LVL={
@@ -12,31 +12,79 @@ const LVL={
 };
 function lvMeta(lv){return LVL[lv]||LVL[''];}
 
-// 重复词检测：记录词形首次出现位置
 const firstSeen={};
-
-// 词性：所有词都显示；只有四类词（动词/形容词/助动词/句型）标注形态
 function isFormWord(pos){
   if(!pos) return false;
   return pos.includes('动词')||pos.includes('形容词')||pos.includes('助动词')||pos.includes('句型');
 }
 
-// 记录每个词出现过的所有句子（用于多出处）
 const wordSents={};
-// 每句纯文本（去除ruby标签，供出处显示）
 const sentPlain={};
 const stripRuby=h=>h.replace(/<ruby>([^<]*)<rt>[\s\S]*?<\/rt><\/ruby>/g,'$1').replace(/<[^>]+>/g,'');
 const escAttr=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-/** 给片假名 ruby 打上 .ruby-kata，便于单独开关平假名注音 */
-function markRubyClasses(html){
+const safeRtText=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ===== 读音覆盖（localStorage，按歌曲隔离）===== */
+const READ_KEY=`jp-lyrics-study:readings:${SONG_ID||'unknown'}`;
+let readings={v:1, ruby:{}, ws:{}};
+
+function loadReadings(){
+  try{
+    const raw=localStorage.getItem(READ_KEY);
+    if(!raw) return;
+    const o=JSON.parse(raw);
+    readings={
+      v:1,
+      ruby:(o&&o.ruby&&typeof o.ruby==='object')?o.ruby:{},
+      ws:(o&&o.ws&&typeof o.ws==='object')?o.ws:{}
+    };
+  }catch(_){
+    readings={v:1, ruby:{}, ws:{}};
+  }
+}
+function saveReadings(){
+  try{
+    const empty=!Object.keys(readings.ruby).length&&!Object.keys(readings.ws).length;
+    if(empty) localStorage.removeItem(READ_KEY);
+    else localStorage.setItem(READ_KEY, JSON.stringify({v:1, ruby:readings.ruby, ws:readings.ws}));
+  }catch(_){}
+}
+function defaultWsRead(ja){
+  const v=vocabMap.get(ja);
+  return v?(v.read||''):'';
+}
+function effectiveWsRead(ja, fallback){
+  if(Object.prototype.hasOwnProperty.call(readings.ws, ja)) return readings.ws[ja];
+  if(fallback!=null&&fallback!==undefined) return fallback;
+  return defaultWsRead(ja);
+}
+function setWsOverride(ja, reading, defaultReading){
+  if(!ja) return;
+  const def=defaultReading!=null?defaultReading:defaultWsRead(ja);
+  const next=(reading==null?'':String(reading)).trim();
+  if(!next||next===def) delete readings.ws[ja];
+  else readings.ws[ja]=next;
+}
+/** 合并 ruby 覆盖，并标记 data-ruby-key / data-base */
+function applyJpOverrides(html, sentIdx){
+  let ri=0;
   return String(html||'').replace(/<ruby([^>]*)>([^<]*)<rt>([\s\S]*?)<\/rt><\/ruby>/g,(_,attrs,base,rt)=>{
+    const key=`${sentIdx}:${ri++}`;
     const bare=String(base).replace(/<[^>]+>/g,'').trim();
     const isKata=/^[\u30a0-\u30ffー゛゜・ゝゞヽヾ]+$/.test(bare);
-    const cleaned=String(attrs||'').replace(/\s*class\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'');
+    const cleaned=String(attrs||'')
+      .replace(/\s*class\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'')
+      .replace(/\s*data-ruby-key\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'')
+      .replace(/\s*data-base\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'');
     const cls=isKata?'ruby-kata':'ruby-kanji';
-    return `<ruby${cleaned} class="${cls}">${base}<rt>${rt}</rt></ruby>`;
+    const defRt=String(rt).replace(/<[^>]+>/g,'');
+    const hasOver=Object.prototype.hasOwnProperty.call(readings.ruby, key);
+    const reading=hasOver?readings.ruby[key]:defRt;
+    const overCls=hasOver?' rt-overridden':'';
+    return `<ruby${cleaned} class="${cls}" data-ruby-key="${escAttr(key)}" data-base="${escAttr(bare)}">${base}<rt class="${overCls.trim()}" data-default-rt="${escAttr(defRt)}" title="点击修改读音">${safeRtText(reading)}</rt></ruby>`;
   });
 }
+
 const SPEAK_ICON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>`;
 function speakBtn(text, extraClass=''){
   const t=(text||'').trim();
@@ -44,10 +92,11 @@ function speakBtn(text, extraClass=''){
   return `<button type="button" class="speak${extraClass?' '+extraClass:''}" aria-label="发音" title="发音" data-speak="${escAttr(t)}">${SPEAK_ICON}</button>`;
 }
 function wordSpeakText(ja, read){
-  // piper-plus（OpenJTalk）优先送汉字词形，由词典解析读音/音调；无汉字时用读音或词形
   const j=(ja&&String(ja).trim())||'';
-  if(j && /[\u4e00-\u9fff]/.test(j)) return j;
-  return (read&&String(read).trim())||j;
+  const r=(effectiveWsRead(ja, read)||'').trim();
+  if(Object.prototype.hasOwnProperty.call(readings.ws, ja)&&r) return r;
+  if(j&&/[\u4e00-\u9fff]/.test(j)) return j;
+  return r||j;
 }
 
 /* ===== 日语朗读（piper-plus / OpenJTalk）===== */
@@ -125,7 +174,6 @@ async function speak(text, btn){
   }
 }
 
-// 生词总表（去重）
 const vocabMap=new Map();
 S.forEach((s,si)=>{
   s.ws.forEach(w=>{
@@ -135,13 +183,17 @@ S.forEach((s,si)=>{
   });
 });
 
+function clearRenderState(){
+  for(const k of Object.keys(firstSeen)) delete firstSeen[k];
+  for(const k of Object.keys(wordSents)) delete wordSents[k];
+}
+
 function renderLyrics(){
   const box=document.getElementById('lyrics');
   box.innerHTML='';
   S.forEach((s,si)=>{
     const num=si+1;
     sentPlain[num]=stripRuby(s.jp);
-    // 每个词的重复标记
     let whtml='';
     s.ws.forEach(w=>{
       const k=w[0];
@@ -155,8 +207,9 @@ function renderLyrics(){
       const posHtml=`<span class="pos">${p.pos||''}</span>`;
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="pos-f">${p.form}</span>`:'';
       (wordSents[k]=wordSents[k]||[]).push(num);
+      const effRead=effectiveWsRead(w[0], w[1]);
       const say=wordSpeakText(w[0], w[1]);
-      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(w[1]||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
+      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
     });
     const plain=sentPlain[num];
     const card=document.createElement('div');
@@ -165,7 +218,7 @@ function renderLyrics(){
     card.innerHTML=`
       <div class="sline" data-s="${num}">
         <span class="num">${num}</span>
-        <div class="jp">${markRubyClasses(s.jp)}</div>
+        <div class="jp">${applyJpOverrides(s.jp, si)}</div>
         ${speakBtn(plain)}
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </div>
@@ -211,11 +264,122 @@ function renderVocabGroups(){
     arr.forEach(v=>{
       const p=POS[v.ja]||{pos:''};
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="wform">${p.form}</span>`:'';
-      t.innerHTML+=`<span class="witem"><button class="wtag ${lvMeta(v.lv)[2]}" data-ja="${escAttr(v.ja)}" data-read="${escAttr(v.read||'')}" data-mean="${escAttr(v.mean)}" data-lv="${v.lv||''}" data-note="${escAttr(v.note||'')}" data-speak="${escAttr(wordSpeakText(v.ja,v.read))}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>${speakBtn(wordSpeakText(v.ja,v.read))}</span>`;
+      const effRead=effectiveWsRead(v.ja, v.read);
+      const say=wordSpeakText(v.ja, v.read);
+      t.innerHTML+=`<span class="witem"><button class="wtag ${lvMeta(v.lv)[2]}" data-ja="${escAttr(v.ja)}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(v.mean)}" data-lv="${v.lv||''}" data-note="${escAttr(v.note||'')}" data-speak="${escAttr(say)}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>${speakBtn(say)}</span>`;
     });
     h.appendChild(t);
     el.appendChild(h);
   });
+}
+
+function rerenderLyricsAndVocab(){
+  clearRenderState();
+  renderLyrics();
+  renderVocabGroups();
+}
+
+/* ===== 读音行内编辑 ===== */
+let editingEl=null;
+function cancelEdit(){
+  if(!editingEl) return;
+  const el=editingEl;
+  editingEl=null;
+  el.contentEditable='false';
+  el.classList.remove('rt-editing');
+  if(el._onKey) el.removeEventListener('keydown', el._onKey);
+  if(el._onBlur) el.removeEventListener('blur', el._onBlur);
+  delete el._onKey; delete el._onBlur; delete el._prev;
+}
+function commitRubyEdit(rt, next){
+  const ruby=rt.closest('ruby');
+  const key=ruby&&ruby.dataset.rubyKey;
+  if(!key) return;
+  const def=rt.dataset.defaultRt||'';
+  const base=ruby.dataset.base||'';
+  const val=(next||'').trim();
+  if(!val||val===def){
+    delete readings.ruby[key];
+    rt.textContent=def;
+    rt.classList.remove('rt-overridden');
+  }else{
+    readings.ruby[key]=val;
+    rt.textContent=val;
+    rt.classList.add('rt-overridden');
+  }
+  if(base&&vocabMap.has(base)){
+    setWsOverride(base, (!val||val===def)?null:val, defaultWsRead(base));
+  }
+  saveReadings();
+  rerenderLyricsAndVocab();
+}
+function commitPopReadEdit(el, next){
+  const ja=el.dataset.ja;
+  if(!ja) return;
+  const def=defaultWsRead(ja);
+  const val=(next||'').trim();
+  setWsOverride(ja, (!val||val===def)?null:val, def);
+  document.querySelectorAll('ruby[data-base]').forEach(r=>{
+    if(r.dataset.base!==ja) return;
+    const key=r.dataset.rubyKey;
+    const rt=r.querySelector('rt');
+    if(!key||!rt) return;
+    const defRt=rt.dataset.defaultRt||'';
+    if(!val||val===defRt) delete readings.ruby[key];
+    else readings.ruby[key]=val;
+  });
+  saveReadings();
+  rerenderLyricsAndVocab();
+  if(pop.classList.contains('show')&&pJp.textContent===ja){
+    const eff=effectiveWsRead(ja);
+    pRead.textContent=eff||'';
+    pRead.dataset.ja=ja;
+    const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
+    document.getElementById('popReadRow').style.display=((hasCJK||hasKata)&&eff)?'':'none';
+    const say=wordSpeakText(ja, eff);
+    const popSpeak=document.getElementById('popSpeak');
+    popSpeak.dataset.speak=say;
+    popSpeak.style.display=say?'':'none';
+  }
+}
+function startEditText(el, onCommit){
+  if(editingEl===el) return;
+  cancelEdit();
+  editingEl=el;
+  el._prev=el.textContent;
+  el.contentEditable='true';
+  el.classList.add('rt-editing');
+  el.focus();
+  try{
+    const range=document.createRange();
+    range.selectNodeContents(el);
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }catch(_){}
+  const onKey=e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      const v=el.textContent;
+      cancelEdit();
+      onCommit(v);
+    }else if(e.key==='Escape'){
+      e.preventDefault();
+      el.textContent=el._prev;
+      cancelEdit();
+    }
+    e.stopPropagation();
+  };
+  const onBlur=()=>{
+    if(editingEl!==el) return;
+    const v=el.textContent;
+    cancelEdit();
+    onCommit(v);
+  };
+  el._onKey=onKey;
+  el._onBlur=onBlur;
+  el.addEventListener('keydown', onKey);
+  el.addEventListener('blur', onBlur);
 }
 
 /* ===== 交互 ===== */
@@ -224,7 +388,19 @@ const pJp=document.getElementById('popJp'), pLv=document.getElementById('popLv')
       pMean=document.getElementById('popMean'), pSrc=document.getElementById('popSrc'), pNote=document.getElementById('popNote');
 
 document.addEventListener('click',e=>{
-  // 发音按钮（句子 / 单词旁）
+  const rt=e.target.closest('.sline .jp rt');
+  if(rt&&document.body.classList.contains('opt-ruby')){
+    e.preventDefault();
+    e.stopPropagation();
+    startEditText(rt, v=>commitRubyEdit(rt, v));
+    return;
+  }
+  if(e.target===pRead&&pRead.classList.contains('editable-read')){
+    e.preventDefault();
+    e.stopPropagation();
+    startEditText(pRead, v=>commitPopReadEdit(pRead, v));
+    return;
+  }
   const sp=e.target.closest('.speak');
   if(sp){
     e.preventDefault();
@@ -232,12 +408,12 @@ document.addEventListener('click',e=>{
     speak(sp.dataset.speak||'', sp);
     return;
   }
-  // 词汇标签 → 弹窗
   const w=e.target.closest('.wtag');
   if(w){
     const ja=w.dataset.ja;
     pJp.textContent=ja;
     const popSpeak=document.getElementById('popSpeak');
+    const effRead=effectiveWsRead(ja, w.dataset.read);
     const say=wordSpeakText(ja, w.dataset.read);
     popSpeak.dataset.speak=say;
     popSpeak.innerHTML=SPEAK_ICON;
@@ -246,34 +422,34 @@ document.addEventListener('click',e=>{
     pLv.innerHTML=`<span class="pill ${meta[1]}">${meta[0]}</span>`;
     const p=POS[ja]||{pos:'',form:''};
     document.getElementById('popPos').textContent=p.pos||'—';
-    // 形态：仅四类词
     const fw=isFormWord(p.pos);
     const formRow=document.getElementById('popFormRow');
     formRow.style.display=fw?'':'none';
     document.getElementById('popForm').textContent=fw?(p.form||'—'):'';
-    // 字典形：仅变体
     const baseRow=document.getElementById('popBaseRow');
     baseRow.style.display=p.base?'':'none';
     document.getElementById('popBase').textContent=p.base||'';
-    // 其他形态：四类词且有 forms，排除当前形态
     const formsRow=document.getElementById('popFormsRow');
     const others=(fw&&Array.isArray(p.forms))?p.forms.filter(f=>f[0]!==p.form):[];
     formsRow.style.display=others.length?'':'none';
     document.getElementById('popForms').innerHTML=others.map(f=>`<span class="of"><b>${f[0]}</b>${f[1]}</span>`).join('');
-    // 读音：纯平假名/符号隐藏；含汉字或片假名时显示（片假名已转平假名）
     const readRow=document.getElementById('popReadRow');
     const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
-    if((hasCJK||hasKata)&&w.dataset.read){
+    if((hasCJK||hasKata)&&effRead){
       readRow.style.display='';
-      pRead.textContent=w.dataset.read;
+      pRead.textContent=effRead;
+      pRead.dataset.ja=ja;
+      pRead.classList.add('editable-read');
+      pRead.title='点击修改读音';
     }else{
       readRow.style.display='none';
+      pRead.classList.remove('editable-read');
+      pRead.removeAttribute('data-ja');
+      pRead.title='';
     }
     pMean.textContent=w.dataset.mean||'—';
-    // 出处：所有出现句，直接写明句子内容
     const sents=(wordSents[ja]||[w.dataset.sent]);
     pSrc.innerHTML=sents.map(n=>`<div class="sent-item"><b>第${n}句</b>${sentPlain[n]||''}</div>`).join('');
-    // 说明：与词性/形态/字典形重复的不显示；无说明时隐藏该行
     const note=w.dataset.note||'';
     const noteRow=document.getElementById('popNoteRow');
     const dupNote=/^(字典形|ない形|ます形|て形|た形|ば形|意志形|命令形|可能态|被动态|使役态|使役被动态|否定形|过去形|副词化|假定形|～たい|名词|副词|イ形容词|ナ形容词)/.test(note);
@@ -283,16 +459,15 @@ document.addEventListener('click',e=>{
     pop.classList.add('show'); popMask.classList.add('show');
     return;
   }
-  // 句子展开
   const line=e.target.closest('.sline');
   if(line){
-    const card=line.closest('.card');
-    card.classList.toggle('open');
+    line.closest('.card').classList.toggle('open');
     return;
   }
 });
 
 function closePop(){
+  cancelEdit();
   pop.classList.remove('show');
   popMask.classList.remove('show');
   stopSpeak();
@@ -307,7 +482,7 @@ document.getElementById('btnCollapse').addEventListener('click',()=>{
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'));
 });
 
-/* ===== 显示设置（振假名 / 片假名→平假名）===== */
+/* ===== 显示设置 ===== */
 const OPT_KEY='jp-lyrics-study:display-opts';
 const optRuby=document.getElementById('optRuby');
 const optKataRuby=document.getElementById('optKataRuby');
@@ -319,10 +494,7 @@ function loadOpts(){
     const raw=localStorage.getItem(OPT_KEY);
     if(!raw) return {ruby:true, kataRuby:false};
     const o=JSON.parse(raw);
-    return {
-      ruby:o.ruby!==false,
-      kataRuby:o.kataRuby===true
-    };
+    return {ruby:o.ruby!==false, kataRuby:o.kataRuby===true};
   }catch(_){
     return {ruby:true, kataRuby:false};
   }
@@ -354,18 +526,25 @@ function closeSettings(){
   optKataRuby.checked=o.kataRuby;
   applyOpts();
 })();
-optRuby.addEventListener('change',()=>{
-  applyOpts();
-  saveOpts();
-});
-optKataRuby.addEventListener('change',()=>{
-  applyOpts();
-  saveOpts();
-});
+optRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
+optKataRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
 document.getElementById('btnSettings').addEventListener('click',openSettings);
 document.getElementById('settingsClose').addEventListener('click',closeSettings);
 settingsMask.addEventListener('click',closeSettings);
 
+document.getElementById('btnResetReadings').addEventListener('click',()=>{
+  if(!Object.keys(readings.ruby).length&&!Object.keys(readings.ws).length){
+    alert('当前没有已保存的读音修改。');
+    return;
+  }
+  if(!confirm('清除本歌所有自定义读音，恢复模板默认？')) return;
+  readings={v:1, ruby:{}, ws:{}};
+  saveReadings();
+  closePop();
+  rerenderLyricsAndVocab();
+});
+
+loadReadings();
 renderLyrics();
 renderStats();
 renderVocabGroups();

@@ -1,6 +1,6 @@
 # 数据填充指南（data-guide）
 
-本 skill 的产物是一个**逐句讲解的日语歌词学习网页**（HTML + CSS + JS + 数据，同目录四件套）。样式在 `lyric-page.css`，交互在 `lyric-page.js`，你只需要向 `assets/lyric-data.js` 填入两块数据：`export const S=[...]`（歌词数据）和 `export const POS={...}`（词性与活用表）。
+本 skill 的产物是一个**逐句讲解的日语歌词学习网页**（HTML + CSS + JS + 数据，同目录四件套）。样式在 `lyric-page.css`，交互在 `lyric-page.js`，你只需要向 `assets/lyric-data.js` 填入：`export const SONG_ID`（读音覆盖隔离键）、`export const S=[...]`（歌词数据）和 `export const POS={...}`（词性与活用表）。
 
 流程总览：
 1. 用搜索检索用户指定歌曲的**官方歌词**（日文原文）。
@@ -162,7 +162,7 @@ const POS={
 ## 三、生成与交付
 
 1. 把 `assets/` 四件套复制到同一输出目录：`lyric-page-template.html`（改名 `歌词名-歌词学习.html`）、`lyric-page.css`、`lyric-page.js`、`lyric-data.js`。
-2. 把填好的 `S` 和 `POS` 写入 `lyric-data.js` 对应占位（搜索 `TODO: 填充歌词数据` 与 `TODO: 填充词性与活用`）。
+2. 把填好的 `SONG_ID`、`S` 和 `POS` 写入 `lyric-data.js` 对应占位（`SONG_ID` 填 `'歌名|歌手名'`；搜索 `TODO: 填充歌词数据` 与 `TODO: 填充词性与活用`）。
 3. **替换 hero 元信息**（HTML 里 5 处占位符）：`[歌名]`（含 `<title>`、`<h1>`、页脚）、`[歌手名]`、`[歌名中文译名]`、`[作词人]`、`[一句歌词主题/简介]`。务必全部替换，否则会残留上一首的标题信息。
 4. **设计 hero 氛围（配色 + 特效）**：每首歌按歌词意象定制 hero，默认是"深夜→破晓微光 + 飘雪"。改 `lyric-page.css` 两处：① `.hero{}` 段的背景渐变（带 `hero 氛围：配色 + 特效` 注释）——冷/暖色调、渐变走向随歌定；② 头部动画特效段（`.snow`，类名、HTML 子元素、`@keyframes` 命名一起换，可选泡沫上升 / 飘雪 / 花瓣飘落 / 星光闪烁 / 光尘漂浮 / 水面涟漪）。两处必须与这首歌的情绪一致，不要沿用上一首。若改特效类名，同步改 HTML 里对应元素。
 5. 用渲染工具自检（如 `html` skill 的 `scripts/shot.py`）确认无 JS 报错、桌面+移动端布局正常、hero 显示本首歌信息，再交付。

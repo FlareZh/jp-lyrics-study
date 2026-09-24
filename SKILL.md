@@ -17,7 +17,7 @@ description: 生成"日语歌词逐句学习网页"。当用户给出日语歌�
 ### 第 2 步：读取填充指南与模板
 
 - 读取 `references/data-guide.md`，掌握 `S` 数组与 `POS` 表的确切结构与读音/去重规则。
-- 读取 `assets/lyric-page-template.html`、`lyric-page.css`、`lyric-page.js`、`lyric-data.js`；确认 `lyric-data.js` 中两处占位：`TODO: 填充歌词数据`（`export const S=[...]`）与 `TODO: 填充词性与活用`（`export const POS={...}`）。
+- 读取 `assets/lyric-page-template.html`、`lyric-page.css`、`lyric-page.js`、`lyric-data.js`；确认 `lyric-data.js` 中：`SONG_ID`（`歌名|歌手名`）、`TODO: 填充歌词数据`（`export const S=[...]`）、`TODO: 填充词性与活用`（`export const POS={...}`）。
 
 ### 第 3 步：逐句拆分并填数据
 
@@ -66,7 +66,7 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 ### 第 4 步：生成并交付
 
 1. 把 `assets/` 下四件套复制到同一输出目录：`lyric-page-template.html`（改名 `歌词名-歌词学习.html`）、`lyric-page.css`、`lyric-page.js`、`lyric-data.js`（相对路径须保持同目录）。
-2. 在 `lyric-data.js` 替换 `S` 与 `POS` 占位。
+2. 在 `lyric-data.js` 填写 `SONG_ID`（`歌名|歌手名`），并替换 `S` 与 `POS` 占位。
 3. 替换 HTML hero 元信息（`[歌名]`/`[歌手名]`/`[歌名中文译名]`/`[作词人]`/`[一句歌词主题/简介]` 共 5 处）。
 4. 在 `lyric-page.css` 按本首歌定制 hero 配色与特效（见 data-guide）。
 5. 用 `html` skill 的 `scripts/shot.py <html>` 自检（确认无 JS 报错、桌面+移动端布局正常、hero 显示本首歌信息）。
@@ -86,6 +86,7 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 - **hero 氛围**：每首歌按歌词意象同时定制 hero 背景配色与动画特效（如 夜蓝泡沫 / 深夜→破晓微光+飘雪 / 花瓣 / 星光…），配色与特效都要贴合本首歌情绪，不要沿用上一首。
 - **展开箭头**：用内联 SVG，不用字符。
 - **显示设置**：模板自带「设置」可开关振假名、片假名→平假名注音（localStorage）；生成页无需接线。片假名注音依赖数据里对片假名写了 `<ruby>…</ruby>`。
+- **读音可改**：用户可点击歌词振假名或浮层读音修改，按 `SONG_ID` 存本机；设置里可「恢复默认读音」。生成时必须填写不重复的 `SONG_ID`。
 - **日语发音**：`lyric-page.js` 已用 piper-plus（浏览器 WASM + OpenJTalk）为每句歌词、生词提供喇叭按钮；生成页无需额外接线。含汉字文本优先送汉字词形由词典解析读音；首次点击会下载并缓存模型（需联网）。语法说明不加发音。
 
 ## 资源
