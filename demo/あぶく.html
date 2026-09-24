@@ -967,47 +967,28 @@ function speakBtn(text=''){
 }
 function wordSpeakText(ja, read){
   const j=(ja&&String(ja).trim())||'';
-  const r=(effectiveWsRead(ja, read)||'').trim();
-  return r||j; // 优先假名，减轻汉字被中文引擎误读
+  // 仅用户改过的读音才覆盖；否则按词形（汉字等）朗读
+  if(Object.prototype.hasOwnProperty.call(readings.ws, ja)){
+    const r=String(readings.ws[ja]||'').trim();
+    if(r) return r;
+  }
+  return j;
 }
-/** 从当前歌词 DOM 取朗读文本：优先用页面上（含手动修改）的振假名 */
+/** 从歌词 DOM 取朗读文本：手改振假名用假名，否则保留汉字/词形 */
 function speakTextFromJpEl(jpEl){
   if(!jpEl) return '';
   const clone=jpEl.cloneNode(true);
   clone.querySelectorAll('ruby').forEach(ruby=>{
     const rt=ruby.querySelector('rt');
+    const key=ruby.dataset.rubyKey||'';
+    const overridden=Object.prototype.hasOwnProperty.call(readings.ruby, key)
+      ||(rt&&rt.classList.contains('rt-overridden'));
     const reading=(rt?rt.textContent:'').trim();
     const base=(ruby.dataset.base||'').trim()
       ||(ruby.childNodes[0]&&ruby.childNodes[0].nodeType===3?ruby.childNodes[0].textContent:'').trim();
-    ruby.replaceWith(document.createTextNode(reading||base));
+    ruby.replaceWith(document.createTextNode(overridden?(reading||base):base));
   });
-  return kanaOnlySpeakText((clone.textContent||'').replace(/\s+/g,' ').trim());
-}
-const HAN_RE=/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g;
-function buildReadMap(){
-  const map=new Map();
-  if(typeof vocabMap!=='undefined'&&vocabMap){
-    vocabMap.forEach((v,ja)=>{
-      const r=(effectiveWsRead(ja, v&&v.read)||'').trim();
-      if(ja&&r) map.set(ja,r);
-    });
-  }
-  Object.keys(readings.ws||{}).forEach(ja=>{
-    const r=String(readings.ws[ja]||'').trim();
-    if(ja&&r) map.set(ja,r);
-  });
-  return map;
-}
-function replaceByReadMap(text){
-  let out=String(text||'');
-  const map=buildReadMap();
-  const keys=[...map.keys()].filter(k=>k&&HAN_RE.test(k)).sort((a,b)=>b.length-a.length);
-  for(const k of keys) out=out.split(k).join(map.get(k));
-  return out;
-}
-/** 朗读前去掉汉字，避免系统把片段交给中文 TTS */
-function kanaOnlySpeakText(text){
-  return replaceByReadMap(text).replace(HAN_RE,'').replace(/\s+/g,' ').trim();
+  return (clone.textContent||'').replace(/\s+/g,' ').trim();
 }
 
 /* ===== 日语朗读（Web Speech API）===== */
@@ -1152,15 +1133,10 @@ function stopSpeak(){
   clearSpeakingUI();
 }
 function speak(text, btn){
-  const raw=(text||'').trim();
-  if(!raw) return;
+  const t=(text||'').trim();
+  if(!t) return;
   if(!window.speechSynthesis){
     alert('当前浏览器不支持语音朗读（Web Speech API）');
-    return;
-  }
-  const t=kanaOnlySpeakText(raw);
-  if(!t){
-    alert('没有可朗读的假名（请为汉字标注读音）。');
     return;
   }
   stopSpeak();
@@ -1429,7 +1405,7 @@ document.addEventListener('click',e=>{
     let text='';
     const sline=sp.closest('.sline');
     if(sline){
-      // 整句：按当前显示的振假名（含手动修改）
+      // 整句：未改振假名读汉字，手改过的用假名
       text=speakTextFromJpEl(sline.querySelector('.jp'));
     }else if(sp.id==='popSpeak'){
       const ja=pJp.textContent||'';
