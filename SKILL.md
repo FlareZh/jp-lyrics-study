@@ -1,11 +1,11 @@
 ---
 name: jp-lyrics-study
-description: 生成"日语歌词逐句学习网页"。当用户给出日语歌曲名（可含歌手名/乐队名），要求"做歌词学习网页""逐句讲解歌词""生成日语学习HTML""日语歌词注音/分词/语法讲解页"时使用。流程：先检索官方歌词发给用户确认，确认后按词法/语法/翻译逐句拆解，生成含逐句讲解、可点击生词弹窗（词性/形态/读音/释义/出处）、按 JLPT 分级生词总表的自包含 HTML 页面。面向初学日语但要求精确语法讲解的学习者。歌词中的拉丁字母英文一律跳过、不做处理。
+description: 生成"日语歌词逐句学习网页"。当用户给出日语歌曲名（可含歌手名/乐队名），要求"做歌词学习网页""逐句讲解歌词""生成日语学习HTML""日语歌词注音/分词/语法讲解页"时使用。流程：先检索官方歌词发给用户确认，确认后按词法/语法/翻译逐句拆解，生成含逐句讲解、可点击生词弹窗（词性/形态/读音/释义/出处）、按 JLPT 分级生词总表的学习页（HTML+CSS+JS+数据同目录）。面向初学日语但要求精确语法讲解的学习者。歌词中的拉丁字母英文一律跳过、不做处理。
 ---
 
 # 日语歌词学习网页
 
-为指定日语歌曲生成一个自包含的单文件 HTML：逐句显示歌词（带 `<ruby>` 振假名）、点击可展开该句的分词/语法/翻译，所有生词可点击弹出词性/形态/读音/释义/出处，底部生词总表按 JLPT 等级分组去重。歌词中的拉丁字母英文原样保留，不做任何学习标注。
+为指定日语歌曲生成学习页（同目录：`歌词名-歌词学习.html` + `lyric-page.css` + `lyric-page.js` + `lyric-data.js`）：逐句显示歌词（带 `<ruby>` 振假名）、点击可展开该句的分词/语法/翻译，所有生词可点击弹出词性/形态/读音/释义/出处，底部生词总表按 JLPT 等级分组去重。歌词中的拉丁字母英文原样保留，不做任何学习标注。
 
 ## 工作流（Workflow）
 
@@ -17,7 +17,7 @@ description: 生成"日语歌词逐句学习网页"。当用户给出日语歌�
 ### 第 2 步：读取填充指南与模板
 
 - 读取 `references/data-guide.md`，掌握 `S` 数组与 `POS` 表的确切结构与读音/去重规则。
-- 读取 `assets/lyric-page-template.html`（含全部样式、交互、渲染逻辑），确认模板中两处占位：`TODO: 填充歌词数据`（`const S=[...]`）与 `TODO: 填充词性与活用`（`const POS={...}`）。
+- 读取 `assets/lyric-page-template.html`、`lyric-page.css`、`lyric-page.js`、`lyric-data.js`；确认 `lyric-data.js` 中两处占位：`TODO: 填充歌词数据`（`export const S=[...]`）与 `TODO: 填充词性与活用`（`export const POS={...}`）。
 
 ### 第 3 步：逐句拆分并填数据
 
@@ -65,10 +65,12 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 
 ### 第 4 步：生成并交付
 
-1. 复制模板到输出目录，改名 `歌词名-歌词学习.html`，替换 `S` 与 `POS` 占位。
-2. 替换 hero 元信息（模板中 `[歌名]`/`[歌手名]`/`[歌名中文译名]`/`[作词人]`/`[一句歌词主题/简介]` 共 5 处占位符）。
-3. 用 `html` skill 的 `scripts/shot.py <html>` 自检（确认无 JS 报错、桌面+移动端布局正常、hero 显示本首歌信息）。
-4. 用 `present_files` 交付。
+1. 把 `assets/` 下四件套复制到同一输出目录：`lyric-page-template.html`（改名 `歌词名-歌词学习.html`）、`lyric-page.css`、`lyric-page.js`、`lyric-data.js`（相对路径须保持同目录）。
+2. 在 `lyric-data.js` 替换 `S` 与 `POS` 占位。
+3. 替换 HTML hero 元信息（`[歌名]`/`[歌手名]`/`[歌名中文译名]`/`[作词人]`/`[一句歌词主题/简介]` 共 5 处）。
+4. 在 `lyric-page.css` 按本首歌定制 hero 配色与特效（见 data-guide）。
+5. 用 `html` skill 的 `scripts/shot.py <html>` 自检（确认无 JS 报错、桌面+移动端布局正常、hero 显示本首歌信息）。
+6. 用 `present_files` 交付（HTML + 同目录的 css/js/data）。
 
 ## 硬性规则（不可破坏）
 
@@ -83,10 +85,13 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 - **生词总表**：词性与形态放在生词按钮内部；按 JLPT 分组去重（无等级词归入「NX」（未收录））。
 - **hero 氛围**：每首歌按歌词意象同时定制 hero 背景配色与动画特效（如 夜蓝泡沫 / 深夜→破晓微光+飘雪 / 花瓣 / 星光…），配色与特效都要贴合本首歌情绪，不要沿用上一首。
 - **展开箭头**：用内联 SVG，不用字符。
-- **日语发音**：模板已用 Web Speech API（`speechSynthesis`，`ja-JP`）为每句歌词、生词提供喇叭按钮；生成页无需额外接线。单词优先读假名读音。语法说明不加发音。
+- **日语发音**：`lyric-page.js` 已用 piper-plus（浏览器 WASM + OpenJTalk）为每句歌词、生词提供喇叭按钮；生成页无需额外接线。含汉字文本优先送汉字词形由词典解析读音；首次点击会下载并缓存模型（需联网）。语法说明不加发音。
 
 ## 资源
 
-- `assets/lyric-page-template.html`：成品页面模板（样式/交互/渲染完整，仅数据留占位）。生成时复制并替换数据。
+- `assets/lyric-page-template.html`：页面结构与 hero 占位。
+- `assets/lyric-page.css`：样式（含可按歌定制的 hero 氛围）。
+- `assets/lyric-page.js`：交互、渲染、piper-plus 朗读。
+- `assets/lyric-data.js`：`S` / `POS` 数据占位（生成时只改这一文件的数据）。
 - `references/data-guide.md`：`S`/`POS` 的数据结构、读音与去重规则、完整示例。填数据前必读。
 - `references/jlpt/vocabulary.jsonl` / `grammar.jsonl`：JLPT 唯一分级源（词汇 / 语法分开）。用 `grep '"k": "…"'` 检索（见第 3.5 步）。由 `references/jlpt/build_index.py` 从各级 md 生成；改源表后需重跑该脚本。
