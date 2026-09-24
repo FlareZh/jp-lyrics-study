@@ -40,6 +40,7 @@
   <div class="controls">
     <div class="stat" id="statBar"></div>
     <div class="cbtns">
+      <button class="btn" id="btnSettings" type="button" aria-haspopup="dialog" aria-controls="settingsPanel">设置</button>
       <button class="btn" id="btnAll">全部展开</button>
       <button class="btn" id="btnCollapse">全部收起</button>
     </div>
@@ -57,6 +58,26 @@
     <p>[歌名] —— [一句歌词主题/简介]。<br>练习歌词阅读 · 由 [作词人] 作词，仅作学习用途。</p>
   </footer>
 </main>
+
+<!-- ===== Settings ===== -->
+<div class="settings-mask" id="settingsMask"></div>
+<div class="settings" id="settingsPanel" role="dialog" aria-labelledby="settingsTitle" aria-modal="true">
+  <div class="head">
+    <span class="title" id="settingsTitle">显示设置</span>
+    <button class="close" id="settingsClose" type="button" aria-label="关闭">×</button>
+  </div>
+  <div class="body">
+    <label class="opt">
+      <input type="checkbox" id="optRuby" checked>
+      <span>显示假名标注（振假名）</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" id="optKataRuby">
+      <span>为片假名标注平假名</span>
+    </label>
+    <p class="hint">关闭「显示假名标注」时，片假名注音也会隐藏；重新开启后仍沿用下方选项。设置保存在本机浏览器。</p>
+  </div>
+</div>
 
 <!-- ===== Popover ===== -->
 <div class="pop-mask" id="popMask"></div>

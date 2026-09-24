@@ -27,6 +27,16 @@ const wordSents={};
 const sentPlain={};
 const stripRuby=h=>h.replace(/<ruby>([^<]*)<rt>[\s\S]*?<\/rt><\/ruby>/g,'$1').replace(/<[^>]+>/g,'');
 const escAttr=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+/** 给片假名 ruby 打上 .ruby-kata，便于单独开关平假名注音 */
+function markRubyClasses(html){
+  return String(html||'').replace(/<ruby([^>]*)>([^<]*)<rt>([\s\S]*?)<\/rt><\/ruby>/g,(_,attrs,base,rt)=>{
+    const bare=String(base).replace(/<[^>]+>/g,'').trim();
+    const isKata=/^[\u30a0-\u30ffー゛゜・ゝゞヽヾ]+$/.test(bare);
+    const cleaned=String(attrs||'').replace(/\s*class\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'');
+    const cls=isKata?'ruby-kata':'ruby-kanji';
+    return `<ruby${cleaned} class="${cls}">${base}<rt>${rt}</rt></ruby>`;
+  });
+}
 const SPEAK_ICON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>`;
 function speakBtn(text, extraClass=''){
   const t=(text||'').trim();
@@ -155,7 +165,7 @@ function renderLyrics(){
     card.innerHTML=`
       <div class="sline" data-s="${num}">
         <span class="num">${num}</span>
-        <div class="jp">${s.jp}</div>
+        <div class="jp">${markRubyClasses(s.jp)}</div>
         ${speakBtn(plain)}
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </div>
@@ -296,6 +306,65 @@ document.getElementById('btnAll').addEventListener('click',()=>{
 document.getElementById('btnCollapse').addEventListener('click',()=>{
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'));
 });
+
+/* ===== 显示设置（振假名 / 片假名→平假名）===== */
+const OPT_KEY='jp-lyrics-study:display-opts';
+const optRuby=document.getElementById('optRuby');
+const optKataRuby=document.getElementById('optKataRuby');
+const settingsPanel=document.getElementById('settingsPanel');
+const settingsMask=document.getElementById('settingsMask');
+
+function loadOpts(){
+  try{
+    const raw=localStorage.getItem(OPT_KEY);
+    if(!raw) return {ruby:true, kataRuby:false};
+    const o=JSON.parse(raw);
+    return {
+      ruby:o.ruby!==false,
+      kataRuby:o.kataRuby===true
+    };
+  }catch(_){
+    return {ruby:true, kataRuby:false};
+  }
+}
+function saveOpts(){
+  try{
+    localStorage.setItem(OPT_KEY, JSON.stringify({
+      ruby:!!optRuby.checked,
+      kataRuby:!!optKataRuby.checked
+    }));
+  }catch(_){}
+}
+function applyOpts(){
+  document.body.classList.toggle('opt-ruby', !!optRuby.checked);
+  document.body.classList.toggle('opt-kata-ruby', !!optKataRuby.checked);
+  optKataRuby.disabled=!optRuby.checked;
+}
+function openSettings(){
+  settingsPanel.classList.add('show');
+  settingsMask.classList.add('show');
+}
+function closeSettings(){
+  settingsPanel.classList.remove('show');
+  settingsMask.classList.remove('show');
+}
+(function initOpts(){
+  const o=loadOpts();
+  optRuby.checked=o.ruby;
+  optKataRuby.checked=o.kataRuby;
+  applyOpts();
+})();
+optRuby.addEventListener('change',()=>{
+  applyOpts();
+  saveOpts();
+});
+optKataRuby.addEventListener('change',()=>{
+  applyOpts();
+  saveOpts();
+});
+document.getElementById('btnSettings').addEventListener('click',openSettings);
+document.getElementById('settingsClose').addEventListener('click',closeSettings);
+settingsMask.addEventListener('click',closeSettings);
 
 renderLyrics();
 renderStats();
