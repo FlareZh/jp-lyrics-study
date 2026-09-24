@@ -6,11 +6,313 @@
 <title>[歌名]｜[歌手名] 歌词逐句学习</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='10' fill='%23E8874C'/%3E%3Ccircle cx='22' cy='10' r='4' fill='%23AFC4D9' opacity='.9'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="./lyric-page.css">
+<style>
+:root{
+  --night:#0E1B2C;
+  --night-2:#16263C;
+  --ink:#22303f;
+  --muted:#6b7686;
+  --paper:#F4F6F9;
+  --card:#ffffff;
+  --line:#dfe5ee;
+  --orange:#E8874C;
+  --orange-deep:#C9652F;
+  --l5:#1e8a4e; --b5:#e4f5eb;
+  --l4:#a86a1a; --b4:#fbeecb;
+  --l3:#c2410c; --b3:#ffead9;
+  --l2:#4338ca; --b2:#e4e7fb;
+  --l1:#6b21a8; --b1:#f3e8ff;
+  --lx:#5b6573; --bx:#e8edf3;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans SC",system-ui,-apple-system,"PingFang SC",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.9;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+/* ===== Hero ===== */
+.hero{
+  /* ===== hero 氛围：配色 + 特效都按本首歌定制 =====
+     hero 背景渐变（本段）与下面的动画特效（.snow 段）一起，
+     按歌词意象与情绪设计。示例：
+     - 《あぶく》：夜蓝 + 橙色泡沫上升（暖）
+     - 《僕が死のうと思ったのは》：深夜→破晓微光 + 飘雪（冷→救赎）
+     可选项：泡沫/飘雪/花瓣/星光/光尘/涟漪 × 冷色/暖色/渐变走向。 */
+  background:
+    radial-gradient(900px 320px at 50% 100%, rgba(255,226,180,.30) 0%, transparent 58%),
+    radial-gradient(700px 400px at 88% -18%, #2c4a63 0%, transparent 60%),
+    linear-gradient(180deg, #0a141f 0%, #16263a 52%, #263a50 100%);
+  color:#e9eef5;
+  padding:52px 20px 44px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0; height:34px;
+  background:var(--paper);
+  border-radius:100% 100% 0 0 / 26px 26px 0 0;
+}
+/* ===== hero 氛围特效 =====
+   这是本首歌的头部背景动画，每首歌按歌词意象设计独特特效。
+   示例：《あぶく》用泡沫上升，《僕が死のうと思ったのは》用飘雪。
+   生成时按这首歌的氛围替换整段（类名、HTML 子元素、keyframes 一起换），
+   可选方向：泡沫上升 / 飘雪 / 花瓣飘落 / 星光闪烁 / 光尘漂浮 / 水面涟漪。 */
+.snow{position:absolute; inset:0; pointer-events:none;}
+.snow span{
+  position:absolute; top:-26px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.96), rgba(214,233,255,.5));
+  opacity:.85; animation:fall linear infinite;
+}
+.snow span:nth-child(1){left:10%; width:5px; height:5px; animation-duration:13s;}
+.snow span:nth-child(2){left:25%; width:8px; height:8px; animation-duration:17s; opacity:.55;}
+.snow span:nth-child(3){left:42%; width:4px; height:4px; animation-duration:11s;}
+.snow span:nth-child(4){left:58%; width:7px; height:7px; animation-duration:15s; opacity:.6;}
+.snow span:nth-child(5){left:72%; width:5px; height:5px; animation-duration:12s;}
+.snow span:nth-child(6){left:85%; width:9px; height:9px; animation-duration:18s; opacity:.5;}
+.snow span:nth-child(7){left:94%; width:4px; height:4px; animation-duration:10s;}
+.snow span:nth-child(8){left:33%; width:14px; height:14px; animation-duration:21s; opacity:.32; filter:blur(1.5px);}
+.snow span:nth-child(9){left:66%; width:12px; height:12px; animation-duration:23s; opacity:.28; filter:blur(1.5px);}
+@keyframes fall{
+  0%{transform:translateY(0) translateX(0) rotate(0deg); opacity:0;}
+  10%{opacity:.85;}
+  90%{opacity:.55;}
+  100%{transform:translateY(620px) translateX(26px) rotate(320deg); opacity:0;}
+}
+.hero h1{
+  font-family:"Noto Serif JP",serif;
+  font-size:44px; font-weight:900; letter-spacing:.06em;
+  position:relative; z-index:2;
+}
+.hero .song{font-family:"Noto Serif JP",serif; font-size:16px; letter-spacing:.35em; opacity:.75; margin-top:8px; position:relative; z-index:2;}
+.hero .tagline{font-size:13.5px; opacity:.85; margin-top:14px; color:#b9c6d6; position:relative; z-index:2;}
+.legend{
+  display:inline-flex; flex-wrap:wrap; gap:8px; justify-content:center;
+  margin-top:16px; position:relative; z-index:2;
+}
+.lg{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:#c7d2e0;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
+.dot.d5{background:var(--b5);border:1px solid var(--l5);}
+.dot.d4{background:var(--b4);border:1px solid var(--l4);}
+.dot.d3{background:var(--b3);border:1px solid var(--l3);}
+.dot.d2{background:var(--b2);border:1px solid var(--l2);}
+.dot.d1{background:var(--b1);border:1px solid var(--l1);}
+.dot.dx{background:var(--bx);border:1px solid var(--lx);}
+
+/* ===== Layout ===== */
+.wrap{max-width:760px; margin:0 auto; padding:0 18px 60px;}
+.controls{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin:22px 0 18px; justify-content:space-between;
+}
+.cbtns{display:flex; gap:10px;}
+.btn{
+  border:1px solid var(--line); background:#fff; color:var(--ink);
+  border-radius:999px; padding:7px 16px; font-size:13.5px; cursor:pointer;
+  transition:all .18s ease;
+}
+.btn:hover{border-color:var(--orange); color:var(--orange-deep);}
+.btn.primary{background:var(--orange); border-color:var(--orange); color:#fff;}
+.btn.primary:hover{background:var(--orange-deep);}
+
+/* ===== Ruby visibility (settings) ===== */
+body:not(.opt-ruby) rt{display:none;}
+body.opt-ruby:not(.opt-kata-ruby) ruby.ruby-kata > rt{display:none;}
+
+/* ===== Settings panel ===== */
+.settings-mask{
+  position:fixed; inset:0; background:rgba(14,27,44,.42); z-index:40;
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.settings-mask.show{opacity:1; pointer-events:auto;}
+.settings{
+  position:fixed; left:50%; top:42%; transform:translate(-50%,-50%) scale(.96);
+  background:#fff; border-radius:14px; width:min(88vw,360px); z-index:41;
+  box-shadow:0 18px 50px rgba(14,27,44,.3);
+  opacity:0; pointer-events:none; transition:all .2s ease;
+}
+.settings.show{opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1);}
+.settings .head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 18px; border-bottom:1px solid #eef2f7;
+}
+.settings .title{font-size:15px; font-weight:700; color:#1c2733;}
+.settings .close{
+  border:none; background:#f1f4f8; color:#5c6775; width:26px; height:26px;
+  border-radius:50%; cursor:pointer; font-size:15px; line-height:1;
+}
+.settings .body{padding:16px 18px 18px; display:flex; flex-direction:column; gap:12px;}
+.settings .opt{
+  display:flex; align-items:flex-start; gap:10px; cursor:pointer;
+  font-size:14px; color:#2a3644; line-height:1.5;
+}
+.settings .opt input{
+  margin-top:3px; width:16px; height:16px; accent-color:var(--orange); flex-shrink:0;
+}
+.settings .opt:has(input:disabled){opacity:.45; cursor:not-allowed;}
+.settings .hint{font-size:12px; color:var(--muted); line-height:1.65; margin:2px 0 0;}
+.settings-sep{height:1px; background:#eef2f7; margin:4px 0;}
+.settings-actions{display:flex; flex-wrap:wrap; gap:8px;}
+.settings-actions .btn{padding:6px 12px; font-size:12.5px;}
+
+/* ===== Editable furigana ===== */
+body.opt-ruby .sline .jp rt{
+  cursor:text; border-radius:3px; padding:0 1px;
+  transition:background .15s ease, outline .15s ease;
+}
+body.opt-ruby .sline .jp rt:hover{background:rgba(232,135,76,.14);}
+body.opt-ruby .sline .jp rt.rt-editing{
+  background:#fff7f0; outline:1px solid var(--orange); cursor:text;
+}
+body.opt-ruby .sline .jp rt.rt-overridden{color:var(--orange-deep);}
+#popRead.editable-read{
+  cursor:text; border-radius:4px; padding:1px 4px; margin:-1px -4px;
+}
+#popRead.editable-read:hover{background:rgba(232,135,76,.12);}
+#popRead.rt-editing{
+  background:#fff7f0; outline:1px solid var(--orange);
+}
+
+.stat{
+  display:flex; gap:6px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--muted);
+}
+.stat b{font-weight:700; color:var(--ink); margin-right:1px;}
+.pill{
+  display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:999px; font-size:12px;
+}
+.pill.n5{background:var(--b5);color:var(--l5);}
+.pill.n4{background:var(--b4);color:var(--l4);}
+.pill.n3{background:var(--b3);color:var(--l3);}
+.pill.n2{background:var(--b2);color:var(--l2);}
+.pill.n1{background:var(--b1);color:var(--l1);}
+.pill.nx{background:var(--bx);color:var(--lx);}
+
+/* ===== Sentence cards ===== */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  margin-bottom:12px; overflow:hidden; box-shadow:0 1px 2px rgba(15,27,44,.04);
+}
+.card.open{border-color:#cfd9e6;}
+.sline{
+  padding:15px 18px; cursor:pointer; user-select:none; display:flex; align-items:flex-start; gap:12px;
+}
+.sline .num{
+  font-family:"Noto Serif JP",serif; font-size:12px; color:#a8b2c0; margin-top:6px; min-width:20px; text-align:center;
+}
+.sline .jp{
+  flex:1; font-family:"Noto Serif JP",serif; font-size:19px; line-height:1.65; color:#1c2733;
+}
+ruby{ruby-position:over;}
+rt{font-size:.52em; color:#8a94a3; font-weight:500;}
+.sline .chev{color:#9aa5b4; width:20px; height:20px; margin-top:5px; transition:transform .25s ease, color .25s ease; flex-shrink:0;}
+.card.open .chev{transform:rotate(180deg); color:var(--orange);}
+.speak{
+  border:none; background:#f2f5f9; color:#7a8494; width:28px; height:28px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  padding:0; transition:background .15s ease, color .15s ease, opacity .15s ease;
+}
+.speak svg{width:15px; height:15px; display:block;}
+.speak:hover,.speak.playing{background:#fdf0e5; color:var(--orange-deep);}
+.speak.loading{opacity:.55; cursor:wait;}
+.sline .speak{margin-top:2px;}
+.witem .speak{width:22px; height:22px; align-self:center;}
+.witem .speak svg{width:12px; height:12px;}
+.pop .head .jp-wrap{display:flex; align-items:center; gap:8px; min-width:0;}
+.pop .head .speak{width:26px; height:26px;}
+.pop .head .speak svg{width:13px; height:13px;}
+.detail{max-height:0; overflow:hidden; transition:max-height .35s ease;}
+.card.open .detail{max-height:none;}
+.detail-inner{padding:4px 18px 18px; border-top:1px solid #eef2f7;}
+.sec{margin-top:12px;}
+.sec h4{
+  font-size:12px; font-weight:700; letter-spacing:.08em; color:#7a8494; margin-bottom:6px;
+  display:flex; align-items:center; gap:6px;
+}
+.sec h4::before{content:""; width:3px; height:12px; background:var(--orange); border-radius:2px;}
+.seg{font-size:14.5px; color:#38434f; line-height:1.8;}
+.seg .sep{color:#c3ccd8; margin:0 2px;}
+.wlist{display:flex; flex-direction:column; gap:6px;}
+.witem{
+  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; font-size:13.5px;
+}
+.wtag{
+  border:none; border-radius:6px; padding:2px 8px; font-size:12px; cursor:pointer;
+  font-family:"Noto Sans SC",sans-serif; transition:filter .15s ease; text-align:left; line-height:1.7;
+}
+.wtag:hover{filter:brightness(.97);}
+.wtag.n5{background:var(--b5);color:var(--l5);}
+.wtag.n4{background:var(--b4);color:var(--l4);}
+.wtag.n3{background:var(--b3);color:var(--l3);}
+.wtag.n2{background:var(--b2);color:var(--l2);}
+.wtag.n1{background:var(--b1);color:var(--l1);}
+.wtag.nx{background:var(--bx);color:var(--lx);}
+.wtag .w-ja{font-family:"Noto Serif JP",serif; font-weight:700;}
+.wtag .w-mean{color:inherit; opacity:.8;}
+.rep{font-size:11px; color:#a3acba; background:#f2f5f9; border-radius:999px; padding:1px 8px; white-space:nowrap;}
+.pos{font-size:11px; color:#8a94a3; background:#eef1f6; border-radius:4px; padding:0 6px; white-space:nowrap;}
+.pos-f{font-size:11px; color:#b06a3c; background:#fdf0e5; border-radius:4px; padding:0 6px; white-space:nowrap;}
+.w-mean{color:inherit; opacity:.82;}
+.otherforms{display:flex; flex-wrap:wrap; gap:4px;}
+#popForms{display:flex; flex-wrap:wrap; gap:4px;}
+.wtag .wpos{font-size:10.5px; opacity:.72; margin-left:5px; font-weight:500;}
+.wtag .wform{font-size:10.5px; opacity:.92; margin-left:4px; font-weight:600;}
+.of{background:#f2f5f9; border:1px solid #e2e9f2; border-radius:5px; padding:1px 7px; font-size:12px; color:#38434f; white-space:nowrap;}
+.of b{color:#b06a3c; font-weight:600; margin-right:3px;}
+.sent-item{font-size:12.5px; color:#38434f; margin-bottom:3px; line-height:1.6;}
+.sent-item b{color:#b06a3c; font-weight:600; margin-right:4px;}
+.grammar{font-size:14px; color:#38434f; line-height:1.9;}
+.grammar code{background:#eef3f9; border:1px solid #e2e9f2; border-radius:5px; padding:1px 6px; font-size:13px; color:#1d4d6b;}
+.tr{font-size:15px; color:#2a3644; font-weight:500; line-height:1.85;}
+.tr::before{content:"「";color:var(--orange);} .tr::after{content:"」";color:var(--orange);}
+
+/* ===== Vocab summary ===== */
+.vocab-panel{background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px; margin-top:26px;}
+.vocab-panel h3{font-size:16px; margin-bottom:4px;}
+.vocab-panel .sub{font-size:12.5px; color:var(--muted); margin-bottom:14px;}
+.vocab-groups{display:grid; gap:16px;}
+.vg h5{font-size:13px; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+.vg .tags{display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+.vg .tags .witem{display:inline-flex; align-items:center; gap:4px;}
+.vg .tags .wtag{font-size:12px;}
+.vg .tags .rep{font-size:10.5px;}
+
+/* ===== Popover ===== */
+.pop-mask{position:fixed; inset:0; background:rgba(14,27,44,.42); z-index:40; opacity:0; pointer-events:none; transition:opacity .2s ease;}
+.pop-mask.show{opacity:1; pointer-events:auto;}
+.pop{
+  position:fixed; left:50%; top:44%; transform:translate(-50%,-50%) scale(.96);
+  background:#fff; border-radius:14px; width:min(88vw,360px); z-index:41;
+  box-shadow:0 18px 50px rgba(14,27,44,.3); opacity:0; pointer-events:none; transition:all .2s ease;
+}
+.pop.show{opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1);}
+.pop .head{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #eef2f7;}
+.pop .head .jp{font-family:"Noto Serif JP",serif; font-size:19px; font-weight:700;}
+.pop .close{border:none; background:#f1f4f8; color:#5c6775; width:26px;height:26px;border-radius:50%;cursor:pointer; font-size:15px; line-height:1;}
+.pop .body{padding:16px 18px; font-size:14px; color:#2a3644;}
+.pop .body .lv{display:inline-flex; margin-bottom:10px;}
+.pop .body .row{margin-bottom:8px; display:flex; gap:8px;}
+.pop .body .k{color:#8a94a3; min-width:44px; flex-shrink:0;}
+.pop .body .v{flex:1;}
+
+footer{margin-top:34px; text-align:center; color:#9aa5b3; font-size:12px; line-height:1.9;}
+footer a{color:#b06a3c; text-decoration:none;}
+
+@media (max-width:520px){
+  .hero h1{font-size:34px;}
+  .sline .jp{font-size:17px;}
+  .controls{flex-direction:column; align-items:stretch;}
+}
+</style>
 <script type="importmap">
 {
   "imports": {
     "piper-plus": "https://cdn.jsdelivr.net/npm/piper-plus@0.7.0/src/index.js",
+    "@piper-plus/g2p": "https://cdn.jsdelivr.net/npm/@piper-plus/g2p@0.4.2/src/index.js",
     "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.min.mjs"
   }
 }
@@ -107,6 +409,579 @@
   </div>
 </div>
 
-<script type="module" src="./lyric-page.js"></script>
+<script type="module">
+import { PiperPlus } from 'piper-plus';
+import * as ort from 'onnxruntime-web';
+
+/* ===== 歌曲标识（读音覆盖 localStorage 按此隔离）=====
+   生成时填：'歌名|歌手名'，勿与其它歌重复。 */
+const SONG_ID='[歌名]|[歌手名]';
+
+/* ===== 歌词数据 =====
+   ws 每项: [词形, 读音, 释义, 等级, 语法说明]
+   jp 为带 <ruby> 的歌词 HTML */
+const S=[/* TODO: 填充歌词数据。每句结构见 references/data-guide.md 的「S 数组」章节。
+  每项: { jp(带<ruby>的歌词HTML), seg(分词用｜分隔), tr(中文翻译), gram(语法说明), ws([[词形,读音,释义,等级n5–n1或空串,说明],...]) }
+  等级只来自 references/jlpt/vocabulary.jsonl；未命中填 ''。示例见 references/data-guide.md。*/];
+
+/* ===== 词性与活用（按词形索引）=====
+   pos:词性  form:当前形态  base:字典形(变体时)  forms:其他形态 */
+const POS={/* TODO: 填充词性与活用。按词形索引，见 references/data-guide.md 的「POS 表」章节。
+  结构: 词形: { pos(词性), form(当前形态), base(字典形,仅变体), forms([[形态名,词形],...]完整清单) }
+  词性类型: 名词/代词/数词/动词/动词短语/动词(敬语)/动词(使役态)/イ形容词/ナ形容词/助词/助动词/句型/惯用短语/副词/接续词/拟声词/外来语·名词/名词(サ变)/名词(四字成语)
+  动词形态名: 字典形/ない形/ます形/て形/た形/ば形/意志形/命令形/可能态/被动态/使役态/使役被动态
+  形容词形态名: 字典形/否定形/过去形/て形/副词化/假定形
+  只有 动词/形容词/助动词/句型 才需要 form 与 forms。*/};
+
+/* ===== 渲染逻辑 ===== */
+const LVL={
+  n5:['N5','pill n5','wtag n5'],
+  n4:['N4','pill n4','wtag n4'],
+  n3:['N3','pill n3','wtag n3'],
+  n2:['N2','pill n2','wtag n2'],
+  n1:['N1','pill n1','wtag n1'],
+  '':['NX','pill nx','wtag nx']
+};
+function lvMeta(lv){return LVL[lv]||LVL[''];}
+
+const firstSeen={};
+function isFormWord(pos){
+  if(!pos) return false;
+  return pos.includes('动词')||pos.includes('形容词')||pos.includes('助动词')||pos.includes('句型');
+}
+
+const wordSents={};
+const sentPlain={};
+const stripRuby=h=>h.replace(/<ruby>([^<]*)<rt>[\s\S]*?<\/rt><\/ruby>/g,'$1').replace(/<[^>]+>/g,'');
+const escAttr=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const safeRtText=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ===== 读音覆盖（localStorage，按歌曲隔离）===== */
+const READ_KEY=`jp-lyrics-study:readings:${SONG_ID||'unknown'}`;
+let readings={v:1, ruby:{}, ws:{}};
+
+function loadReadings(){
+  try{
+    const raw=localStorage.getItem(READ_KEY);
+    if(!raw) return;
+    const o=JSON.parse(raw);
+    readings={
+      v:1,
+      ruby:(o&&o.ruby&&typeof o.ruby==='object')?o.ruby:{},
+      ws:(o&&o.ws&&typeof o.ws==='object')?o.ws:{}
+    };
+  }catch(_){
+    readings={v:1, ruby:{}, ws:{}};
+  }
+}
+function saveReadings(){
+  try{
+    const empty=!Object.keys(readings.ruby).length&&!Object.keys(readings.ws).length;
+    if(empty) localStorage.removeItem(READ_KEY);
+    else localStorage.setItem(READ_KEY, JSON.stringify({v:1, ruby:readings.ruby, ws:readings.ws}));
+  }catch(_){}
+}
+function defaultWsRead(ja){
+  const v=vocabMap.get(ja);
+  return v?(v.read||''):'';
+}
+function effectiveWsRead(ja, fallback){
+  if(Object.prototype.hasOwnProperty.call(readings.ws, ja)) return readings.ws[ja];
+  if(fallback!=null&&fallback!==undefined) return fallback;
+  return defaultWsRead(ja);
+}
+function setWsOverride(ja, reading, defaultReading){
+  if(!ja) return;
+  const def=defaultReading!=null?defaultReading:defaultWsRead(ja);
+  const next=(reading==null?'':String(reading)).trim();
+  if(!next||next===def) delete readings.ws[ja];
+  else readings.ws[ja]=next;
+}
+/** 合并 ruby 覆盖，并标记 data-ruby-key / data-base */
+function applyJpOverrides(html, sentIdx){
+  let ri=0;
+  return String(html||'').replace(/<ruby([^>]*)>([^<]*)<rt>([\s\S]*?)<\/rt><\/ruby>/g,(_,attrs,base,rt)=>{
+    const key=`${sentIdx}:${ri++}`;
+    const bare=String(base).replace(/<[^>]+>/g,'').trim();
+    const isKata=/^[\u30a0-\u30ffー゛゜・ゝゞヽヾ]+$/.test(bare);
+    const cleaned=String(attrs||'')
+      .replace(/\s*class\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'')
+      .replace(/\s*data-ruby-key\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'')
+      .replace(/\s*data-base\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi,'');
+    const cls=isKata?'ruby-kata':'ruby-kanji';
+    const defRt=String(rt).replace(/<[^>]+>/g,'');
+    const hasOver=Object.prototype.hasOwnProperty.call(readings.ruby, key);
+    const reading=hasOver?readings.ruby[key]:defRt;
+    const overCls=hasOver?' rt-overridden':'';
+    return `<ruby${cleaned} class="${cls}" data-ruby-key="${escAttr(key)}" data-base="${escAttr(bare)}">${base}<rt class="${overCls.trim()}" data-default-rt="${escAttr(defRt)}" title="点击修改读音">${safeRtText(reading)}</rt></ruby>`;
+  });
+}
+
+const SPEAK_ICON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>`;
+function speakBtn(text, extraClass=''){
+  const t=(text||'').trim();
+  if(!t) return '';
+  return `<button type="button" class="speak${extraClass?' '+extraClass:''}" aria-label="发音" title="发音" data-speak="${escAttr(t)}">${SPEAK_ICON}</button>`;
+}
+function wordSpeakText(ja, read){
+  const j=(ja&&String(ja).trim())||'';
+  const r=(effectiveWsRead(ja, read)||'').trim();
+  if(Object.prototype.hasOwnProperty.call(readings.ws, ja)&&r) return r;
+  if(j&&/[\u4e00-\u9fff]/.test(j)) return j;
+  return r||j;
+}
+
+/* ===== 日语朗读（piper-plus / OpenJTalk）===== */
+let piper=null;
+let piperInit=null;
+let speakAudio=null;
+let speakGen=0;
+
+function clearSpeakingUI(){
+  document.querySelectorAll('.speak.playing,.speak.loading').forEach(el=>{
+    el.classList.remove('playing','loading');
+    el.title='发音';
+  });
+}
+function stopSpeak(){
+  speakGen++;
+  if(speakAudio){
+    try{
+      speakAudio.pause();
+      const src=speakAudio.src;
+      speakAudio.removeAttribute('src');
+      speakAudio.load();
+      if(src) URL.revokeObjectURL(src);
+    }catch(_){}
+    speakAudio=null;
+  }
+  clearSpeakingUI();
+}
+function ensurePiper(){
+  if(piper) return Promise.resolve(piper);
+  if(piperInit) return piperInit;
+  piperInit=PiperPlus.initialize({model:'tsukuyomi', ort})
+    .then(p=>{piper=p; return p;})
+    .catch(err=>{piperInit=null; throw err;});
+  return piperInit;
+}
+async function speak(text, btn){
+  const t=(text||'').trim();
+  if(!t) return;
+  stopSpeak();
+  const gen=speakGen;
+  if(btn){
+    btn.classList.add('loading');
+    btn.title='加载语音模型…';
+  }
+  try{
+    const eng=await ensurePiper();
+    if(gen!==speakGen) return;
+    if(btn) btn.title='合成中…';
+    const result=await eng.synthesize(t,{language:'ja',lengthScale:1.05});
+    if(gen!==speakGen) return;
+    const url=URL.createObjectURL(result.toBlob());
+    const audio=new Audio(url);
+    speakAudio=audio;
+    if(btn){
+      btn.classList.remove('loading');
+      btn.classList.add('playing');
+      btn.title='发音';
+    }
+    const done=()=>{
+      if(speakAudio===audio) speakAudio=null;
+      URL.revokeObjectURL(url);
+      if(btn) btn.classList.remove('playing','loading');
+    };
+    audio.addEventListener('ended',done);
+    audio.addEventListener('error',done);
+    await audio.play();
+  }catch(err){
+    if(btn){
+      btn.classList.remove('loading','playing');
+      btn.title='发音';
+    }
+    console.error(err);
+    alert('语音合成失败（需联网首次下载 piper-plus 模型，并允许浏览器播放声音）');
+  }
+}
+
+const vocabMap=new Map();
+S.forEach((s,si)=>{
+  s.ws.forEach(w=>{
+    const k=w[0];
+    const wobj={ja:w[0],read:w[1],mean:w[2],lv:w[3],note:w[4]||'',sent:si+1};
+    if(!vocabMap.has(k)) vocabMap.set(k,wobj);
+  });
+});
+
+function clearRenderState(){
+  for(const k of Object.keys(firstSeen)) delete firstSeen[k];
+  for(const k of Object.keys(wordSents)) delete wordSents[k];
+}
+
+function renderLyrics(){
+  const box=document.getElementById('lyrics');
+  box.innerHTML='';
+  S.forEach((s,si)=>{
+    const num=si+1;
+    sentPlain[num]=stripRuby(s.jp);
+    let whtml='';
+    s.ws.forEach(w=>{
+      const k=w[0];
+      const meta=lvMeta(w[3]);
+      const lv=meta[2];
+      const isRep=firstSeen[k]!==undefined;
+      const repTag=isRep?`<span class="rep">重复·第${firstSeen[k]}处</span>`:'';
+      if(!isRep) firstSeen[k]=num;
+      const readHtml=`<span class="w-ja">${w[0]}</span>`;
+      const p=POS[k]||{pos:'',form:''};
+      const posHtml=`<span class="pos">${p.pos||''}</span>`;
+      const formTag=(isFormWord(p.pos)&&p.form)?`<span class="pos-f">${p.form}</span>`:'';
+      (wordSents[k]=wordSents[k]||[]).push(num);
+      const effRead=effectiveWsRead(w[0], w[1]);
+      const say=wordSpeakText(w[0], w[1]);
+      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
+    });
+    const plain=sentPlain[num];
+    const card=document.createElement('div');
+    card.className='card';
+    card.id='sent-'+num;
+    card.innerHTML=`
+      <div class="sline" data-s="${num}">
+        <span class="num">${num}</span>
+        <div class="jp">${applyJpOverrides(s.jp, si)}</div>
+        ${speakBtn(plain)}
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="detail"><div class="detail-inner">
+        <div class="sec"><h4>分词</h4><div class="seg">${s.seg.split('｜').join('<span class="sep">·</span>')}</div></div>
+        <div class="sec"><h4>词汇与等级</h4><div class="wlist">${whtml}</div></div>
+        <div class="sec"><h4>语法</h4><div class="grammar">${s.gram}</div></div>
+        <div class="sec"><h4>中文翻译</h4><div class="tr">${s.tr}</div></div>
+      </div></div>`;
+    box.appendChild(card);
+  });
+}
+
+function renderStats(){
+  const counts={n5:0,n4:0,n3:0,n2:0,n1:0,'':0};
+  vocabMap.forEach(v=>{counts[v.lv in counts?v.lv:'']++;});
+  const total=vocabMap.size;
+  const el=document.getElementById('statBar');
+  const bits=[
+    ['n5','N5'],['n4','N4'],['n3','N3'],['n2','N2'],['n1','N1'],['','NX']
+  ].filter(([k])=>counts[k]>0)
+   .map(([k,label])=>`<span class="pill ${lvMeta(k)[1]}">${label} ${counts[k]}</span>`);
+  el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词 · ${bits.join(' ')}`;
+}
+
+function renderVocabGroups(){
+  const order=['n5','n4','n3','n2','n1',''];
+  const groups={n5:[],n4:[],n3:[],n2:[],n1:[],'':[]};
+  vocabMap.forEach(v=>{
+    const lv=v.lv in groups?v.lv:'';
+    groups[lv].push(v);
+  });
+  const el=document.getElementById('vocabGroups');
+  el.innerHTML='';
+  order.forEach(lv=>{
+    const arr=groups[lv];
+    if(!arr.length) return;
+    const meta=lvMeta(lv);
+    const h=document.createElement('div');
+    h.className='vg';
+    h.innerHTML=`<h5><span class="pill ${meta[1]}">${meta[0]}</span><span style="color:var(--muted);font-size:12px">${arr.length} 词</span></h5>`;
+    const t=document.createElement('div'); t.className='tags';
+    arr.forEach(v=>{
+      const p=POS[v.ja]||{pos:''};
+      const formTag=(isFormWord(p.pos)&&p.form)?`<span class="wform">${p.form}</span>`:'';
+      const effRead=effectiveWsRead(v.ja, v.read);
+      const say=wordSpeakText(v.ja, v.read);
+      t.innerHTML+=`<span class="witem"><button class="wtag ${lvMeta(v.lv)[2]}" data-ja="${escAttr(v.ja)}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(v.mean)}" data-lv="${v.lv||''}" data-note="${escAttr(v.note||'')}" data-speak="${escAttr(say)}">${v.ja}<span class="wpos">${p.pos||''}</span>${formTag}</button>${speakBtn(say)}</span>`;
+    });
+    h.appendChild(t);
+    el.appendChild(h);
+  });
+}
+
+function rerenderLyricsAndVocab(){
+  clearRenderState();
+  renderLyrics();
+  renderVocabGroups();
+}
+
+/* ===== 读音行内编辑 ===== */
+let editingEl=null;
+function cancelEdit(){
+  if(!editingEl) return;
+  const el=editingEl;
+  editingEl=null;
+  el.contentEditable='false';
+  el.classList.remove('rt-editing');
+  if(el._onKey) el.removeEventListener('keydown', el._onKey);
+  if(el._onBlur) el.removeEventListener('blur', el._onBlur);
+  delete el._onKey; delete el._onBlur; delete el._prev;
+}
+function commitRubyEdit(rt, next){
+  const ruby=rt.closest('ruby');
+  const key=ruby&&ruby.dataset.rubyKey;
+  if(!key) return;
+  const def=rt.dataset.defaultRt||'';
+  const base=ruby.dataset.base||'';
+  const val=(next||'').trim();
+  if(!val||val===def){
+    delete readings.ruby[key];
+    rt.textContent=def;
+    rt.classList.remove('rt-overridden');
+  }else{
+    readings.ruby[key]=val;
+    rt.textContent=val;
+    rt.classList.add('rt-overridden');
+  }
+  if(base&&vocabMap.has(base)){
+    setWsOverride(base, (!val||val===def)?null:val, defaultWsRead(base));
+  }
+  saveReadings();
+  rerenderLyricsAndVocab();
+}
+function commitPopReadEdit(el, next){
+  const ja=el.dataset.ja;
+  if(!ja) return;
+  const def=defaultWsRead(ja);
+  const val=(next||'').trim();
+  setWsOverride(ja, (!val||val===def)?null:val, def);
+  document.querySelectorAll('ruby[data-base]').forEach(r=>{
+    if(r.dataset.base!==ja) return;
+    const key=r.dataset.rubyKey;
+    const rt=r.querySelector('rt');
+    if(!key||!rt) return;
+    const defRt=rt.dataset.defaultRt||'';
+    if(!val||val===defRt) delete readings.ruby[key];
+    else readings.ruby[key]=val;
+  });
+  saveReadings();
+  rerenderLyricsAndVocab();
+  if(pop.classList.contains('show')&&pJp.textContent===ja){
+    const eff=effectiveWsRead(ja);
+    pRead.textContent=eff||'';
+    pRead.dataset.ja=ja;
+    const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
+    document.getElementById('popReadRow').style.display=((hasCJK||hasKata)&&eff)?'':'none';
+    const say=wordSpeakText(ja, eff);
+    const popSpeak=document.getElementById('popSpeak');
+    popSpeak.dataset.speak=say;
+    popSpeak.style.display=say?'':'none';
+  }
+}
+function startEditText(el, onCommit){
+  if(editingEl===el) return;
+  cancelEdit();
+  editingEl=el;
+  el._prev=el.textContent;
+  el.contentEditable='true';
+  el.classList.add('rt-editing');
+  el.focus();
+  try{
+    const range=document.createRange();
+    range.selectNodeContents(el);
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }catch(_){}
+  const onKey=e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      const v=el.textContent;
+      cancelEdit();
+      onCommit(v);
+    }else if(e.key==='Escape'){
+      e.preventDefault();
+      el.textContent=el._prev;
+      cancelEdit();
+    }
+    e.stopPropagation();
+  };
+  const onBlur=()=>{
+    if(editingEl!==el) return;
+    const v=el.textContent;
+    cancelEdit();
+    onCommit(v);
+  };
+  el._onKey=onKey;
+  el._onBlur=onBlur;
+  el.addEventListener('keydown', onKey);
+  el.addEventListener('blur', onBlur);
+}
+
+/* ===== 交互 ===== */
+const popMask=document.getElementById('popMask'), pop=document.getElementById('pop');
+const pJp=document.getElementById('popJp'), pLv=document.getElementById('popLv'), pRead=document.getElementById('popRead'),
+      pMean=document.getElementById('popMean'), pSrc=document.getElementById('popSrc'), pNote=document.getElementById('popNote');
+
+document.addEventListener('click',e=>{
+  const rt=e.target.closest('.sline .jp rt');
+  if(rt&&document.body.classList.contains('opt-ruby')){
+    e.preventDefault();
+    e.stopPropagation();
+    startEditText(rt, v=>commitRubyEdit(rt, v));
+    return;
+  }
+  if(e.target===pRead&&pRead.classList.contains('editable-read')){
+    e.preventDefault();
+    e.stopPropagation();
+    startEditText(pRead, v=>commitPopReadEdit(pRead, v));
+    return;
+  }
+  const sp=e.target.closest('.speak');
+  if(sp){
+    e.preventDefault();
+    e.stopPropagation();
+    speak(sp.dataset.speak||'', sp);
+    return;
+  }
+  const w=e.target.closest('.wtag');
+  if(w){
+    const ja=w.dataset.ja;
+    pJp.textContent=ja;
+    const popSpeak=document.getElementById('popSpeak');
+    const effRead=effectiveWsRead(ja, w.dataset.read);
+    const say=wordSpeakText(ja, w.dataset.read);
+    popSpeak.dataset.speak=say;
+    popSpeak.innerHTML=SPEAK_ICON;
+    popSpeak.style.display=say?'':'none';
+    const meta=lvMeta(w.dataset.lv||'');
+    pLv.innerHTML=`<span class="pill ${meta[1]}">${meta[0]}</span>`;
+    const p=POS[ja]||{pos:'',form:''};
+    document.getElementById('popPos').textContent=p.pos||'—';
+    const fw=isFormWord(p.pos);
+    const formRow=document.getElementById('popFormRow');
+    formRow.style.display=fw?'':'none';
+    document.getElementById('popForm').textContent=fw?(p.form||'—'):'';
+    const baseRow=document.getElementById('popBaseRow');
+    baseRow.style.display=p.base?'':'none';
+    document.getElementById('popBase').textContent=p.base||'';
+    const formsRow=document.getElementById('popFormsRow');
+    const others=(fw&&Array.isArray(p.forms))?p.forms.filter(f=>f[0]!==p.form):[];
+    formsRow.style.display=others.length?'':'none';
+    document.getElementById('popForms').innerHTML=others.map(f=>`<span class="of"><b>${f[0]}</b>${f[1]}</span>`).join('');
+    const readRow=document.getElementById('popReadRow');
+    const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
+    if((hasCJK||hasKata)&&effRead){
+      readRow.style.display='';
+      pRead.textContent=effRead;
+      pRead.dataset.ja=ja;
+      pRead.classList.add('editable-read');
+      pRead.title='点击修改读音';
+    }else{
+      readRow.style.display='none';
+      pRead.classList.remove('editable-read');
+      pRead.removeAttribute('data-ja');
+      pRead.title='';
+    }
+    pMean.textContent=w.dataset.mean||'—';
+    const sents=(wordSents[ja]||[w.dataset.sent]);
+    pSrc.innerHTML=sents.map(n=>`<div class="sent-item"><b>第${n}句</b>${sentPlain[n]||''}</div>`).join('');
+    const note=w.dataset.note||'';
+    const noteRow=document.getElementById('popNoteRow');
+    const dupNote=/^(字典形|ない形|ます形|て形|た形|ば形|意志形|命令形|可能态|被动态|使役态|使役被动态|否定形|过去形|副词化|假定形|～たい|名词|副词|イ形容词|ナ形容词)/.test(note);
+    const showNote=note&&!dupNote;
+    noteRow.style.display=showNote?'':'none';
+    pNote.textContent=showNote?note:'';
+    pop.classList.add('show'); popMask.classList.add('show');
+    return;
+  }
+  const line=e.target.closest('.sline');
+  if(line){
+    line.closest('.card').classList.toggle('open');
+    return;
+  }
+});
+
+function closePop(){
+  cancelEdit();
+  pop.classList.remove('show');
+  popMask.classList.remove('show');
+  stopSpeak();
+}
+document.getElementById('popClose').addEventListener('click',closePop);
+popMask.addEventListener('click',closePop);
+
+document.getElementById('btnAll').addEventListener('click',()=>{
+  document.querySelectorAll('.card').forEach(c=>c.classList.add('open'));
+});
+document.getElementById('btnCollapse').addEventListener('click',()=>{
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'));
+});
+
+/* ===== 显示设置 ===== */
+const OPT_KEY='jp-lyrics-study:display-opts';
+const optRuby=document.getElementById('optRuby');
+const optKataRuby=document.getElementById('optKataRuby');
+const settingsPanel=document.getElementById('settingsPanel');
+const settingsMask=document.getElementById('settingsMask');
+
+function loadOpts(){
+  try{
+    const raw=localStorage.getItem(OPT_KEY);
+    if(!raw) return {ruby:true, kataRuby:false};
+    const o=JSON.parse(raw);
+    return {ruby:o.ruby!==false, kataRuby:o.kataRuby===true};
+  }catch(_){
+    return {ruby:true, kataRuby:false};
+  }
+}
+function saveOpts(){
+  try{
+    localStorage.setItem(OPT_KEY, JSON.stringify({
+      ruby:!!optRuby.checked,
+      kataRuby:!!optKataRuby.checked
+    }));
+  }catch(_){}
+}
+function applyOpts(){
+  document.body.classList.toggle('opt-ruby', !!optRuby.checked);
+  document.body.classList.toggle('opt-kata-ruby', !!optKataRuby.checked);
+  optKataRuby.disabled=!optRuby.checked;
+}
+function openSettings(){
+  settingsPanel.classList.add('show');
+  settingsMask.classList.add('show');
+}
+function closeSettings(){
+  settingsPanel.classList.remove('show');
+  settingsMask.classList.remove('show');
+}
+(function initOpts(){
+  const o=loadOpts();
+  optRuby.checked=o.ruby;
+  optKataRuby.checked=o.kataRuby;
+  applyOpts();
+})();
+optRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
+optKataRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
+document.getElementById('btnSettings').addEventListener('click',openSettings);
+document.getElementById('settingsClose').addEventListener('click',closeSettings);
+settingsMask.addEventListener('click',closeSettings);
+
+document.getElementById('btnResetReadings').addEventListener('click',()=>{
+  if(!Object.keys(readings.ruby).length&&!Object.keys(readings.ws).length){
+    alert('当前没有已保存的读音修改。');
+    return;
+  }
+  if(!confirm('清除本歌所有自定义读音，恢复模板默认？')) return;
+  readings={v:1, ruby:{}, ws:{}};
+  saveReadings();
+  closePop();
+  rerenderLyricsAndVocab();
+});
+
+loadReadings();
+renderLyrics();
+renderStats();
+renderVocabGroups();
+document.getElementById('popSpeak').innerHTML=SPEAK_ICON;
+
+</script>
 </body>
 </html>
