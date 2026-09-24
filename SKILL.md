@@ -87,7 +87,7 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 - **展开箭头**：用内联 SVG，不用字符。
 - **显示设置**：模板自带「设置」可开关振假名、片假名→平假名注音（localStorage）；生成页无需接线。片假名注音依赖数据里对片假名写了 `<ruby>…</ruby>`。
 - **读音可改**：用户可点击歌词振假名或浮层读音修改，按 `SONG_ID` 存本机；设置里可「恢复默认读音」。生成时必须填写不重复的 `SONG_ID`。
-- **日语发音**：模板用 piper-plus（CDN import map：`piper-plus` / `@piper-plus/g2p` / `onnxruntime-web` + OpenJTalk）为每句歌词、生词提供喇叭按钮；初始化时显式传入 `ort`。首次点击会下载并缓存模型（需联网）。语法说明不加发音。建议用本地 `http://` 打开页面。
+- **日语发音**：模板用 piper-plus（CDN：`piper-plus` / `@piper-plus/g2p` / `onnxruntime-web`；日语 WASM 从 unpkg 加载，因 jsDelivr 常拦 `.wasm`）+ OpenJTalk。初始化传入 `ort` 与 `wasmG2pUrl`。首次点击会下载模型（需联网）。建议用本地 `http://` 打开。
 
 ## 资源
 

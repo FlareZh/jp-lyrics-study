@@ -560,7 +560,9 @@ function stopSpeak(){
 function ensurePiper(){
   if(piper) return Promise.resolve(piper);
   if(piperInit) return piperInit;
-  piperInit=PiperPlus.initialize({model:'tsukuyomi', ort})
+  // 日语 OpenJTalk 依赖 Rust WASM；jsDelivr 常对 .wasm 返回 403，改用 unpkg
+  const wasmG2pUrl='https://unpkg.com/piper-plus@0.7.0/dist/rust-wasm/piper_plus_wasm.js';
+  piperInit=PiperPlus.initialize({model:'tsukuyomi', ort, wasmG2pUrl})
     .then(p=>{piper=p; return p;})
     .catch(err=>{piperInit=null; throw err;});
   return piperInit;
@@ -602,7 +604,7 @@ async function speak(text, btn){
       btn.title='发音';
     }
     console.error(err);
-    alert('语音合成失败（需联网首次下载 piper-plus 模型，并允许浏览器播放声音）');
+    alert('语音合成失败（需联网：jsDelivr/unpkg 拉运行时，Hugging Face 拉语音模型；日语需 WASM。请用 http:// 打开并查看控制台）');
   }
 }
 
