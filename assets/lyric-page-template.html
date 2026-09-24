@@ -171,6 +171,14 @@ body.opt-ruby:not(.opt-kata-ruby) ruby.ruby-kata > rt{display:none;}
   border-radius:8px; padding:7px 12px; font-size:12.5px; cursor:pointer;
 }
 .settings .btn-preview:hover{background:#fdf0e5; border-color:#f0c9a8; color:var(--orange-deep);}
+.settings .slider-row{
+  display:grid; grid-template-columns:3.5em 1fr 2.6em; gap:8px; align-items:center;
+  font-size:13px; color:#38434f;
+}
+.settings .slider-row input[type=range]{
+  width:100%; accent-color:var(--orange); cursor:pointer;
+}
+.settings .slider-row .val{font-variant-numeric:tabular-nums; color:var(--muted); text-align:right;}
 .settings-actions{display:flex; flex-wrap:wrap; gap:8px;}
 .settings-actions .btn{padding:6px 12px; font-size:12.5px;}
 
@@ -388,6 +396,16 @@ footer a{color:#b06a3c; text-decoration:none;}
         <select id="optVoice" aria-label="日语发音音色"></select>
         <button type="button" class="btn-preview" id="btnVoicePreview">试听</button>
       </div>
+      <div class="slider-row">
+        <span>语速</span>
+        <input type="range" id="optRate" aria-label="语速">
+        <span class="val" id="optRateVal"></span>
+      </div>
+      <div class="slider-row">
+        <span>音调</span>
+        <input type="range" id="optPitch" aria-label="音调">
+        <span class="val" id="optPitchVal"></span>
+      </div>
       <p class="hint" id="voiceHint" hidden></p>
     </div>
     <div class="settings-sep"></div>
@@ -527,16 +545,13 @@ function applyJpOverrides(html, sentIdx){
 }
 
 const SPEAK_ICON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>`;
-function speakBtn(text, extraClass=''){
-  const t=(text||'').trim();
-  if(!t) return '';
-  return `<button type="button" class="speak${extraClass?' '+extraClass:''}" aria-label="发音" title="发音" data-speak="${escAttr(t)}">${SPEAK_ICON}</button>`;
+function speakBtn(text=''){
+  return `<button type="button" class="speak" aria-label="发音" title="发音" data-speak="${escAttr(String(text||'').trim())}">${SPEAK_ICON}</button>`;
 }
 function wordSpeakText(ja, read){
   const j=(ja&&String(ja).trim())||'';
   const r=(effectiveWsRead(ja, read)||'').trim();
-  // 必须出假名：Kyoko 遇未收录汉字会整段切到中文引擎
-  return r||j;
+  return r||j; // 优先假名，减轻汉字被中文引擎误读
 }
 /** 从当前歌词 DOM 取朗读文本：优先用页面上（含手动修改）的振假名 */
 function speakTextFromJpEl(jpEl){
@@ -550,28 +565,6 @@ function speakTextFromJpEl(jpEl){
     ruby.replaceWith(document.createTextNode(reading||base));
   });
   return kanaOnlySpeakText((clone.textContent||'').replace(/\s+/g,' ').trim());
-}
-/** 整句朗读：用振假名（含 readings.ruby 覆盖）替换 ruby */
-function jpToSpeakText(html, sentIdx){
-  let ri=0;
-  let out=String(html||'').replace(/<ruby([^>]*)>([^<]*)<rt>([\s\S]*?)<\/rt><\/ruby>/g,(_,attrs,base,rt)=>{
-    const key=`${sentIdx}:${ri++}`;
-    const defRt=String(rt).replace(/<[^>]+>/g,'').trim();
-    const reading=Object.prototype.hasOwnProperty.call(readings.ruby, key)
-      ? String(readings.ruby[key]||'').trim()
-      : defRt;
-    const bare=String(base).replace(/<[^>]+>/g,'');
-    return reading||bare;
-  });
-  out=out.replace(/<[^>]+>/g,'')
-    .replace(/&nbsp;/g,' ')
-    .replace(/&amp;/g,'&')
-    .replace(/&lt;/g,'<')
-    .replace(/&gt;/g,'>')
-    .replace(/&quot;/g,'"')
-    .replace(/\s+/g,' ')
-    .trim();
-  return kanaOnlySpeakText(out);
 }
 const HAN_RE=/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g;
 function buildReadMap(){
@@ -597,17 +590,28 @@ function replaceByReadMap(text){
 }
 /** 朗读前去掉汉字，避免系统把片段交给中文 TTS */
 function kanaOnlySpeakText(text){
-  let t=replaceByReadMap(text);
-  t=t.replace(HAN_RE,'');
-  return t.replace(/\s+/g,' ').trim();
+  return replaceByReadMap(text).replace(HAN_RE,'').replace(/\s+/g,' ').trim();
 }
 
 /* ===== 日语朗读（Web Speech API）===== */
-let speakVoice=null;
-let preferredVoiceUri=''; // '' = 自动优选；否则为 voiceURI
+const SPEAK={
+  RATE_DEFAULT:1,
+  PITCH_DEFAULT:1,
+  AXIS_MIN:0.5,
+  AXIS_MAX:1.5,
+  AXIS_STEP:0.05,
+  VALUE_DECIMALS:2,
+  AFTER_CANCEL_MS:80,
+  PREVIEW_TEXT:'こんにちは。これは音声のテストです。'
+};
+const SPEAK_VALUE_SCALE=10**SPEAK.VALUE_DECIMALS;
+let preferredVoiceUri='';
 let preferredVoiceName='';
-let speakUtterance=null; // Chrome：必须抓住引用，否则可能静默失败/落到默认中文音色
+let speakRate=SPEAK.RATE_DEFAULT;
+let speakPitch=SPEAK.PITCH_DEFAULT;
+let speakUtterance=null;
 let speakTimer=null;
+
 function listJaVoices(){
   if(!window.speechSynthesis) return [];
   return (speechSynthesis.getVoices()||[]).filter(v=>{
@@ -621,46 +625,55 @@ function scoreJaVoice(v){
   if(!(lang==='ja-jp'||lang.startsWith('ja'))) return -1e9;
   let s=lang==='ja-jp'?20:8;
   const blob=`${v.name||''} ${v.voiceURI||''}`.toLowerCase();
-  // 高质量常见音色
-  if(/\bo-?ren\b/.test(blob)) s+=110;
-  if(/\bkyoko\b/.test(blob)) s+=100;
-  if(/google/.test(blob)&&(blob.includes('日本語')||/japanese|ja-jp|ja_jp/.test(blob))) s+=95;
-  if(/\b(nanami|haruka|ayumi|ichiro|sayaka|otoya)\b/.test(blob)) s+=85;
-  if(/premium|enhanced|neural|natural|wavenet|studio|online \(natural\)/.test(blob)) s+=40;
-  if(/compact/.test(blob)) s+=5;
-  // macOS Eloquence 趣味音色：学习场景不适合
-  if(/eloquence/.test(blob)) s-=80;
-  if(/\b(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley)\b/.test(blob)) s-=90;
-  // 中文系统/浏览器下 Kyoko 常静音或只读汉字，自动优选时避开
-  const ui=(navigator.language||'').toLowerCase();
-  if(ui.startsWith('zh')&&/\bkyoko\b/.test(blob)) s-=130;
+  const rules=[
+    [/\bo-?ren\b/,110],[/\bkyoko\b/,100],
+    [/google.*(?:日本語|japanese|ja-jp|ja_jp)|(?:日本語|japanese).*google/,95],
+    [/\b(nanami|haruka|ayumi|ichiro|sayaka|otoya)\b/,85],
+    [/premium|enhanced|neural|natural|wavenet|studio|online \(natural\)/,40],
+    [/compact/,5],
+    [/eloquence/,-80],
+    [/\b(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley)\b/,-90]
+  ];
+  for(const [re,pts] of rules) if(re.test(blob)) s+=pts;
+  if((navigator.language||'').toLowerCase().startsWith('zh')&&/\bkyoko\b/.test(blob)) s-=130;
   if(v.localService) s+=15;
   if(v.default) s+=3;
   return s;
 }
-function pickBestJaVoice(voices){
-  const list=voices&&voices.length?voices:listJaVoices();
-  if(!list.length) return null;
-  return list.slice().sort((a,b)=>scoreJaVoice(b)-scoreJaVoice(a)||String(a.name).localeCompare(String(b.name)))[0];
+function compareJaVoices(a,b){
+  return scoreJaVoice(b)-scoreJaVoice(a)||String(a.name).localeCompare(String(b.name));
 }
-/** 有手动偏好则返回该音色；空 uri+空 name = 自动 */
+function sortedJaVoices(voices){
+  return (voices&&voices.length?voices:listJaVoices()).slice().sort(compareJaVoices);
+}
+function pickBestJaVoice(voices){
+  const list=sortedJaVoices(voices);
+  return list[0]||null;
+}
 function findVoiceByPref(){
+  if(!preferredVoiceUri) return null;
   const ja=listJaVoices();
-  if(!ja.length) return null;
-  if(!preferredVoiceUri) return null; // 自动：忽略残留 name
-  const byUri=ja.find(v=>v.voiceURI===preferredVoiceUri);
-  if(byUri) return byUri;
-  if(preferredVoiceName){
-    return ja.find(v=>v.name===preferredVoiceName)||null;
-  }
-  return null;
+  return ja.find(v=>v.voiceURI===preferredVoiceUri)
+    ||(preferredVoiceName&&ja.find(v=>v.name===preferredVoiceName))
+    ||null;
 }
 function resolveSpeakVoice(){
   const ja=listJaVoices();
-  if(!ja.length){ speakVoice=null; return null; }
-  const chosen=findVoiceByPref();
-  speakVoice=chosen||pickBestJaVoice(ja);
-  return speakVoice;
+  if(!ja.length) return null;
+  return findVoiceByPref()||pickBestJaVoice(ja);
+}
+function setVoicePref(uri){
+  preferredVoiceUri=uri||'';
+  if(!preferredVoiceUri){
+    preferredVoiceName='';
+    return;
+  }
+  const v=listJaVoices().find(x=>x.voiceURI===preferredVoiceUri);
+  preferredVoiceName=v?(v.name||''):'';
+}
+function clearVoicePref(){
+  preferredVoiceUri='';
+  preferredVoiceName='';
 }
 function voiceOptionLabel(v, bestUri){
   const bits=[v.name||'未命名'];
@@ -672,18 +685,11 @@ function voiceOptionLabel(v, bestUri){
 function updateVoiceHint(){
   const hint=document.getElementById('voiceHint');
   if(!hint) return;
-  if(!window.speechSynthesis){
-    hint.hidden=false;
-    hint.textContent='当前浏览器不支持语音朗读。';
-    return;
-  }
-  if(!listJaVoices().length){
-    hint.hidden=false;
-    hint.textContent='未检测到日语音色，请在系统设置中安装日语语音。';
-    return;
-  }
-  hint.hidden=true;
-  hint.textContent='';
+  let msg='';
+  if(!window.speechSynthesis) msg='当前浏览器不支持语音朗读。';
+  else if(!listJaVoices().length) msg='未检测到日语音色，请在系统设置中安装日语语音。';
+  hint.hidden=!msg;
+  hint.textContent=msg;
 }
 function refreshVoiceSelect(){
   const sel=document.getElementById('optVoice');
@@ -696,33 +702,25 @@ function refreshVoiceSelect(){
   auto.value='';
   auto.textContent=best?`自动（推荐：${best.name}）`:'自动（未检测到日语音色）';
   sel.appendChild(auto);
-  ja.slice().sort((a,b)=>scoreJaVoice(b)-scoreJaVoice(a)||String(a.name).localeCompare(String(b.name)))
-    .forEach(v=>{
-      const opt=document.createElement('option');
-      opt.value=v.voiceURI;
-      opt.textContent=voiceOptionLabel(v, bestUri);
-      sel.appendChild(opt);
-    });
+  sortedJaVoices(ja).forEach(v=>{
+    const opt=document.createElement('option');
+    opt.value=v.voiceURI;
+    opt.textContent=voiceOptionLabel(v, bestUri);
+    sel.appendChild(opt);
+  });
   const matched=findVoiceByPref();
   if(matched){
-    preferredVoiceUri=matched.voiceURI;
-    preferredVoiceName=matched.name||'';
+    setVoicePref(matched.voiceURI);
     sel.value=matched.voiceURI;
   }else{
-    // 自动，或偏好音色已不存在
-    if(ja.length&&preferredVoiceUri){
-      preferredVoiceUri='';
-      preferredVoiceName='';
-    }else if(!preferredVoiceUri){
-      preferredVoiceName='';
-    }
+    if(ja.length&&preferredVoiceUri) clearVoicePref();
+    else if(!preferredVoiceUri) preferredVoiceName='';
     sel.value='';
   }
-  resolveSpeakVoice();
   updateVoiceHint();
 }
 if(window.speechSynthesis){
-  speechSynthesis.addEventListener('voiceschanged',()=>{ refreshVoiceSelect(); });
+  speechSynthesis.addEventListener('voiceschanged', refreshVoiceSelect);
 }
 function clearSpeakingUI(){
   document.querySelectorAll('.speak.playing').forEach(el=>el.classList.remove('playing'));
@@ -750,11 +748,9 @@ function speak(text, btn){
   }
   stopSpeak();
   if(btn) btn.classList.add('playing');
-  // Chrome：cancel 后需稍等；且 utterance 必须挂到全局，否则可能落到默认中文音色
   speakTimer=setTimeout(()=>{
     speakTimer=null;
     const voice=resolveSpeakVoice();
-    // 取最新 voice 引用，避免 voiceschanged 后旧对象在 Chrome 上静音
     const fresh=voice&&(listJaVoices().find(v=>v.voiceURI===voice.voiceURI)||voice);
     const u=new SpeechSynthesisUtterance(t);
     speakUtterance=u;
@@ -764,24 +760,23 @@ function speak(text, btn){
     }else{
       u.lang='ja-JP';
     }
-    u.rate=0.92;
-    u.onend=()=>{
+    u.rate=speakRate;
+    u.pitch=speakPitch;
+    const done=()=>{
       if(speakUtterance===u) speakUtterance=null;
       if(btn) btn.classList.remove('playing');
     };
-    u.onerror=()=>{
-      if(speakUtterance===u) speakUtterance=null;
-      if(btn) btn.classList.remove('playing');
-    };
+    u.onend=done;
+    u.onerror=done;
     try{
       speechSynthesis.speak(u);
       if(speechSynthesis.paused) speechSynthesis.resume();
     }catch(err){
       console.error(err);
-      if(btn) btn.classList.remove('playing');
+      done();
       alert('语音朗读失败，请换一个日语音色再试。');
     }
-  }, 80);
+  }, SPEAK.AFTER_CANCEL_MS);
 }
 
 const vocabMap=new Map();
@@ -821,8 +816,6 @@ function renderLyrics(){
       const say=wordSpeakText(w[0], w[1]);
       whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
     });
-    const plain=sentPlain[num];
-    const sayLine=jpToSpeakText(s.jp, si);
     const card=document.createElement('div');
     card.className='card';
     card.id='sent-'+num;
@@ -830,7 +823,7 @@ function renderLyrics(){
       <div class="sline" data-s="${num}">
         <span class="num">${num}</span>
         <div class="jp">${applyJpOverrides(s.jp, si)}</div>
-        ${speakBtn(sayLine)}
+        ${speakBtn()}
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </div>
       <div class="detail"><div class="detail-inner">
@@ -1111,22 +1104,48 @@ const OPT_KEY='jp-lyrics-study:display-opts';
 const optRuby=document.getElementById('optRuby');
 const optKataRuby=document.getElementById('optKataRuby');
 const optVoice=document.getElementById('optVoice');
+const optRate=document.getElementById('optRate');
+const optPitch=document.getElementById('optPitch');
+const optRateVal=document.getElementById('optRateVal');
+const optPitchVal=document.getElementById('optPitchVal');
 const settingsPanel=document.getElementById('settingsPanel');
 const settingsMask=document.getElementById('settingsMask');
 
+function defaultOpts(){
+  return {ruby:true, kataRuby:false, voiceUri:'', voiceName:'', rate:SPEAK.RATE_DEFAULT, pitch:SPEAK.PITCH_DEFAULT};
+}
+function clampSpeakAxis(n, fallback){
+  const x=Number(n);
+  if(!Number.isFinite(x)) return fallback;
+  return Math.min(SPEAK.AXIS_MAX, Math.max(SPEAK.AXIS_MIN, Math.round(x*SPEAK_VALUE_SCALE)/SPEAK_VALUE_SCALE));
+}
+function syncSpeakSliders(){
+  for(const [el,val,label] of [
+    [optRate, speakRate, optRateVal],
+    [optPitch, speakPitch, optPitchVal]
+  ]){
+    el.min=String(SPEAK.AXIS_MIN);
+    el.max=String(SPEAK.AXIS_MAX);
+    el.step=String(SPEAK.AXIS_STEP);
+    el.value=String(val);
+    label.textContent=Number(val).toFixed(SPEAK.VALUE_DECIMALS);
+  }
+}
 function loadOpts(){
   try{
     const raw=localStorage.getItem(OPT_KEY);
-    if(!raw) return {ruby:true, kataRuby:false, voiceUri:'', voiceName:''};
+    if(!raw) return defaultOpts();
     const o=JSON.parse(raw);
     return {
       ruby:o.ruby!==false,
       kataRuby:o.kataRuby===true,
       voiceUri:typeof o.voiceUri==='string'?o.voiceUri:'',
-      voiceName:typeof o.voiceName==='string'?o.voiceName:''
+      voiceName:typeof o.voiceName==='string'?o.voiceName:'',
+      rate:clampSpeakAxis(o.rate, SPEAK.RATE_DEFAULT),
+      pitch:clampSpeakAxis(o.pitch, SPEAK.PITCH_DEFAULT)
     };
   }catch(_){
-    return {ruby:true, kataRuby:false, voiceUri:'', voiceName:''};
+    return defaultOpts();
   }
 }
 function saveOpts(){
@@ -1135,7 +1154,9 @@ function saveOpts(){
       ruby:!!optRuby.checked,
       kataRuby:!!optKataRuby.checked,
       voiceUri:preferredVoiceUri||'',
-      voiceName:preferredVoiceName||''
+      voiceName:preferredVoiceName||'',
+      rate:speakRate,
+      pitch:speakPitch
     }));
   }catch(_){}
 }
@@ -1146,6 +1167,7 @@ function applyOpts(){
 }
 function openSettings(){
   refreshVoiceSelect();
+  syncSpeakSliders();
   settingsPanel.classList.add('show');
   settingsMask.classList.add('show');
 }
@@ -1158,28 +1180,29 @@ function closeSettings(){
   optRuby.checked=o.ruby;
   optKataRuby.checked=o.kataRuby;
   preferredVoiceUri=o.voiceUri||'';
-  // uri 为空表示自动；勿沿用旧的 name，否则会锁回上一音色
   preferredVoiceName=preferredVoiceUri?(o.voiceName||''):'';
+  speakRate=o.rate;
+  speakPitch=o.pitch;
+  syncSpeakSliders();
   applyOpts();
   refreshVoiceSelect();
 })();
 optRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
 optKataRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
 optVoice.addEventListener('change',()=>{
-  preferredVoiceUri=optVoice.value||'';
-  if(!preferredVoiceUri){
-    preferredVoiceName='';
-  }else{
-    const v=listJaVoices().find(x=>x.voiceURI===preferredVoiceUri);
-    preferredVoiceName=v?(v.name||''):'';
-  }
-  resolveSpeakVoice();
+  setVoicePref(optVoice.value||'');
   saveOpts();
   updateVoiceHint();
 });
-document.getElementById('btnVoicePreview').addEventListener('click',()=>{
-  speak('こんにちは。これは音声のテストです。');
-});
+function onSpeakSliderInput(){
+  speakRate=clampSpeakAxis(optRate.value, SPEAK.RATE_DEFAULT);
+  speakPitch=clampSpeakAxis(optPitch.value, SPEAK.PITCH_DEFAULT);
+  syncSpeakSliders();
+  saveOpts();
+}
+optRate.addEventListener('input', onSpeakSliderInput);
+optPitch.addEventListener('input', onSpeakSliderInput);
+document.getElementById('btnVoicePreview').addEventListener('click',()=>speak(SPEAK.PREVIEW_TEXT));
 document.getElementById('btnSettings').addEventListener('click',openSettings);
 document.getElementById('settingsClose').addEventListener('click',closeSettings);
 settingsMask.addEventListener('click',closeSettings);
