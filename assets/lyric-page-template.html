@@ -381,7 +381,6 @@ footer a{color:#b06a3c; text-decoration:none;}
       <input type="checkbox" id="optKataRuby">
       <span>为片假名标注平假名</span>
     </label>
-    <p class="hint">关闭「显示假名标注」时，片假名注音也会隐藏；重新开启后仍沿用下方选项。显示偏好保存在本机浏览器。</p>
     <div class="settings-sep"></div>
     <div class="field">
       <span>日语发音</span>
@@ -389,10 +388,10 @@ footer a{color:#b06a3c; text-decoration:none;}
         <select id="optVoice" aria-label="日语发音音色"></select>
         <button type="button" class="btn-preview" id="btnVoicePreview">试听</button>
       </div>
-      <p class="hint" id="voiceHint">当前音色与假名朗读说明会显示在这里。</p>
+      <p class="hint" id="voiceHint" hidden></p>
     </div>
     <div class="settings-sep"></div>
-    <p class="hint" style="margin:0">点击歌词上的振假名可修改读音，按歌曲保存在本机。</p>
+    <p class="hint" style="margin:0">点击歌词上的振假名可修改读音。</p>
     <div class="settings-actions">
       <button type="button" class="btn" id="btnResetReadings">恢复默认读音</button>
     </div>
@@ -539,7 +538,20 @@ function wordSpeakText(ja, read){
   // 必须出假名：Kyoko 遇未收录汉字会整段切到中文引擎
   return r||j;
 }
-/** 整句朗读：用振假名（含覆盖）替换 ruby */
+/** 从当前歌词 DOM 取朗读文本：优先用页面上（含手动修改）的振假名 */
+function speakTextFromJpEl(jpEl){
+  if(!jpEl) return '';
+  const clone=jpEl.cloneNode(true);
+  clone.querySelectorAll('ruby').forEach(ruby=>{
+    const rt=ruby.querySelector('rt');
+    const reading=(rt?rt.textContent:'').trim();
+    const base=(ruby.dataset.base||'').trim()
+      ||(ruby.childNodes[0]&&ruby.childNodes[0].nodeType===3?ruby.childNodes[0].textContent:'').trim();
+    ruby.replaceWith(document.createTextNode(reading||base));
+  });
+  return kanaOnlySpeakText((clone.textContent||'').replace(/\s+/g,' ').trim());
+}
+/** 整句朗读：用振假名（含 readings.ruby 覆盖）替换 ruby */
 function jpToSpeakText(html, sentIdx){
   let ri=0;
   let out=String(html||'').replace(/<ruby([^>]*)>([^<]*)<rt>([\s\S]*?)<\/rt><\/ruby>/g,(_,attrs,base,rt)=>{
@@ -619,6 +631,9 @@ function scoreJaVoice(v){
   // macOS Eloquence 趣味音色：学习场景不适合
   if(/eloquence/.test(blob)) s-=80;
   if(/\b(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley)\b/.test(blob)) s-=90;
+  // 中文系统/浏览器下 Kyoko 常静音或只读汉字，自动优选时避开
+  const ui=(navigator.language||'').toLowerCase();
+  if(ui.startsWith('zh')&&/\bkyoko\b/.test(blob)) s-=130;
   if(v.localService) s+=15;
   if(v.default) s+=3;
   return s;
@@ -628,16 +643,15 @@ function pickBestJaVoice(voices){
   if(!list.length) return null;
   return list.slice().sort((a,b)=>scoreJaVoice(b)-scoreJaVoice(a)||String(a.name).localeCompare(String(b.name)))[0];
 }
+/** 有手动偏好则返回该音色；空 uri+空 name = 自动 */
 function findVoiceByPref(){
   const ja=listJaVoices();
   if(!ja.length) return null;
-  if(preferredVoiceUri){
-    const byUri=ja.find(v=>v.voiceURI===preferredVoiceUri);
-    if(byUri) return byUri;
-  }
+  if(!preferredVoiceUri) return null; // 自动：忽略残留 name
+  const byUri=ja.find(v=>v.voiceURI===preferredVoiceUri);
+  if(byUri) return byUri;
   if(preferredVoiceName){
-    const byName=ja.find(v=>v.name===preferredVoiceName);
-    if(byName) return byName;
+    return ja.find(v=>v.name===preferredVoiceName)||null;
   }
   return null;
 }
@@ -655,21 +669,21 @@ function voiceOptionLabel(v, bestUri){
   if(bestUri&&v.voiceURI===bestUri) bits.push('推荐');
   return bits.join(' · ');
 }
-function updateVoiceHint(extra){
+function updateVoiceHint(){
   const hint=document.getElementById('voiceHint');
   if(!hint) return;
-  const ja=listJaVoices();
-  const cur=resolveSpeakVoice();
   if(!window.speechSynthesis){
-    hint.textContent='当前浏览器不支持 Web Speech API。';
+    hint.hidden=false;
+    hint.textContent='当前浏览器不支持语音朗读。';
     return;
   }
-  if(!ja.length){
-    hint.textContent='未检测到日语音色。请在系统/浏览器语音设置中安装日语语音包。';
+  if(!listJaVoices().length){
+    hint.hidden=false;
+    hint.textContent='未检测到日语音色，请在系统设置中安装日语语音。';
     return;
   }
-  const who=cur?`${cur.name}（${cur.lang||'ja-JP'}${cur.localService?' · 本机':''}）`:'未知';
-  hint.textContent=`当前：${who}。朗读会去掉汉字只留假名（Kyoko 遇未收录汉字会切到中文引擎）。${extra||''}`;
+  hint.hidden=true;
+  hint.textContent='';
 }
 function refreshVoiceSelect(){
   const sel=document.getElementById('optVoice');
@@ -695,8 +709,13 @@ function refreshVoiceSelect(){
     preferredVoiceName=matched.name||'';
     sel.value=matched.voiceURI;
   }else{
-    preferredVoiceUri='';
-    preferredVoiceName='';
+    // 自动，或偏好音色已不存在
+    if(ja.length&&preferredVoiceUri){
+      preferredVoiceUri='';
+      preferredVoiceName='';
+    }else if(!preferredVoiceUri){
+      preferredVoiceName='';
+    }
     sel.value='';
   }
   resolveSpeakVoice();
@@ -735,11 +754,13 @@ function speak(text, btn){
   speakTimer=setTimeout(()=>{
     speakTimer=null;
     const voice=resolveSpeakVoice();
+    // 取最新 voice 引用，避免 voiceschanged 后旧对象在 Chrome 上静音
+    const fresh=voice&&(listJaVoices().find(v=>v.voiceURI===voice.voiceURI)||voice);
     const u=new SpeechSynthesisUtterance(t);
     speakUtterance=u;
-    if(voice){
-      u.voice=voice;
-      u.lang=(voice.lang||'ja-JP').replace(/_/g,'-');
+    if(fresh){
+      u.voice=fresh;
+      u.lang=fresh.lang||'ja-JP';
     }else{
       u.lang='ja-JP';
     }
@@ -760,7 +781,6 @@ function speak(text, btn){
       if(btn) btn.classList.remove('playing');
       alert('语音朗读失败，请换一个日语音色再试。');
     }
-    updateVoiceHint(`试听文本：${t.slice(0,24)}${t.length>24?'…':''}`);
   }, 80);
 }
 
@@ -996,7 +1016,20 @@ document.addEventListener('click',e=>{
   if(sp){
     e.preventDefault();
     e.stopPropagation();
-    speak(sp.dataset.speak||'', sp);
+    let text='';
+    const sline=sp.closest('.sline');
+    if(sline){
+      // 整句：按当前显示的振假名（含手动修改）
+      text=speakTextFromJpEl(sline.querySelector('.jp'));
+    }else if(sp.id==='popSpeak'){
+      const ja=pJp.textContent||'';
+      text=wordSpeakText(ja, effectiveWsRead(ja));
+    }else{
+      const wtag=sp.closest('.witem')&&sp.closest('.witem').querySelector('.wtag');
+      if(wtag) text=wordSpeakText(wtag.dataset.ja, wtag.dataset.read);
+      else text=sp.dataset.speak||'';
+    }
+    speak(text||sp.dataset.speak||'', sp);
     return;
   }
   const w=e.target.closest('.wtag');
@@ -1125,7 +1158,8 @@ function closeSettings(){
   optRuby.checked=o.ruby;
   optKataRuby.checked=o.kataRuby;
   preferredVoiceUri=o.voiceUri||'';
-  preferredVoiceName=o.voiceName||'';
+  // uri 为空表示自动；勿沿用旧的 name，否则会锁回上一音色
+  preferredVoiceName=preferredVoiceUri?(o.voiceName||''):'';
   applyOpts();
   refreshVoiceSelect();
 })();
@@ -1133,8 +1167,12 @@ optRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
 optKataRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
 optVoice.addEventListener('change',()=>{
   preferredVoiceUri=optVoice.value||'';
-  const v=findVoiceByPref()||listJaVoices().find(x=>x.voiceURI===preferredVoiceUri);
-  preferredVoiceName=v?v.name:'';
+  if(!preferredVoiceUri){
+    preferredVoiceName='';
+  }else{
+    const v=listJaVoices().find(x=>x.voiceURI===preferredVoiceUri);
+    preferredVoiceName=v?(v.name||''):'';
+  }
   resolveSpeakVoice();
   saveOpts();
   updateVoiceHint();
@@ -1151,7 +1189,9 @@ document.getElementById('btnResetReadings').addEventListener('click',()=>{
     alert('当前没有已保存的读音修改。');
     return;
   }
-  if(!confirm('清除本歌所有自定义读音，恢复模板默认？')) return;
+  if(!confirm(
+    '将清除本歌所有你改过的读音（歌词振假名与生词读音），并恢复为页面默认。\n\n此操作无法撤销。'
+  )) return;
   readings={v:1, ruby:{}, ws:{}};
   saveReadings();
   closePop();
