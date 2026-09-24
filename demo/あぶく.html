@@ -112,7 +112,7 @@ body{
   display:flex; align-items:center; gap:12px; flex-wrap:wrap;
   margin:22px 0 18px; justify-content:space-between;
 }
-.cbtns{display:flex; gap:10px;}
+.cbtns{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
 .btn{
   border:1px solid var(--line); background:#fff; color:var(--ink);
   border-radius:999px; padding:7px 16px; font-size:13.5px; cursor:pointer;
@@ -121,6 +121,18 @@ body{
 .btn:hover{border-color:var(--orange); color:var(--orange-deep);}
 .btn.primary{background:var(--orange); border-color:var(--orange); color:#fff;}
 .btn.primary:hover{background:var(--orange-deep);}
+.btn:disabled{opacity:.45; cursor:not-allowed;}
+.btn.icon-btn{
+  width:34px; height:34px; padding:0; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:#f2f5f9; border-color:transparent; color:#7a8494;
+}
+.btn.icon-btn svg{width:16px; height:16px; display:block;}
+.btn.icon-btn:hover{background:#fdf0e5; border-color:transparent; color:var(--orange-deep);}
+.btn.icon-btn.primary{background:var(--orange); color:#fff; border-color:transparent;}
+.btn.icon-btn.primary:hover{background:var(--orange-deep); color:#fff;}
+.btn.icon-btn.speaking-active{background:#fdf0e5; color:var(--orange-deep); border-color:transparent;}
+.cbtns .speak-controls{display:inline-flex; gap:6px; align-items:center;}
 
 /* ===== Ruby visibility (settings) ===== */
 body:not(.opt-ruby) rt{display:none;}
@@ -158,6 +170,10 @@ body.opt-ruby:not(.opt-kata-ruby) ruby.ruby-kata > rt{display:none;}
 }
 .settings .opt:has(input:disabled){opacity:.45; cursor:not-allowed;}
 .settings .hint{font-size:12px; color:var(--muted); line-height:1.65; margin:2px 0 0;}
+.settings .hint kbd{
+  font:inherit; font-size:11px; color:#5c6775; background:#f2f5f9;
+  border:1px solid #e2e9f2; border-radius:4px; padding:0 5px;
+}
 .settings-sep{height:1px; background:#eef2f7; margin:4px 0;}
 .settings .field{display:flex; flex-direction:column; gap:6px;}
 .settings .field > span{font-size:13.5px; color:#2a3644; font-weight:600;}
@@ -194,12 +210,25 @@ body.opt-ruby .sline .jp rt.rt-editing{
   background:#fff7f0; outline:1px solid var(--orange); cursor:text;
 }
 body.opt-ruby .sline .jp rt.rt-overridden{color:var(--orange-deep);}
+body.opt-ruby .sline .jp rt.rt-force-kana{
+  color:var(--orange-deep);
+  text-decoration:underline;
+  text-decoration-style:dotted;
+  text-underline-offset:2px;
+}
 #popRead.editable-read{
   cursor:text; border-radius:4px; padding:1px 4px; margin:-1px -4px;
 }
 #popRead.editable-read:hover{background:rgba(232,135,76,.12);}
 #popRead.rt-editing{
   background:#fff7f0; outline:1px solid var(--orange);
+}
+.pop .opt{
+  display:flex; align-items:flex-start; gap:8px; cursor:pointer;
+  font-size:13px; color:#2a3644; line-height:1.45; margin:0 0 8px;
+}
+.pop .opt input{
+  margin-top:2px; width:15px; height:15px; accent-color:var(--orange); flex-shrink:0;
 }
 
 .stat{
@@ -220,8 +249,13 @@ body.opt-ruby .sline .jp rt.rt-overridden{color:var(--orange-deep);}
 .card{
   background:var(--card); border:1px solid var(--line); border-radius:14px;
   margin-bottom:12px; overflow:hidden; box-shadow:0 1px 2px rgba(15,27,44,.04);
+  transition:border-color .2s ease, box-shadow .2s ease;
 }
 .card.open{border-color:#cfd9e6;}
+.card.speaking{
+  border-color:var(--orange);
+  box-shadow:0 0 0 2px rgba(232,135,76,.18), 0 1px 2px rgba(15,27,44,.04);
+}
 .sline{
   padding:15px 18px; cursor:pointer; user-select:none; display:flex; align-items:flex-start; gap:12px;
 }
@@ -356,6 +390,10 @@ footer a{color:#b06a3c; text-decoration:none;}
   <div class="controls">
     <div class="stat" id="statBar"></div>
     <div class="cbtns">
+      <span class="speak-controls">
+        <button class="btn icon-btn primary" id="btnSpeakAll" type="button" aria-label="全部朗读" title="全部朗读"></button>
+        <button class="btn icon-btn" id="btnSpeakStop" type="button" aria-label="停止朗读" title="停止" hidden></button>
+      </span>
       <button class="btn" id="btnSettings" type="button" aria-haspopup="dialog" aria-controls="settingsPanel">设置</button>
       <button class="btn" id="btnAll">全部展开</button>
       <button class="btn" id="btnCollapse">全部收起</button>
@@ -411,7 +449,7 @@ footer a{color:#b06a3c; text-decoration:none;}
       <p class="hint" id="voiceHint" hidden></p>
     </div>
     <div class="settings-sep"></div>
-    <p class="hint" style="margin:0">点击歌词上的振假名可修改读音。</p>
+    <p class="hint" style="margin:0">点击振假名可改读音；按住 <kbd>Alt</kbd>/<kbd>⌥</kbd> 再点击可切换「按假名发音」（不改字也能纠正朗读）。生词弹窗里也可勾选。</p>
     <div class="settings-actions">
       <button type="button" class="btn" id="btnResetReadings">恢复默认读音</button>
     </div>
@@ -435,6 +473,10 @@ footer a{color:#b06a3c; text-decoration:none;}
     <div class="row" id="popBaseRow" style="display:none"><span class="k">字典形</span><span class="v" id="popBase"></span></div>
     <div class="row" id="popFormsRow" style="display:none"><span class="k">其他形态</span><span class="v" id="popForms"></span></div>
     <div class="row" id="popReadRow"><span class="k">读音</span><span class="v" id="popRead"></span></div>
+    <label class="opt" id="popForceKanaRow" style="display:none">
+      <input type="checkbox" id="popForceKana">
+      <span>朗读时用振假名</span>
+    </label>
     <div class="row"><span class="k">释义</span><span class="v" id="popMean"></span></div>
     <div class="row"><span class="k">出处</span><span class="v" id="popSrc"></span></div>
     <div class="row" id="popNoteRow" style="display:none"><span class="k">说明</span><span class="v" id="popNote"></span></div>
@@ -902,8 +944,22 @@ const safeRtText=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 
 /* ===== 读音覆盖（localStorage，按歌曲隔离）===== */
 const READ_KEY=`jp-lyrics-study:readings:${SONG_ID||'unknown'}`;
-let readings={v:1, ruby:{}, ws:{}};
+let readings={v:1, ruby:{}, ws:{}, forceKana:{ruby:{}, ws:{}}};
 
+function emptyForceKana(){ return {ruby:{}, ws:{}}; }
+function normalizeForceKana(o){
+  const src=(o&&typeof o==='object')?o:{};
+  return {
+    ruby:(src.ruby&&typeof src.ruby==='object')?src.ruby:{},
+    ws:(src.ws&&typeof src.ws==='object')?src.ws:{}
+  };
+}
+function readingsEmpty(){
+  return !Object.keys(readings.ruby).length
+    && !Object.keys(readings.ws).length
+    && !Object.keys(readings.forceKana.ruby).length
+    && !Object.keys(readings.forceKana.ws).length;
+}
 function loadReadings(){
   try{
     const raw=localStorage.getItem(READ_KEY);
@@ -912,17 +968,19 @@ function loadReadings(){
     readings={
       v:1,
       ruby:(o&&o.ruby&&typeof o.ruby==='object')?o.ruby:{},
-      ws:(o&&o.ws&&typeof o.ws==='object')?o.ws:{}
+      ws:(o&&o.ws&&typeof o.ws==='object')?o.ws:{},
+      forceKana:normalizeForceKana(o&&o.forceKana)
     };
   }catch(_){
-    readings={v:1, ruby:{}, ws:{}};
+    readings={v:1, ruby:{}, ws:{}, forceKana:emptyForceKana()};
   }
 }
 function saveReadings(){
   try{
-    const empty=!Object.keys(readings.ruby).length&&!Object.keys(readings.ws).length;
-    if(empty) localStorage.removeItem(READ_KEY);
-    else localStorage.setItem(READ_KEY, JSON.stringify({v:1, ruby:readings.ruby, ws:readings.ws}));
+    if(readingsEmpty()) localStorage.removeItem(READ_KEY);
+    else localStorage.setItem(READ_KEY, JSON.stringify({
+      v:1, ruby:readings.ruby, ws:readings.ws, forceKana:readings.forceKana
+    }));
   }catch(_){}
 }
 function defaultWsRead(ja){
@@ -941,6 +999,63 @@ function setWsOverride(ja, reading, defaultReading){
   if(!next||next===def) delete readings.ws[ja];
   else readings.ws[ja]=next;
 }
+function isForceKanaWs(ja){
+  return !!(ja&&Object.prototype.hasOwnProperty.call(readings.forceKana.ws, ja));
+}
+/** 词表词形与 ruby 底字的对应：蠢く→蠢、浮かぶ→浮、動かす→動 */
+function wordRelatesToRubyBase(ja, base){
+  if(!ja||!base) return false;
+  if(ja===base) return true;
+  return /[\u4e00-\u9fff]/.test(base) && ja.startsWith(base);
+}
+function rubyKeySentNum(key){
+  const si=parseInt(String(key||'').split(':')[0], 10);
+  return Number.isFinite(si)?si+1:0;
+}
+/** 某 ruby 是否应因词级「按假名」而强制用振假名 */
+function forceKanaWsHitsRuby(key, base){
+  if(!base) return false;
+  if(isForceKanaWs(base)) return true;
+  const sentNum=key?rubyKeySentNum(key):0;
+  for(const ja of Object.keys(readings.forceKana.ws)){
+    if(!wordRelatesToRubyBase(ja, base)) continue;
+    const sents=wordSents[ja];
+    // 渲染中途 wordSents 可能尚未含后续句；无出处信息时仍按词形匹配
+    if(!sents||!sents.length) return true;
+    if(sentNum&&sents.includes(sentNum)) return true;
+  }
+  return false;
+}
+function isForceKanaRuby(key, base){
+  if(key&&Object.prototype.hasOwnProperty.call(readings.forceKana.ruby, key)) return true;
+  return forceKanaWsHitsRuby(key, base);
+}
+function setForceKanaWs(ja, on){
+  if(!ja) return;
+  if(on) readings.forceKana.ws[ja]=true;
+  else delete readings.forceKana.ws[ja];
+}
+function toggleForceKanaRuby(key, base){
+  if(!key) return false;
+  // 若词级已强制覆盖此处，Alt 点击改为取消相关词级标记
+  if(forceKanaWsHitsRuby(key, base)
+    &&!(key&&Object.prototype.hasOwnProperty.call(readings.forceKana.ruby, key))){
+    for(const ja of Object.keys(readings.forceKana.ws)){
+      if(!wordRelatesToRubyBase(ja, base)) continue;
+      const sents=wordSents[ja];
+      if(sents&&sents.length&&!sents.includes(rubyKeySentNum(key))) continue;
+      setForceKanaWs(ja, false);
+    }
+    delete readings.forceKana.ruby[key];
+    return false;
+  }
+  if(Object.prototype.hasOwnProperty.call(readings.forceKana.ruby, key)){
+    delete readings.forceKana.ruby[key];
+    return false;
+  }
+  readings.forceKana.ruby[key]=true;
+  return true;
+}
 /** 合并 ruby 覆盖，并标记 data-ruby-key / data-base */
 function applyJpOverrides(html, sentIdx){
   let ri=0;
@@ -956,37 +1071,47 @@ function applyJpOverrides(html, sentIdx){
     const defRt=String(rt).replace(/<[^>]+>/g,'');
     const hasOver=Object.prototype.hasOwnProperty.call(readings.ruby, key);
     const reading=hasOver?readings.ruby[key]:defRt;
-    const overCls=hasOver?' rt-overridden':'';
-    return `<ruby${cleaned} class="${cls}" data-ruby-key="${escAttr(key)}" data-base="${escAttr(bare)}">${base}<rt class="${overCls.trim()}" data-default-rt="${escAttr(defRt)}" title="点击修改读音">${safeRtText(reading)}</rt></ruby>`;
+    const force=isForceKanaRuby(key, bare);
+    const overCls=hasOver?' rt-overridden':(force?' rt-force-kana':'');
+    const tip=force
+      ?'按假名发音中 · 点击改读音 · Alt/⌥+点击取消'
+      :'点击修改读音 · Alt/⌥+点击按假名发音';
+    return `<ruby${cleaned} class="${cls}" data-ruby-key="${escAttr(key)}" data-base="${escAttr(bare)}">${base}<rt class="${overCls.trim()}" data-default-rt="${escAttr(defRt)}" title="${escAttr(tip)}">${safeRtText(reading)}</rt></ruby>`;
   });
 }
 
 const SPEAK_ICON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/><path d="M18.5 6a8 8 0 0 1 0 12"/></svg>`;
+const ICON_PLAY=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86a1 1 0 0 0-1.5.86z"/></svg>`;
+const ICON_PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>`;
+const ICON_STOP=`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>`;
 function speakBtn(text=''){
   return `<button type="button" class="speak" aria-label="发音" title="发音" data-speak="${escAttr(String(text||'').trim())}">${SPEAK_ICON}</button>`;
 }
 function wordSpeakText(ja, read){
   const j=(ja&&String(ja).trim())||'';
-  // 仅用户改过的读音才覆盖；否则按词形（汉字等）朗读
-  if(Object.prototype.hasOwnProperty.call(readings.ws, ja)){
-    const r=String(readings.ws[ja]||'').trim();
+  // 用户改过读音，或手动指定「按假名读」时用振假名；否则按词形（汉字等）朗读
+  const force=isForceKanaWs(ja)||Object.prototype.hasOwnProperty.call(readings.ws, ja);
+  if(force){
+    const r=String(effectiveWsRead(ja, read)||'').trim();
     if(r) return r;
   }
   return j;
 }
-/** 从歌词 DOM 取朗读文本：手改振假名用假名，否则保留汉字/词形 */
+/** 从歌词 DOM 取朗读文本：手改/强制振假名用假名，否则保留汉字/词形 */
 function speakTextFromJpEl(jpEl){
   if(!jpEl) return '';
   const clone=jpEl.cloneNode(true);
   clone.querySelectorAll('ruby').forEach(ruby=>{
     const rt=ruby.querySelector('rt');
     const key=ruby.dataset.rubyKey||'';
-    const overridden=Object.prototype.hasOwnProperty.call(readings.ruby, key)
-      ||(rt&&rt.classList.contains('rt-overridden'));
-    const reading=(rt?rt.textContent:'').trim();
     const base=(ruby.dataset.base||'').trim()
       ||(ruby.childNodes[0]&&ruby.childNodes[0].nodeType===3?ruby.childNodes[0].textContent:'').trim();
-    ruby.replaceWith(document.createTextNode(overridden?(reading||base):base));
+    const overridden=Object.prototype.hasOwnProperty.call(readings.ruby, key)
+      ||(rt&&rt.classList.contains('rt-overridden'));
+    const force=overridden||isForceKanaRuby(key, base)
+      ||(rt&&rt.classList.contains('rt-force-kana'));
+    const reading=(rt?rt.textContent:'').trim();
+    ruby.replaceWith(document.createTextNode(force?(reading||base):base));
   });
   return (clone.textContent||'').replace(/\s+/g,' ').trim();
 }
@@ -1000,6 +1125,7 @@ const SPEAK={
   AXIS_STEP:0.05,
   VALUE_DECIMALS:2,
   AFTER_CANCEL_MS:80,
+  BETWEEN_SENTENCE_MS:320,
   PREVIEW_TEXT:'こんにちは。これは音声のテストです。'
 };
 const SPEAK_VALUE_SCALE=10**SPEAK.VALUE_DECIMALS;
@@ -1009,6 +1135,8 @@ let speakRate=SPEAK.RATE_DEFAULT;
 let speakPitch=SPEAK.PITCH_DEFAULT;
 let speakUtterance=null;
 let speakTimer=null;
+/** 全部朗读队列：{ items:[{text,card,btn}], index, paused } */
+let speakAll=null;
 
 function listJaVoices(){
   if(!window.speechSynthesis) return [];
@@ -1122,27 +1250,162 @@ if(window.speechSynthesis){
 }
 function clearSpeakingUI(){
   document.querySelectorAll('.speak.playing').forEach(el=>el.classList.remove('playing'));
+  document.querySelectorAll('.card.speaking').forEach(el=>el.classList.remove('speaking'));
 }
-function stopSpeak(){
+function updateSpeakAllUI(){
+  const playBtn=document.getElementById('btnSpeakAll');
+  const stopBtn=document.getElementById('btnSpeakStop');
+  if(!playBtn||!stopBtn) return;
+  if(!stopBtn.dataset.ready){
+    stopBtn.innerHTML=ICON_STOP;
+    stopBtn.dataset.ready='1';
+  }
+  if(!speakAll){
+    playBtn.innerHTML=ICON_PLAY;
+    playBtn.classList.add('primary');
+    playBtn.classList.remove('speaking-active');
+    playBtn.setAttribute('aria-label','全部朗读');
+    playBtn.title='全部朗读';
+    stopBtn.hidden=true;
+    return;
+  }
+  stopBtn.hidden=false;
+  playBtn.classList.remove('primary');
+  playBtn.classList.add('speaking-active');
+  if(speakAll.paused){
+    playBtn.innerHTML=ICON_PLAY;
+    playBtn.setAttribute('aria-label','继续朗读');
+    playBtn.title='继续';
+  }else{
+    playBtn.innerHTML=ICON_PAUSE;
+    playBtn.setAttribute('aria-label','暂停朗读');
+    playBtn.title='暂停';
+  }
+}
+function cancelCurrentUtterance(){
   if(speakTimer){ clearTimeout(speakTimer); speakTimer=null; }
   if(window.speechSynthesis){
     try{ speechSynthesis.cancel(); }catch(_){}
     try{ if(speechSynthesis.paused) speechSynthesis.resume(); }catch(_){}
   }
   speakUtterance=null;
-  clearSpeakingUI();
 }
-function speak(text, btn){
-  const t=(text||'').trim();
-  if(!t) return;
+function stopSpeak(){
+  speakAll=null;
+  cancelCurrentUtterance();
+  clearSpeakingUI();
+  updateSpeakAllUI();
+}
+function pauseSpeakAll(){
+  if(!speakAll||speakAll.paused) return;
+  speakAll.paused=true;
+  if(window.speechSynthesis){
+    try{ speechSynthesis.pause(); }catch(_){}
+  }
+  updateSpeakAllUI();
+}
+function resumeSpeakAll(){
+  if(!speakAll||!speakAll.paused) return;
+  speakAll.paused=false;
+  updateSpeakAllUI();
+  if(window.speechSynthesis){
+    try{
+      if(speechSynthesis.paused){
+        speechSynthesis.resume();
+        return;
+      }
+    }catch(_){}
+  }
+  // 若当前没有挂起的 utterance（例如卡在句间等待），继续下一句
+  if(!speakUtterance&&!speakTimer) speakAllNext();
+}
+function finishSpeakAll(){
+  speakAll=null;
+  clearSpeakingUI();
+  updateSpeakAllUI();
+}
+function speakAllNext(){
+  if(!speakAll||speakAll.paused) return;
+  if(speakAll.index>=speakAll.items.length){
+    finishSpeakAll();
+    return;
+  }
+  const item=speakAll.items[speakAll.index];
+  document.querySelectorAll('.card.speaking').forEach(el=>el.classList.remove('speaking'));
+  if(item.card){
+    item.card.classList.add('speaking');
+    try{ item.card.scrollIntoView({behavior:'smooth', block:'center'}); }catch(_){}
+  }
+  speakRaw(item.text,{
+    btn:item.btn,
+    onEnd:()=>{
+      if(!speakAll) return;
+      speakAll.index++;
+      if(speakAll.paused) return;
+      if(speakAll.index>=speakAll.items.length){
+        finishSpeakAll();
+        return;
+      }
+      speakTimer=setTimeout(()=>{
+        speakTimer=null;
+        speakAllNext();
+      }, SPEAK.BETWEEN_SENTENCE_MS);
+    }
+  });
+}
+function startSpeakAll(){
   if(!window.speechSynthesis){
     alert('当前浏览器不支持语音朗读（Web Speech API）');
     return;
   }
-  stopSpeak();
+  const items=[];
+  document.querySelectorAll('#lyrics .card').forEach(card=>{
+    const jp=card.querySelector('.sline .jp');
+    const text=speakTextFromJpEl(jp);
+    if(!text) return;
+    items.push({
+      text,
+      card,
+      btn:card.querySelector('.sline .speak')
+    });
+  });
+  if(!items.length){
+    alert('没有可朗读的歌词。');
+    return;
+  }
+  cancelCurrentUtterance();
+  clearSpeakingUI();
+  speakAll={items, index:0, paused:false};
+  updateSpeakAllUI();
+  speakAllNext();
+}
+function speakRaw(text, {btn, onEnd}={}){
+  const t=(text||'').trim();
+  if(!t){
+    if(onEnd) onEnd();
+    return;
+  }
+  if(!window.speechSynthesis){
+    alert('当前浏览器不支持语音朗读（Web Speech API）');
+    if(onEnd) onEnd();
+    return;
+  }
+  if(speakTimer){ clearTimeout(speakTimer); speakTimer=null; }
+  try{ speechSynthesis.cancel(); }catch(_){}
+  try{ if(speechSynthesis.paused) speechSynthesis.resume(); }catch(_){}
+  speakUtterance=null;
+  clearSpeakingUI();
+  // 保留全部朗读的当前句高亮
+  if(speakAll&&speakAll.items[speakAll.index]&&speakAll.items[speakAll.index].card){
+    speakAll.items[speakAll.index].card.classList.add('speaking');
+  }
   if(btn) btn.classList.add('playing');
   speakTimer=setTimeout(()=>{
     speakTimer=null;
+    if(speakAll&&speakAll.paused){
+      if(btn) btn.classList.remove('playing');
+      return;
+    }
     const voice=resolveSpeakVoice();
     const fresh=voice&&(listJaVoices().find(v=>v.voiceURI===voice.voiceURI)||voice);
     const u=new SpeechSynthesisUtterance(t);
@@ -1158,6 +1421,7 @@ function speak(text, btn){
     const done=()=>{
       if(speakUtterance===u) speakUtterance=null;
       if(btn) btn.classList.remove('playing');
+      if(onEnd) onEnd();
     };
     u.onend=done;
     u.onerror=done;
@@ -1170,6 +1434,12 @@ function speak(text, btn){
       alert('语音朗读失败，请换一个日语音色再试。');
     }
   }, SPEAK.AFTER_CANCEL_MS);
+}
+function speak(text, btn){
+  // 单句/单词朗读会中断全部朗读
+  speakAll=null;
+  updateSpeakAllUI();
+  speakRaw(text, {btn});
 }
 
 const vocabMap=new Map();
@@ -1271,6 +1541,7 @@ function renderVocabGroups(){
 }
 
 function rerenderLyricsAndVocab(){
+  stopSpeak();
   clearRenderState();
   renderLyrics();
   renderVocabGroups();
@@ -1333,10 +1604,27 @@ function commitPopReadEdit(el, next){
     pRead.dataset.ja=ja;
     const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
     document.getElementById('popReadRow').style.display=((hasCJK||hasKata)&&eff)?'':'none';
+    syncPopForceKana(ja, eff);
     const say=wordSpeakText(ja, eff);
     const popSpeak=document.getElementById('popSpeak');
     popSpeak.dataset.speak=say;
     popSpeak.style.display=say?'':'none';
+  }
+}
+function syncPopForceKana(ja, effRead){
+  const forceRow=document.getElementById('popForceKanaRow');
+  const forceCb=document.getElementById('popForceKana');
+  if(!forceRow||!forceCb) return;
+  const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
+  const eff=effRead!=null?effRead:effectiveWsRead(ja);
+  if((hasCJK||hasKata)&&eff){
+    forceRow.style.display='';
+    const overridden=Object.prototype.hasOwnProperty.call(readings.ws, ja);
+    forceCb.checked=isForceKanaWs(ja)||overridden;
+    forceCb.disabled=overridden;
+    forceCb.title=overridden?'已改读音，朗读会自动用假名':'勾选后按振假名朗读（不改读音文字）';
+  }else{
+    forceRow.style.display='none';
   }
 }
 function startEditText(el, onCommit){
@@ -1389,6 +1677,18 @@ document.addEventListener('click',e=>{
   if(rt&&document.body.classList.contains('opt-ruby')){
     e.preventDefault();
     e.stopPropagation();
+    // Alt/⌥（或 Ctrl）+点击：切换「按假名发音」，不改读音文字
+    if(e.altKey||e.metaKey||e.ctrlKey){
+      const ruby=rt.closest('ruby');
+      const key=ruby&&ruby.dataset.rubyKey;
+      const base=ruby&&ruby.dataset.base;
+      if(key){
+        toggleForceKanaRuby(key, base);
+        saveReadings();
+        rerenderLyricsAndVocab();
+      }
+      return;
+    }
     startEditText(rt, v=>commitRubyEdit(rt, v));
     return;
   }
@@ -1405,7 +1705,7 @@ document.addEventListener('click',e=>{
     let text='';
     const sline=sp.closest('.sline');
     if(sline){
-      // 整句：未改振假名读汉字，手改过的用假名
+      // 整句：默认读汉字；手改或强制振假名处用假名
       text=speakTextFromJpEl(sline.querySelector('.jp'));
     }else if(sp.id==='popSpeak'){
       const ja=pJp.textContent||'';
@@ -1457,6 +1757,7 @@ document.addEventListener('click',e=>{
       pRead.removeAttribute('data-ja');
       pRead.title='';
     }
+    syncPopForceKana(ja, effRead);
     pMean.textContent=w.dataset.mean||'—';
     const sents=(wordSents[ja]||[w.dataset.sent]);
     pSrc.innerHTML=sents.map(n=>`<div class="sent-item"><b>第${n}句</b>${sentPlain[n]||''}</div>`).join('');
@@ -1480,16 +1781,54 @@ function closePop(){
   cancelEdit();
   pop.classList.remove('show');
   popMask.classList.remove('show');
-  stopSpeak();
+  // 关闭浮层：打断单词试听即可，勿中断「全部朗读」
+  if(speakAll){
+    const popSpeak=document.getElementById('popSpeak');
+    if(popSpeak) popSpeak.classList.remove('playing');
+  }else{
+    stopSpeak();
+  }
 }
 document.getElementById('popClose').addEventListener('click',closePop);
 popMask.addEventListener('click',closePop);
+document.getElementById('popForceKana').addEventListener('change',e=>{
+  const ja=pJp.textContent||'';
+  if(!ja||e.target.disabled) return;
+  const on=!!e.target.checked;
+  setForceKanaWs(ja, on);
+  // 同步句中对应 ruby（词形可能是 蠢く，底字是 蠢）：开则标记，关则清掉相关单点
+  document.querySelectorAll('#lyrics ruby[data-ruby-key]').forEach(r=>{
+    const key=r.dataset.rubyKey;
+    const base=r.dataset.base||'';
+    if(!key||!wordRelatesToRubyBase(ja, base)) return;
+    const sents=wordSents[ja];
+    if(sents&&sents.length&&!sents.includes(rubyKeySentNum(key))) return;
+    if(on) readings.forceKana.ruby[key]=true;
+    else delete readings.forceKana.ruby[key];
+  });
+  saveReadings();
+  rerenderLyricsAndVocab();
+  const eff=effectiveWsRead(ja);
+  const say=wordSpeakText(ja, eff);
+  const popSpeak=document.getElementById('popSpeak');
+  popSpeak.dataset.speak=say;
+  popSpeak.style.display=say?'':'none';
+  syncPopForceKana(ja, eff);
+});
 
 document.getElementById('btnAll').addEventListener('click',()=>{
   document.querySelectorAll('.card').forEach(c=>c.classList.add('open'));
 });
 document.getElementById('btnCollapse').addEventListener('click',()=>{
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('open'));
+});
+document.getElementById('btnSpeakAll').addEventListener('click',()=>{
+  if(!speakAll) startSpeakAll();
+  else if(speakAll.paused) resumeSpeakAll();
+  else pauseSpeakAll();
+});
+document.getElementById('btnSpeakStop').addEventListener('click',()=>{
+  stopSpeak();
 });
 
 /* ===== 显示设置 ===== */
@@ -1601,20 +1940,21 @@ document.getElementById('settingsClose').addEventListener('click',closeSettings)
 settingsMask.addEventListener('click',closeSettings);
 
 document.getElementById('btnResetReadings').addEventListener('click',()=>{
-  if(!Object.keys(readings.ruby).length&&!Object.keys(readings.ws).length){
-    alert('当前没有已保存的读音修改。');
+  if(readingsEmpty()){
+    alert('当前没有已保存的读音修改或「按假名发音」标记。');
     return;
   }
   if(!confirm(
-    '将清除本歌所有你改过的读音（歌词振假名与生词读音），并恢复为页面默认。\n\n此操作无法撤销。'
+    '将清除本歌所有你改过的读音，以及「按假名发音」标记，并恢复为页面默认。\n\n此操作无法撤销。'
   )) return;
-  readings={v:1, ruby:{}, ws:{}};
+  readings={v:1, ruby:{}, ws:{}, forceKana:emptyForceKana()};
   saveReadings();
   closePop();
   rerenderLyricsAndVocab();
 });
 
 loadReadings();
+updateSpeakAllUI();
 renderLyrics();
 renderStats();
 renderVocabGroups();
