@@ -563,9 +563,44 @@ function ensurePiper(){
   // 日语 OpenJTalk 依赖 Rust WASM；jsDelivr 常对 .wasm 返回 403，改用 unpkg
   const wasmG2pUrl='https://unpkg.com/piper-plus@0.7.0/dist/rust-wasm/piper_plus_wasm.js';
   piperInit=PiperPlus.initialize({model:'tsukuyomi', ort, wasmG2pUrl})
-    .then(p=>{piper=p; return p;})
+    .then(p=>{
+      // piper-plus 0.7 无 embedding 时硬编码 [1,192]；tsukuyomi 等模型要 256
+      patchSpeakerEmbeddingDim(p);
+      piper=p;
+      return p;
+    })
     .catch(err=>{piperInit=null; throw err;});
   return piperInit;
+}
+/** 按 ONNX 实际维度修正 speaker_embedding，避免 192/256 不匹配 */
+function patchSpeakerEmbeddingDim(p){
+  const session=p&&p._session;
+  if(!session||typeof session.run!=='function') return;
+  const names=session.inputNames||[];
+  if(!names.includes('speaker_embedding')) return;
+  let expected=256;
+  try{
+    const meta=session.inputMetadata&&session.inputMetadata.speaker_embedding;
+    const dims=meta&&(meta.dims||meta.shape);
+    if(dims&&dims.length>=2&&Number(dims[1])>0) expected=Number(dims[1]);
+  }catch(_){}
+  const origRun=session.run.bind(session);
+  session.run=(feeds,...args)=>{
+    if(feeds&&feeds.speaker_embedding){
+      const t=feeds.speaker_embedding;
+      const data=t.data||t.cpuData;
+      const len=data?data.length:(t.dims&&t.dims[1]);
+      if(len&&len!==expected){
+        feeds={...feeds};
+        feeds.speaker_embedding=new ort.Tensor('float32', new Float32Array(expected), [1, expected]);
+        // mask=0：不使用克隆向量，走模型默认话者
+        if(feeds.speaker_embedding_mask){
+          feeds.speaker_embedding_mask=new ort.Tensor('int64', new BigInt64Array([0n]), [1]);
+        }
+      }
+    }
+    return origRun(feeds, ...args);
+  };
 }
 async function speak(text, btn){
   const t=(text||'').trim();
@@ -580,7 +615,7 @@ async function speak(text, btn){
     const eng=await ensurePiper();
     if(gen!==speakGen) return;
     if(btn) btn.title='合成中…';
-    const result=await eng.synthesize(t,{language:'ja',lengthScale:1.05});
+    const result=await eng.synthesize(t,{language:'ja',lengthScale:1.5,noiseScale:0.667,noiseW:0.8});
     if(gen!==speakGen) return;
     const url=URL.createObjectURL(result.toBlob());
     const audio=new Audio(url);
