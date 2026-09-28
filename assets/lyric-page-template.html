@@ -424,8 +424,25 @@ rt{font-size:.52em; color:#8a94a3; font-weight:500;}
 .of b{color:#b06a3c; font-weight:600; margin-right:3px;}
 .sent-item{font-size:12.5px; color:#38434f; margin-bottom:3px; line-height:1.6;}
 .sent-item b{color:#b06a3c; font-weight:600; margin-right:4px;}
-.grammar{font-size:14px; color:#38434f; line-height:1.9;}
-.grammar code{background:#eef3f9; border:1px solid #e2e9f2; border-radius:5px; padding:1px 6px; font-size:13px; color:#1d4d6b;}
+.grammar{font-size:14px; color:#38434f; line-height:1.75; display:flex; flex-direction:column; gap:6px;}
+.grammar .gitem{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:8px;
+  font-size:13.5px;
+}
+.grammar .gtag{
+  border-radius:6px; padding:2px 8px; font-size:12px; font-weight:600;
+  font-family:"Noto Sans SC",sans-serif; line-height:1.7; white-space:nowrap;
+}
+.grammar .gtag.n5{background:var(--b5);color:var(--l5);}
+.grammar .gtag.n4{background:var(--b4);color:var(--l4);}
+.grammar .gtag.n3{background:var(--b3);color:var(--l3);}
+.grammar .gtag.n2{background:var(--b2);color:var(--l2);}
+.grammar .gtag.n1{background:var(--b1);color:var(--l1);}
+.grammar .gtag.nx{background:var(--bx);color:var(--lx);}
+.grammar .gitem .gnote{flex:1 1 12em; color:#4a5563; font-size:13px; line-height:1.55;}
+.grammar .gram-empty{color:var(--muted); font-size:13px;}
+.grammar .gram-legacy{line-height:1.9;}
+.grammar .gram-legacy code{background:#eef3f9; border:1px solid #e2e9f2; border-radius:5px; padding:1px 6px; font-size:13px; color:#1d4d6b;}
 .tr{font-size:15px; color:#2a3644; font-weight:500; line-height:1.85;}
 .tr::before{content:"「";color:var(--orange);} .tr::after{content:"」";color:var(--orange);}
 
@@ -490,7 +507,8 @@ footer a{color:#b06a3c; text-decoration:none;}
     <span class="lg"><span class="dot d3"></span>N3</span>
     <span class="lg"><span class="dot d2"></span>N2</span>
     <span class="lg"><span class="dot d1"></span>N1</span>
-    <span class="lg"><span class="dot dx"></span>NX 未收录</span>
+    <span class="lg"><span class="dot dx"></span>NX 生词未收录</span>
+    <span class="lg"><span class="dot dx"></span>语法未收录</span>
   </div>
 </header>
 
@@ -621,8 +639,8 @@ const SONG_ID='[歌名]|[歌手名]';
    ws 每项: [词形, 读音, 释义, 等级, 语法说明]
    jp 为带 <ruby> 的歌词 HTML */
 const S=[/* TODO: 填充歌词数据。每句结构见 references/data-guide.md 的「S 数组」章节。
-  每项: { jp(带<ruby>的歌词HTML), seg(分词用｜分隔), tr(中文翻译), gram(语法说明), ws([[词形,读音,释义,等级n5–n1或空串,说明],...]) }
-  等级只来自 references/jlpt/vocabulary.jsonl；未命中填 ''。示例见 references/data-guide.md。*/];
+  每项: { jp, seg, tr, grams:[{pat,lv,note},...], ws:[[词形,读音,释义,等级,说明],...] }
+  助词不进 ws；语法等级查 grammar.jsonl；词汇等级查 vocabulary.jsonl；未命中填 ''。*/];
 
 /* ===== 词性与活用（按词形索引）=====
    pos:词性  form:当前形态  base:字典形(变体时)  forms:其他形态 */
@@ -643,6 +661,25 @@ const LVL={
   '':['NX','pill nx','wtag nx']
 };
 function lvMeta(lv){return LVL[lv]||LVL[''];}
+/** 语法句型用与生词相同的等级底色（n5…nx），不显示 N 级文字 */
+function gramTagClass(lv){
+  const tag=(LVL[lv]&&LVL[lv][2])||LVL[''][2]; // wtag n5
+  return tag.replace(/^wtag\s*/,'');
+}
+function renderGrammarHtml(s){
+  if(Array.isArray(s.grams)){
+    if(!s.grams.length) return '<span class="gram-empty">（本句无单独语法点）</span>';
+    return s.grams.map(g=>{
+      const pat=g&&g.pat!=null?String(g.pat):'';
+      const lv=g&&g.lv!=null?String(g.lv):'';
+      const note=g&&g.note!=null?String(g.note):'';
+      const cls=gramTagClass(lv);
+      return `<div class="gitem"><span class="gtag ${cls}">${escAttr(pat)}</span><span class="gnote">${escAttr(note)}</span></div>`;
+    }).join('');
+  }
+  if(s.gram) return `<div class="gram-legacy">${s.gram}</div>`;
+  return '<span class="gram-empty">（本句无单独语法点）</span>';
+}
 
 const firstSeen={};
 function isFormWord(pos){
@@ -1354,8 +1391,8 @@ function renderLyrics(){
       </div>
       <div class="detail"><div class="detail-inner">
         <div class="sec"><h4>分词</h4><div class="seg">${s.seg.split('｜').join('<span class="sep">·</span>')}</div></div>
-        <div class="sec"><h4>词汇与等级</h4><div class="wlist">${whtml}</div></div>
-        <div class="sec"><h4>语法</h4><div class="grammar">${s.gram}</div></div>
+        <div class="sec"><h4>词汇</h4><div class="wlist">${whtml}</div></div>
+        <div class="sec"><h4>语法</h4><div class="grammar">${renderGrammarHtml(s)}</div></div>
         <div class="sec"><h4>中文翻译</h4><div class="tr">${s.tr}</div></div>
       </div></div>`;
     box.appendChild(card);
@@ -1516,6 +1553,51 @@ const popMask=document.getElementById('popMask'), pop=document.getElementById('p
 const pJp=document.getElementById('popJp'), pLv=document.getElementById('popLv'), pRead=document.getElementById('popRead'),
       pMean=document.getElementById('popMean'), pSrc=document.getElementById('popSrc'), pNote=document.getElementById('popNote');
 
+function openWordPop(w){
+  const ja=w.dataset.ja;
+  pJp.textContent=ja;
+  const popSpeak=document.getElementById('popSpeak');
+  const effRead=effectiveWsRead(ja, w.dataset.read);
+  const say=wordSpeakText(ja, w.dataset.read);
+  popSpeak.dataset.speak=say;
+  popSpeak.innerHTML=SPEAK_ICON;
+  popSpeak.style.display=say?'':'none';
+  const meta=lvMeta(w.dataset.lv||'');
+  pLv.innerHTML=`<span class="pill ${meta[1]}">${meta[0]}</span>`;
+  const p=POS[ja]||{pos:'',form:''};
+  document.getElementById('popPos').textContent=p.pos||'—';
+  const fw=isFormWord(p.pos);
+  const formRow=document.getElementById('popFormRow');
+  formRow.style.display=fw?'':'none';
+  document.getElementById('popForm').textContent=fw?(p.form||'—'):'';
+  const baseRow=document.getElementById('popBaseRow');
+  baseRow.style.display=p.base?'':'none';
+  document.getElementById('popBase').textContent=p.base||'';
+  const formsRow=document.getElementById('popFormsRow');
+  const others=(fw&&Array.isArray(p.forms))?p.forms.filter(f=>f[0]!==p.form):[];
+  formsRow.style.display=others.length?'':'none';
+  document.getElementById('popForms').innerHTML=others.map(f=>`<span class="of"><b>${f[0]}</b>${f[1]}</span>`).join('');
+  const readRow=document.getElementById('popReadRow');
+  const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
+  if((hasCJK||hasKata)&&effRead){
+    readRow.style.display='';
+    pRead.textContent=effRead;
+  }else{
+    readRow.style.display='none';
+  }
+  syncPopForceKana(ja, effRead);
+  pMean.textContent=w.dataset.mean||'—';
+  const sents=(wordSents[ja]||[w.dataset.sent]);
+  pSrc.innerHTML=sents.map(n=>`<div class="sent-item"><b>第${n}句</b>${sentPlain[n]||''}</div>`).join('');
+  const note=w.dataset.note||'';
+  const noteRow=document.getElementById('popNoteRow');
+  const dupNote=/^(字典形|ない形|ます形|て形|た形|ば形|意志形|命令形|可能态|被动态|使役态|使役被动态|否定形|过去形|副词化|假定形|～たい|名词|副词|イ形容词|ナ形容词)/.test(note);
+  const showNote=note&&!dupNote;
+  noteRow.style.display=showNote?'':'none';
+  pNote.textContent=showNote?note:'';
+  pop.classList.add('show'); popMask.classList.add('show');
+}
+
 document.addEventListener('click',e=>{
   const rt=e.target.closest('.sline .jp rt');
   if(rt&&document.body.classList.contains('opt-ruby')){
@@ -1561,48 +1643,7 @@ document.addEventListener('click',e=>{
   }
   const w=e.target.closest('.wtag');
   if(w){
-    const ja=w.dataset.ja;
-    pJp.textContent=ja;
-    const popSpeak=document.getElementById('popSpeak');
-    const effRead=effectiveWsRead(ja, w.dataset.read);
-    const say=wordSpeakText(ja, w.dataset.read);
-    popSpeak.dataset.speak=say;
-    popSpeak.innerHTML=SPEAK_ICON;
-    popSpeak.style.display=say?'':'none';
-    const meta=lvMeta(w.dataset.lv||'');
-    pLv.innerHTML=`<span class="pill ${meta[1]}">${meta[0]}</span>`;
-    const p=POS[ja]||{pos:'',form:''};
-    document.getElementById('popPos').textContent=p.pos||'—';
-    const fw=isFormWord(p.pos);
-    const formRow=document.getElementById('popFormRow');
-    formRow.style.display=fw?'':'none';
-    document.getElementById('popForm').textContent=fw?(p.form||'—'):'';
-    const baseRow=document.getElementById('popBaseRow');
-    baseRow.style.display=p.base?'':'none';
-    document.getElementById('popBase').textContent=p.base||'';
-    const formsRow=document.getElementById('popFormsRow');
-    const others=(fw&&Array.isArray(p.forms))?p.forms.filter(f=>f[0]!==p.form):[];
-    formsRow.style.display=others.length?'':'none';
-    document.getElementById('popForms').innerHTML=others.map(f=>`<span class="of"><b>${f[0]}</b>${f[1]}</span>`).join('');
-    const readRow=document.getElementById('popReadRow');
-    const hasCJK=/[\u4e00-\u9fff]/.test(ja), hasKata=/[\u30a0-\u30ff]/.test(ja);
-    if((hasCJK||hasKata)&&effRead){
-      readRow.style.display='';
-      pRead.textContent=effRead;
-    }else{
-      readRow.style.display='none';
-    }
-    syncPopForceKana(ja, effRead);
-    pMean.textContent=w.dataset.mean||'—';
-    const sents=(wordSents[ja]||[w.dataset.sent]);
-    pSrc.innerHTML=sents.map(n=>`<div class="sent-item"><b>第${n}句</b>${sentPlain[n]||''}</div>`).join('');
-    const note=w.dataset.note||'';
-    const noteRow=document.getElementById('popNoteRow');
-    const dupNote=/^(字典形|ない形|ます形|て形|た形|ば形|意志形|命令形|可能态|被动态|使役态|使役被动态|否定形|过去形|副词化|假定形|～たい|名词|副词|イ形容词|ナ形容词)/.test(note);
-    const showNote=note&&!dupNote;
-    noteRow.style.display=showNote?'':'none';
-    pNote.textContent=showNote?note:'';
-    pop.classList.add('show'); popMask.classList.add('show');
+    openWordPop(w);
     return;
   }
   const line=e.target.closest('.sline');

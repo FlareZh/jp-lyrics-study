@@ -30,6 +30,11 @@ VERB_POS = {"动词", "动词短语", "动词（敬语）", "动词（使役态�
 ADJ_POS = {"イ形容词", "ナ形容词"}
 NEED_FORMS_POS = VERB_POS | ADJ_POS | {"助动词", "句型", "句型（许可）"}
 VALID_LV = {"", "n5", "n4", "n3", "n2", "n1"}
+# 助词黑名单：不得出现在 ws / POS
+PARTICLES = {
+    "に", "は", "を", "も", "へ", "で", "が", "と", "より", "から", "まで",
+    "だけ", "しか", "ばかり", "ほど", "か", "や", "の", "ね", "よ", "さ", "ぞ", "わ", "かな",
+}
 
 PLACEHOLDER_RES = [
     (re.compile(r"\[歌名\]"), "仍有占位符 [歌名]"),
@@ -134,23 +139,34 @@ try {
     return json.loads(proc.stdout)
 
 
-def batch_lookup(words: list[str]) -> dict[str, dict]:
+def batch_lookup(words: list[str], kind: str = "vocab") -> dict[str, dict]:
     if not words:
         return {}
-    proc = subprocess.run(
-        [sys.executable, str(LOOKUP), "vocab", *words],
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0:
-        raise RuntimeError(proc.stderr or "jlpt_lookup failed")
-    out = {}
-    for line in proc.stdout.splitlines():
-        if not line.strip():
-            continue
-        row = json.loads(line)
-        out[row["q"]] = row
+    out: dict[str, dict] = {}
+    batch = 40
+    for i in range(0, len(words), batch):
+        chunk = words[i:i + batch]
+        proc = subprocess.run(
+            [sys.executable, str(LOOKUP), kind, *chunk],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr or f"jlpt_lookup {kind} failed")
+        for line in proc.stdout.splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            out[row["q"]] = row
     return out
+
+
+def batch_lookup_vocab(words: list[str]) -> dict[str, dict]:
+    return batch_lookup(words, "vocab")
+
+
+def batch_lookup_grammar(pats: list[str]) -> dict[str, dict]:
+    return batch_lookup(pats, "grammar")
 
 
 def check_placeholders(html: str, issues: list) -> None:
@@ -190,6 +206,8 @@ def check_data(song_id: str, S: list, POS: dict, issues: list, skip_jlpt: bool) 
             ws_words.add(ja)
             if LATIN_WORD_RE.match(ja):
                 issues.append(("error", f"生词不应收录英文: {ja!r}（第{si+1}句）"))
+            if ja in PARTICLES:
+                issues.append(("error", f"助词 {ja!r} 不应进 ws（第{si+1}句）；请改写入 grams"))
             if lv not in VALID_LV:
                 issues.append(("error", f"{ja}: 等级 {lv!r} 非法（只要 n5–n1 或空）"))
             if isinstance(read, str) and read:
@@ -197,6 +215,28 @@ def check_data(song_id: str, S: list, POS: dict, issues: list, skip_jlpt: bool) 
                     issues.append(("warning", f"{ja}: 纯平假名一般不填读音"))
                 if KATAKANA_RE.search(ja) and not HIRAGANA_ONLY_RE.match(read):
                     issues.append(("warning", f"{ja}: 片假名读音应写成平假名，当前 {read!r}"))
+
+        grams = sent.get("grams")
+        if grams is None and sent.get("gram"):
+            issues.append(("warning", f"第{si+1}句仍用旧字段 gram，请改为 grams 数组"))
+        elif grams is None:
+            issues.append(("warning", f"第{si+1}句缺少 grams（可用 []）"))
+        elif not isinstance(grams, list):
+            issues.append(("error", f"S[{si}].grams 应为数组"))
+        else:
+            for gi, g in enumerate(grams):
+                if not isinstance(g, dict):
+                    issues.append(("error", f"S[{si}].grams[{gi}] 应为对象"))
+                    continue
+                pat = g.get("pat")
+                lv = g.get("lv", "")
+                note = g.get("note", "")
+                if not isinstance(pat, str) or not pat.strip():
+                    issues.append(("error", f"S[{si}].grams[{gi}] 缺少 pat"))
+                if lv not in VALID_LV:
+                    issues.append(("error", f"语法 {pat!r}: 等级 {lv!r} 非法"))
+                if note is not None and not isinstance(note, str):
+                    issues.append(("error", f"语法 {pat!r}: note 应为字符串"))
 
     pos_keys = set(POS.keys())
     missing_pos = sorted(ws_words - pos_keys)
@@ -210,12 +250,16 @@ def check_data(song_id: str, S: list, POS: dict, issues: list, skip_jlpt: bool) 
         issues.append(("warning", f"另有 {len(orphan)-20} 个 POS 键未出现在 ws"))
 
     for ja, meta in POS.items():
+        if ja in PARTICLES:
+            issues.append(("error", f"助词 {ja!r} 不应进 POS"))
         if LATIN_WORD_RE.match(ja):
             issues.append(("error", f"POS 不应收录英文: {ja!r}"))
         if not isinstance(meta, dict):
             issues.append(("error", f"POS[{ja!r}] 不是对象"))
             continue
         pos = meta.get("pos") or ""
+        if pos == "助词":
+            issues.append(("error", f"POS[{ja!r}] 词性为助词，应删除该键并把用法写入 grams"))
         if not pos:
             issues.append(("error", f"POS[{ja!r}] 缺少 pos"))
             continue
@@ -250,53 +294,89 @@ def check_data(song_id: str, S: list, POS: dict, issues: list, skip_jlpt: bool) 
     if skip_jlpt:
         return
 
-    # 等级与索引对照：只抽有填等级的词
+    # 词汇等级对照
     leveled = sorted({
         row[0]
         for sent in S if isinstance(sent, dict)
         for row in (sent.get("ws") or [])
         if isinstance(row, (list, tuple)) and len(row) >= 4 and row[3]
     })
-    if not leveled:
-        return
-    # 分批，避免命令行过长
-    looked: dict[str, dict] = {}
-    batch = 40
-    for i in range(0, len(leveled), batch):
-        looked.update(batch_lookup(leveled[i:i + batch]))
-    for ja in leveled:
-        # 找到页面上填的等级
-        page_lvs = {
-            row[3]
-            for sent in S if isinstance(sent, dict)
-            for row in (sent.get("ws") or [])
-            if isinstance(row, (list, tuple)) and len(row) >= 4 and row[0] == ja and row[3]
-        }
-        info = looked.get(ja) or {"status": "miss"}
-        st = info.get("status")
-        if st == "ok":
-            if page_lvs - {info["lv"]}:
-                issues.append((
-                    "error",
-                    f"{ja}: 页面等级 {sorted(page_lvs)} 与索引 {info['lv']} 不一致",
-                ))
-        elif st == "ambiguous":
-            guess = info.get("lv_guess")
-            if guess and page_lvs <= {guess}:
-                issues.append((
-                    "warning",
-                    f"{ja}: 索引有多义，页面填了 {sorted(page_lvs)}（索引同级猜测 {guess}）",
-                ))
+    if leveled:
+        looked = batch_lookup_vocab(leveled)
+        for ja in leveled:
+            page_lvs = {
+                row[3]
+                for sent in S if isinstance(sent, dict)
+                for row in (sent.get("ws") or [])
+                if isinstance(row, (list, tuple)) and len(row) >= 4 and row[0] == ja and row[3]
+            }
+            info = looked.get(ja) or {"status": "miss"}
+            st = info.get("status")
+            if st == "ok":
+                if page_lvs - {info["lv"]}:
+                    issues.append((
+                        "error",
+                        f"{ja}: 页面等级 {sorted(page_lvs)} 与索引 {info['lv']} 不一致",
+                    ))
+            elif st == "ambiguous":
+                guess = info.get("lv_guess")
+                if guess and page_lvs <= {guess}:
+                    issues.append((
+                        "warning",
+                        f"{ja}: 索引有多义，页面填了 {sorted(page_lvs)}（索引同级猜测 {guess}）",
+                    ))
+                else:
+                    issues.append((
+                        "error",
+                        f"{ja}: 页面填了等级 {sorted(page_lvs)}，但索引无法唯一确定（{info.get('reason','ambiguous')}）",
+                    ))
             else:
                 issues.append((
                     "error",
-                    f"{ja}: 页面填了等级 {sorted(page_lvs)}，但索引无法唯一确定（{info.get('reason','ambiguous')}）",
+                    f"{ja}: 页面填了等级 {sorted(page_lvs)}，但索引为 {st}，应改成空",
                 ))
-        else:
-            issues.append((
-                "error",
-                f"{ja}: 页面填了等级 {sorted(page_lvs)}，但索引为 {st}，应改成空",
-            ))
+
+    # 语法等级对照
+    gram_pats = sorted({
+        g.get("pat")
+        for sent in S if isinstance(sent, dict)
+        for g in (sent.get("grams") or [])
+        if isinstance(g, dict) and g.get("pat") and g.get("lv")
+    })
+    if gram_pats:
+        glooked = batch_lookup_grammar(gram_pats)
+        for pat in gram_pats:
+            page_lvs = {
+                g.get("lv")
+                for sent in S if isinstance(sent, dict)
+                for g in (sent.get("grams") or [])
+                if isinstance(g, dict) and g.get("pat") == pat and g.get("lv")
+            }
+            info = glooked.get(pat) or {"status": "miss"}
+            st = info.get("status")
+            if st == "ok":
+                if page_lvs - {info["lv"]}:
+                    issues.append((
+                        "error",
+                        f"语法 {pat}: 页面等级 {sorted(page_lvs)} 与索引 {info['lv']} 不一致",
+                    ))
+            elif st == "ambiguous":
+                guess = info.get("lv_guess")
+                if guess and page_lvs <= {guess}:
+                    issues.append((
+                        "warning",
+                        f"语法 {pat}: 索引多义，页面填了 {sorted(page_lvs)}（猜测 {guess}）",
+                    ))
+                else:
+                    issues.append((
+                        "error",
+                        f"语法 {pat}: 页面填了 {sorted(page_lvs)}，但索引无法唯一确定",
+                    ))
+            else:
+                issues.append((
+                    "error",
+                    f"语法 {pat}: 页面填了 {sorted(page_lvs)}，但索引为 {st}，应改成空",
+                ))
 
 
 def main(argv: list[str] | None = None) -> int:

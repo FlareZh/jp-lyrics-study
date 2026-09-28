@@ -153,19 +153,107 @@ def lookup_vocab_one(q: str, index: dict[str, list[dict]]) -> dict:
     }
 
 
-def lookup_grammar_one(q: str, index: dict[str, list[dict]]) -> dict:
-    q = (q or "").strip().replace("～", "〜").replace("~", "〜")
-    if not q:
-        return {"q": q, "status": "miss"}
+def load_grammar_index(path: Path) -> tuple[dict[str, list[dict]], dict[str, list[dict]]]:
+    """返回 (精确键索引, 去罗马音括号后的规范化键索引)。"""
+    by_exact: dict[str, list[dict]] = defaultdict(list)
+    by_norm: dict[str, list[dict]] = defaultdict(list)
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        if row.get("meta"):
+            continue
+        k = row.get("k")
+        if not k:
+            continue
+        by_exact[k].append(row)
+        nk = norm_grammar_key(k)
+        if nk:
+            by_norm[nk].append(row)
+        # 同时挂上 ～ 变体，方便查询
+        alt = k.replace("〜", "～")
+        if alt != k:
+            by_exact[alt].append(row)
+    return by_exact, by_norm
 
-    raw = index.get(q, [])
-    # 也试未规范化的原串
-    if not raw:
-        raw = index.get((q or "").strip(), [])
-    if not raw:
-        return {"q": q, "status": "miss"}
 
-    good, noisy = clean_hits(raw)
+def norm_grammar_key(q: str) -> str:
+    s = (q or "").strip().replace("～", "〜").replace("~", "〜")
+    # 去掉末尾罗马音/注释括号：〜ほど (hodo)
+    s = re.sub(r"\s*[\(（][^）\)]*[\)）]\s*$", "", s).strip()
+    return s
+
+
+# 有限核心回退：查询串里若含这些尾巴，再试标准键
+GRAMMAR_CORE_FALLBACKS = (
+    ("たい", ("〜たい", "たい")),
+    ("だけ", ("だけ", "〜だけ")),
+    ("ほど", ("〜ほど", "ほど", "～ほど")),
+    ("より", ("〜より〜のほうが", "より")),
+    ("てもいい", ("〜てもいい", "てもいい")),
+    ("でもいい", ("〜でもいい", "でもいい")),
+    ("てはいけない", ("〜てはいけない", "てはいけない")),
+    ("がほしい", ("〜がほしい", "がほしい", "欲しい")),
+    ("が欲しい", ("〜がほしい", "が欲しい", "欲しい")),
+    ("みたい", ("みたいだ", "〜みたいだ")),
+    ("だに", ("だに", "N + だに")),
+)
+
+
+def gather_grammar_raw(
+    q: str,
+    by_exact: dict[str, list[dict]],
+    by_norm: dict[str, list[dict]],
+) -> list[dict]:
+    """按规范化与有限回退收集候选（去重保序）。"""
+    seen: set[int] = set()
+    out: list[dict] = []
+
+    def add_rows(rows: list[dict]):
+        for r in rows:
+            ident = id(r)
+            if ident in seen:
+                continue
+            seen.add(ident)
+            out.append(r)
+
+    nq = norm_grammar_key(q)
+    if not nq:
+        return out
+
+    # 精确 / 规范化键
+    add_rows(by_exact.get(q, []))
+    add_rows(by_exact.get(nq, []))
+    add_rows(by_norm.get(nq, []))
+    # 带/不带 〜 前缀
+    if not nq.startswith("〜"):
+        add_rows(by_exact.get("〜" + nq, []))
+        add_rows(by_norm.get("〜" + nq, []))
+    else:
+        bare = nq[1:]
+        add_rows(by_exact.get(bare, []))
+        add_rows(by_norm.get(bare, []))
+
+    if out:
+        return out
+
+    # 核心尾巴回退（仅在尚无命中时）
+    low = nq
+    for needle, keys in GRAMMAR_CORE_FALLBACKS:
+        if needle not in low:
+            continue
+        for k in keys:
+            add_rows(by_exact.get(k, []))
+            add_rows(by_norm.get(norm_grammar_key(k), []))
+        if out:
+            break
+    return out
+
+
+def decide_grammar_pool(q: str, pool: list[dict]) -> dict:
+    if not pool:
+        return {"q": q, "status": "miss"}
+    good, noisy = clean_hits(pool)
     if not good and noisy:
         return {
             "q": q,
@@ -173,7 +261,6 @@ def lookup_grammar_one(q: str, index: dict[str, list[dict]]) -> dict:
             "reason": "meaning_noise",
             "candidates": summarize_candidates(noisy),
         }
-
     levels = sorted({r.get("lv", "") for r in good if r.get("lv")})
     if len(levels) == 1 and len(good) == 1:
         r = good[0]
@@ -187,8 +274,21 @@ def lookup_grammar_one(q: str, index: dict[str, list[dict]]) -> dict:
         if r.get("src"):
             out["src"] = r["src"]
         return out
-
     if len(levels) == 1:
+        meanings = {(r.get("m") or "").strip() for r in good}
+        # 同级且释义相同（如 〜ほど / ～ほど (hodo) 重复行）→ 视为唯一命中
+        if len(meanings) == 1:
+            r = good[0]
+            out = {
+                "q": q,
+                "status": "ok",
+                "lv": levels[0],
+                "k": r.get("k", q),
+                "m": r.get("m", ""),
+            }
+            if r.get("src"):
+                out["src"] = r["src"]
+            return out
         return {
             "q": q,
             "status": "ambiguous",
@@ -196,13 +296,30 @@ def lookup_grammar_one(q: str, index: dict[str, list[dict]]) -> dict:
             "reason": "same_level_multiple_entries",
             "candidates": summarize_candidates(good),
         }
-
     return {
         "q": q,
         "status": "ambiguous",
         "reason": "multiple_levels",
         "candidates": summarize_candidates(good),
     }
+
+
+def lookup_grammar_one(
+    q: str,
+    by_exact: dict[str, list[dict]],
+    by_norm: dict[str, list[dict]] | None = None,
+) -> dict:
+    """查语法。by_norm 可省略（则只按 exact 字典，兼容旧调用）。"""
+    raw_q = (q or "").strip()
+    if not raw_q:
+        return {"q": raw_q, "status": "miss"}
+    if by_norm is None:
+        # 旧接口：只有一个 exact 索引
+        by_norm = defaultdict(list)
+        for k, rows in by_exact.items():
+            by_norm[norm_grammar_key(k)].extend(rows)
+    pool = gather_grammar_raw(raw_q, by_exact, by_norm)
+    return decide_grammar_pool(raw_q, pool)
 
 
 def read_queries(args: argparse.Namespace) -> list[str]:
@@ -255,8 +372,8 @@ def main(argv: list[str] | None = None) -> int:
         index = load_index(VOCAB_PATH)
         results = [lookup_vocab_one(q, index) for q in queries]
     else:
-        index = load_index(GRAMMAR_PATH)
-        results = [lookup_grammar_one(q, index) for q in queries]
+        by_exact, by_norm = load_grammar_index(GRAMMAR_PATH)
+        results = [lookup_grammar_one(q, by_exact, by_norm) for q in queries]
 
     if args.tsv:
         print("词\t状态\t等级\t原因\t说明")
