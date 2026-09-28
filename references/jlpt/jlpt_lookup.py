@@ -184,28 +184,12 @@ def norm_grammar_key(q: str) -> str:
     return s
 
 
-# 有限核心回退：查询串里若含这些尾巴，再试标准键
-GRAMMAR_CORE_FALLBACKS = (
-    ("たい", ("〜たい", "たい")),
-    ("だけ", ("だけ", "〜だけ")),
-    ("ほど", ("〜ほど", "ほど", "～ほど")),
-    ("より", ("〜より〜のほうが", "より")),
-    ("てもいい", ("〜てもいい", "てもいい")),
-    ("でもいい", ("〜でもいい", "でもいい")),
-    ("てはいけない", ("〜てはいけない", "てはいけない")),
-    ("がほしい", ("〜がほしい", "がほしい", "欲しい")),
-    ("が欲しい", ("〜がほしい", "が欲しい", "欲しい")),
-    ("みたい", ("みたいだ", "〜みたいだ")),
-    ("だに", ("だに", "N + だに")),
-)
-
-
 def gather_grammar_raw(
     q: str,
     by_exact: dict[str, list[dict]],
     by_norm: dict[str, list[dict]],
 ) -> list[dict]:
-    """按规范化与有限回退收集候选（去重保序）。"""
+    """精确键 + 规范化键（波浪号/去括号）+ 带/不带 〜 前缀。不做手工别名表。"""
     seen: set[int] = set()
     out: list[dict] = []
 
@@ -221,11 +205,9 @@ def gather_grammar_raw(
     if not nq:
         return out
 
-    # 精确 / 规范化键
     add_rows(by_exact.get(q, []))
     add_rows(by_exact.get(nq, []))
     add_rows(by_norm.get(nq, []))
-    # 带/不带 〜 前缀
     if not nq.startswith("〜"):
         add_rows(by_exact.get("〜" + nq, []))
         add_rows(by_norm.get("〜" + nq, []))
@@ -233,20 +215,6 @@ def gather_grammar_raw(
         bare = nq[1:]
         add_rows(by_exact.get(bare, []))
         add_rows(by_norm.get(bare, []))
-
-    if out:
-        return out
-
-    # 核心尾巴回退（仅在尚无命中时）
-    low = nq
-    for needle, keys in GRAMMAR_CORE_FALLBACKS:
-        if needle not in low:
-            continue
-        for k in keys:
-            add_rows(by_exact.get(k, []))
-            add_rows(by_norm.get(norm_grammar_key(k), []))
-        if out:
-            break
     return out
 
 

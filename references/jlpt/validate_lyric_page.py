@@ -378,6 +378,66 @@ def check_data(song_id: str, S: list, POS: dict, issues: list, skip_jlpt: bool) 
                     f"语法 {pat}: 页面填了 {sorted(page_lvs)}，但索引为 {st}，应改成空",
                 ))
 
+    # 空等级复查：未填 lv 的词/语法再查一遍索引
+    # - 其实能唯一命中 → error（漏填，必须补）
+    # - 仍 miss/reject/ambiguous → warning（列入复查清单，确认不是查错键）
+    empty_vocab = sorted({
+        row[0]
+        for sent in S if isinstance(sent, dict)
+        for row in (sent.get("ws") or [])
+        if isinstance(row, (list, tuple)) and len(row) >= 4
+        and row[0] and not row[3]
+    })
+    if empty_vocab:
+        looked = batch_lookup_vocab(empty_vocab)
+        for ja in empty_vocab:
+            info = looked.get(ja) or {"status": "miss"}
+            st = info.get("status")
+            if st == "ok":
+                issues.append((
+                    "error",
+                    f"{ja}: 页面等级为空，但索引可定级为 {info.get('lv')}——请复查后填上",
+                ))
+            elif st == "ambiguous":
+                guess = info.get("lv_guess") or "?"
+                issues.append((
+                    "warning",
+                    f"{ja}: NX 复查——索引多义（猜测 {guess}），请对照释义后手选或确认留空",
+                ))
+            else:
+                issues.append((
+                    "warning",
+                    f"{ja}: NX 复查——索引 {st}，请换字典形/读音再查；确认无命中才留空",
+                ))
+
+    empty_grams = sorted({
+        g.get("pat")
+        for sent in S if isinstance(sent, dict)
+        for g in (sent.get("grams") or [])
+        if isinstance(g, dict) and g.get("pat") and not g.get("lv")
+    })
+    if empty_grams:
+        glooked = batch_lookup_grammar(empty_grams)
+        for pat in empty_grams:
+            info = glooked.get(pat) or {"status": "miss"}
+            st = info.get("status")
+            if st == "ok":
+                issues.append((
+                    "error",
+                    f"语法 {pat}: 页面等级为空，但索引可定级为 {info.get('lv')}——请复查后填上",
+                ))
+            elif st == "ambiguous":
+                guess = info.get("lv_guess") or "?"
+                issues.append((
+                    "warning",
+                    f"语法 {pat}: 未收录复查——索引多义（猜测 {guess}），请对照后手选或确认留空",
+                ))
+            else:
+                issues.append((
+                    "warning",
+                    f"语法 {pat}: 未收录复查——索引 {st}，请换 〜/核心键再查；确认无命中才留空",
+                ))
+
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="歌词学习页交卷检查")
