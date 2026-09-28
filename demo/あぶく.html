@@ -294,6 +294,22 @@ body.opt-ruby:not(.opt-kata-ruby) ruby.ruby-kata > rt{display:none;}
   border:1px solid #e2e9f2; border-radius:4px; padding:0 5px;
 }
 .settings-sep{height:1px; background:#eef2f7; margin:4px 0;}
+.settings .lv-toggles{display:flex; flex-wrap:wrap; gap:6px;}
+.settings .lv-tog{
+  border:none; border-radius:6px; padding:4px 10px; font:inherit; font-size:12px; font-weight:700;
+  cursor:pointer; line-height:1.5; transition:opacity .15s ease, filter .15s ease, transform .1s ease;
+}
+.settings .lv-tog:active{transform:scale(.97);}
+.settings .lv-tog.on.n5{background:var(--b5);color:var(--l5);}
+.settings .lv-tog.on.n4{background:var(--b4);color:var(--l4);}
+.settings .lv-tog.on.n3{background:var(--b3);color:var(--l3);}
+.settings .lv-tog.on.n2{background:var(--b2);color:var(--l2);}
+.settings .lv-tog.on.n1{background:var(--b1);color:var(--l1);}
+.settings .lv-tog.on.nx{background:var(--bx);color:var(--lx);}
+.settings .lv-tog:not(.on){
+  background:#eef2f7; color:#9aa5b3; opacity:.72; font-weight:600;
+}
+.settings-sep{height:1px; background:#eef2f7; margin:4px 0;}
 .settings .field{display:flex; flex-direction:column; gap:6px;}
 .settings .field > span{font-size:13.5px; color:#2a3644; font-weight:600;}
 .settings .field-row{display:flex; gap:8px; align-items:center;}
@@ -511,7 +527,7 @@ footer a{color:#b06a3c; text-decoration:none;}
   </div>
   <h1>あぶく</h1>
   <div class="song">ヨルシカ / 泡沫</div>
-  <p class="tagline">作詞・作曲 n-buna ｜ 点击展开讲解 · 喇叭图标朗读日语</p>
+  <p class="tagline">作詞・作曲 n-buna</p>
   <div class="legend">
     <span class="lg"><span class="dot d5"></span>N5</span>
     <span class="lg"><span class="dot d4"></span>N4</span>
@@ -570,6 +586,18 @@ footer a{color:#b06a3c; text-decoration:none;}
       <input type="checkbox" id="optKataRuby">
       <span>为片假名标注平假名</span>
     </label>
+    <div class="field">
+      <span>难度筛选</span>
+      <div class="lv-toggles" id="optLvToggles" role="group" aria-label="点亮要显示的等级">
+        <button type="button" class="lv-tog on n5" data-lv="n5" aria-pressed="true">N5</button>
+        <button type="button" class="lv-tog on n4" data-lv="n4" aria-pressed="true">N4</button>
+        <button type="button" class="lv-tog on n3" data-lv="n3" aria-pressed="true">N3</button>
+        <button type="button" class="lv-tog on n2" data-lv="n2" aria-pressed="true">N2</button>
+        <button type="button" class="lv-tog on n1" data-lv="n1" aria-pressed="true">N1</button>
+        <button type="button" class="lv-tog on nx" data-lv="" aria-pressed="true">NX</button>
+      </div>
+      <p class="hint">点亮显示、熄灭隐藏。控制句内词汇 / 语法与底部生词表。</p>
+    </div>
     <div class="settings-sep"></div>
     <div class="field">
       <span>日语发音</span>
@@ -2480,7 +2508,17 @@ const LVL={
   n1:['N1','pill n1','wtag n1'],
   '':['NX','pill nx','wtag nx']
 };
+/** 点亮的等级；默认全开。空字符串键表示 NX */
+const LV_KEYS=['n5','n4','n3','n2','n1',''];
+let showLvs=new Set(LV_KEYS);
 function lvMeta(lv){return LVL[lv]||LVL[''];}
+function lvPassesFilter(lv){
+  const key=(lv&&LVL[lv])?lv:'';
+  return showLvs.has(key);
+}
+function isLvFilterActive(){
+  return showLvs.size<LV_KEYS.length;
+}
 /** 语法句型用与生词相同的等级底色（n5…nx），不显示 N 级文字 */
 function gramTagClass(lv){
   const tag=(LVL[lv]&&LVL[lv][2])||LVL[''][2]; // wtag n5
@@ -2488,8 +2526,9 @@ function gramTagClass(lv){
 }
 function renderGrammarHtml(s){
   if(Array.isArray(s.grams)){
-    if(!s.grams.length) return '<span class="gram-empty">（本句无单独语法点）</span>';
-    return s.grams.map(g=>{
+    const items=(s.grams||[]).filter(g=>lvPassesFilter(g&&g.lv!=null?String(g.lv):''));
+    if(!items.length) return '';
+    return items.map(g=>{
       const pat=g&&g.pat!=null?String(g.pat):'';
       const lv=g&&g.lv!=null?String(g.lv):'';
       const note=g&&g.note!=null?String(g.note):'';
@@ -2498,7 +2537,7 @@ function renderGrammarHtml(s){
     }).join('');
   }
   if(s.gram) return `<div class="gram-legacy">${s.gram}</div>`;
-  return '<span class="gram-empty">（本句无单独语法点）</span>';
+  return '';
 }
 
 const firstSeen={};
@@ -3188,7 +3227,10 @@ function renderLyrics(){
     let whtml='';
     s.ws.forEach(w=>{
       const k=w[0];
-      const meta=lvMeta(w[3]);
+      const wlv=w[3]||'';
+      (wordSents[k]=wordSents[k]||[]).push(num);
+      if(!lvPassesFilter(wlv)) return;
+      const meta=lvMeta(wlv);
       const lv=meta[2];
       const isRep=firstSeen[k]!==undefined;
       const repTag=isRep?`<span class="rep">重复·第${firstSeen[k]}处</span>`:'';
@@ -3197,11 +3239,13 @@ function renderLyrics(){
       const p=POS[k]||{pos:'',form:''};
       const posHtml=`<span class="pos">${p.pos||''}</span>`;
       const formTag=(isFormWord(p.pos)&&p.form)?`<span class="pos-f">${p.form}</span>`:'';
-      (wordSents[k]=wordSents[k]||[]).push(num);
       const effRead=effectiveWsRead(w[0], w[1]);
       const say=wordSpeakText(w[0], w[1]);
-      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(w[2])}" data-lv="${w[3]||''}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
+      whtml+=`<span class="witem"><button class="wtag ${lv}" data-ja="${escAttr(w[0])}" data-read="${escAttr(effRead||'')}" data-mean="${escAttr(w[2])}" data-lv="${wlv}" data-note="${escAttr(w[4]||'')}" data-speak="${escAttr(say)}">${readHtml}</button>${speakBtn(say)}${posHtml}${formTag}<span class="w-mean">${w[2]}</span>${repTag}</span>`;
     });
+    const ghtml=renderGrammarHtml(s);
+    const wsSec=whtml?`<div class="sec"><h4>词汇</h4><div class="wlist">${whtml}</div></div>`:'';
+    const gramSec=ghtml?`<div class="sec"><h4>语法</h4><div class="grammar">${ghtml}</div></div>`:'';
     const card=document.createElement('div');
     card.className='card';
     card.id='sent-'+num;
@@ -3214,8 +3258,8 @@ function renderLyrics(){
       </div>
       <div class="detail"><div class="detail-inner">
         <div class="sec"><h4>分词</h4><div class="seg">${s.seg.split('｜').join('<span class="sep">·</span>')}</div></div>
-        <div class="sec"><h4>词汇</h4><div class="wlist">${whtml}</div></div>
-        <div class="sec"><h4>语法</h4><div class="grammar">${renderGrammarHtml(s)}</div></div>
+        ${wsSec}
+        ${gramSec}
         <div class="sec"><h4>中文翻译</h4><div class="tr">${s.tr}</div></div>
       </div></div>`;
     box.appendChild(card);
@@ -3224,14 +3268,21 @@ function renderLyrics(){
 
 function renderStats(){
   const counts={n5:0,n4:0,n3:0,n2:0,n1:0,'':0};
-  vocabMap.forEach(v=>{counts[v.lv in counts?v.lv:'']++;});
+  let shown=0;
+  vocabMap.forEach(v=>{
+    const lv=v.lv in counts?v.lv:'';
+    if(!lvPassesFilter(lv)) return;
+    counts[lv]++;
+    shown++;
+  });
   const total=vocabMap.size;
   const el=document.getElementById('statBar');
   const bits=[
     ['n5','N5'],['n4','N4'],['n3','N3'],['n2','N2'],['n1','N1'],['','NX']
   ].filter(([k])=>counts[k]>0)
    .map(([k,label])=>`<span class="pill ${lvMeta(k)[1]}">${label} ${counts[k]}</span>`);
-  el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词 · ${bits.join(' ')}`;
+  const filterHint=isLvFilterActive()?` · 筛选后 <b>${shown}</b> 个`:'';
+  el.innerHTML=`共 <b>${S.length}</b> 句 · <b>${total}</b> 个生词${filterHint} · ${bits.join(' ')}`;
 }
 
 function renderVocabGroups(){
@@ -3239,13 +3290,16 @@ function renderVocabGroups(){
   const groups={n5:[],n4:[],n3:[],n2:[],n1:[],'':[]};
   vocabMap.forEach(v=>{
     const lv=v.lv in groups?v.lv:'';
+    if(!lvPassesFilter(lv)) return;
     groups[lv].push(v);
   });
   const el=document.getElementById('vocabGroups');
   el.innerHTML='';
+  let any=false;
   order.forEach(lv=>{
     const arr=groups[lv];
     if(!arr.length) return;
+    any=true;
     const meta=lvMeta(lv);
     const h=document.createElement('div');
     h.className='vg';
@@ -3261,6 +3315,9 @@ function renderVocabGroups(){
     h.appendChild(t);
     el.appendChild(h);
   });
+  if(!any&&vocabMap.size){
+    el.innerHTML='<p class="sub" style="margin:0">当前难度筛选下没有可显示的生词。</p>';
+  }
 }
 
 function rerenderLyricsAndVocab(){
@@ -3270,6 +3327,7 @@ function rerenderLyricsAndVocab(){
   clearRenderState();
   renderLyrics();
   renderVocabGroups();
+  renderStats();
   openIds.forEach(id=>{
     const c=document.getElementById(id);
     if(c) c.classList.add('open');
@@ -3523,6 +3581,7 @@ document.getElementById('btnSpeakAll').addEventListener('click',()=>{
 const OPT_KEY='jp-lyrics-study:display-opts';
 const optRuby=document.getElementById('optRuby');
 const optKataRuby=document.getElementById('optKataRuby');
+const optLvToggles=document.getElementById('optLvToggles');
 const optVoice=document.getElementById('optVoice');
 const optRate=document.getElementById('optRate');
 const optPitch=document.getElementById('optPitch');
@@ -3531,8 +3590,40 @@ const optPitchVal=document.getElementById('optPitchVal');
 const settingsPanel=document.getElementById('settingsPanel');
 const settingsMask=document.getElementById('settingsMask');
 
+function defaultShowLvs(){ return new Set(LV_KEYS); }
+function normalizeShowLvs(o){
+  if(Array.isArray(o)){
+    const s=new Set();
+    o.forEach(k=>{
+      if(k==='nx'||k==null) s.add('');
+      else if(Object.prototype.hasOwnProperty.call(LVL, k)||k==='') s.add(k);
+    });
+    return s;
+  }
+  if(o&&Array.isArray(o.showLvs)) return normalizeShowLvs(o.showLvs);
+  // 兼容旧版 minLv（N几及以上）
+  if(o&&typeof o.minLv==='string'){
+    const rank={n5:1,n4:2,n3:3,n2:4,n1:5};
+    const m=rank[o.minLv];
+    if(m){
+      const s=new Set();
+      LV_KEYS.forEach(k=>{ if(k&&rank[k]>=m) s.add(k); });
+      return s;
+    }
+  }
+  return defaultShowLvs();
+}
+function syncLvToggleUI(){
+  if(!optLvToggles) return;
+  optLvToggles.querySelectorAll('.lv-tog').forEach(btn=>{
+    const lv=btn.dataset.lv==null?'':btn.dataset.lv;
+    const on=showLvs.has(lv);
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', on?'true':'false');
+  });
+}
 function defaultOpts(){
-  return {ruby:true, kataRuby:false, voiceUri:'', voiceName:'', rate:SPEAK.RATE_DEFAULT, pitch:SPEAK.PITCH_DEFAULT};
+  return {ruby:true, kataRuby:false, showLvs:LV_KEYS.slice(), voiceUri:'', voiceName:'', rate:SPEAK.RATE_DEFAULT, pitch:SPEAK.PITCH_DEFAULT};
 }
 function clampSpeakAxis(n, fallback){
   const x=Number(n);
@@ -3556,9 +3647,11 @@ function loadOpts(){
     const raw=localStorage.getItem(OPT_KEY);
     if(!raw) return defaultOpts();
     const o=JSON.parse(raw);
+    const show=normalizeShowLvs(o);
     return {
       ruby:o.ruby!==false,
       kataRuby:o.kataRuby===true,
+      showLvs:[...show],
       voiceUri:typeof o.voiceUri==='string'?o.voiceUri:'',
       voiceName:typeof o.voiceName==='string'?o.voiceName:'',
       rate:clampSpeakAxis(o.rate, SPEAK.RATE_DEFAULT),
@@ -3573,6 +3666,7 @@ function saveOpts(){
     localStorage.setItem(OPT_KEY, JSON.stringify({
       ruby:!!optRuby.checked,
       kataRuby:!!optKataRuby.checked,
+      showLvs:LV_KEYS.filter(k=>showLvs.has(k)),
       voiceUri:preferredVoiceUri||'',
       voiceName:preferredVoiceName||'',
       rate:speakRate,
@@ -3588,6 +3682,7 @@ function applyOpts(){
 function openSettings(){
   refreshVoiceSelect();
   syncSpeakSliders();
+  syncLvToggleUI();
   settingsPanel.classList.add('show');
   settingsMask.classList.add('show');
 }
@@ -3599,6 +3694,8 @@ function closeSettings(){
   const o=loadOpts();
   optRuby.checked=o.ruby;
   optKataRuby.checked=o.kataRuby;
+  showLvs=new Set(Array.isArray(o.showLvs)?o.showLvs:LV_KEYS);
+  syncLvToggleUI();
   preferredVoiceUri=o.voiceUri||'';
   preferredVoiceName=preferredVoiceUri?(o.voiceName||''):'';
   speakRate=o.rate;
@@ -3609,6 +3706,18 @@ function closeSettings(){
 })();
 optRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
 optKataRuby.addEventListener('change',()=>{ applyOpts(); saveOpts(); });
+if(optLvToggles){
+  optLvToggles.addEventListener('click',e=>{
+    const btn=e.target.closest('.lv-tog');
+    if(!btn||!optLvToggles.contains(btn)) return;
+    const lv=btn.dataset.lv==null?'':btn.dataset.lv;
+    if(showLvs.has(lv)) showLvs.delete(lv);
+    else showLvs.add(lv);
+    syncLvToggleUI();
+    saveOpts();
+    rerenderLyricsAndVocab();
+  });
+}
 optVoice.addEventListener('change',()=>{
   setVoicePref(optVoice.value||'');
   saveOpts();
