@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Build JLPT vocabulary/grammar JSONL indexes from per-level markdown tables.
 
-    grep '"k": "会う"' references/jlpt/vocabulary.jsonl
-    grep '"k": "だに"' references/jlpt/grammar.jsonl
+查询请用 jlpt_lookup.py，不要裸 grep：
+
+    python3 references/jlpt/jlpt_lookup.py vocab 会う 私
+    python3 references/jlpt/jlpt_lookup.py grammar だに
 """
 import json
 import re

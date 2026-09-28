@@ -52,16 +52,20 @@ jp-lyrics-study/
         ├── vocabulary.jsonl         # 词汇 JLPT 分级索引
         ├── grammar.jsonl            # 语法 JLPT 分级索引
         ├── build_index.py           # 从各级 md 重建上述索引
+        ├── jlpt_lookup.py           # 批量查等级（生成时用）
+        ├── validate_lyric_page.py   # 生成后交卷检查
         └── n5…n1/                   # vocabulary.md · grammar.md
 ```
 
 | 文件 | 作用 |
 |------|------|
-| `SKILL.md` | 触发条件、工作流、硬性规则、索引检索方式 |
+| `SKILL.md` | 触发条件、工作流、硬性规则、查等级与交卷检查 |
 | `assets/lyric-page-template.html` | 复制后替换 `SONG_ID`、`S`、`POS` 与 hero 占位即可出页 |
 | `references/data-guide.md` | 歌词数组 `S`、词性表 `POS`、读音与分级规则 |
 | `references/jlpt/vocabulary.jsonl` | 词汇 JLPT 分级源；未命中则不分级（NX） |
 | `references/jlpt/grammar.jsonl` | 语法 JLPT 分级源；未命中则不标注等级 |
+| `references/jlpt/jlpt_lookup.py` | 批量查词/语法等级，避免裸搜大索引 |
+| `references/jlpt/validate_lyric_page.py` | 检查占位符、ws↔POS、形态名、等级是否靠谱 |
 
 ## 生成产物概要
 

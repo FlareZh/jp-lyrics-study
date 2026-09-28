@@ -29,39 +29,34 @@ description: 生成"日语歌词逐句学习网页"。当用户给出日语歌�
 - 遵守读音规则：纯平假名词读音留空；片假名词读音转平假名；说明行只写与词性/形态/字典形不重复的内容，无则留空。
 - 重复出现的词在 `POS` 只写一次（模板会自动标注出处）。
 
-### 第 3.5 步：JLPT 索引检索（必做）
+### 第 3.5 步：JLPT 等级查询（必做）
 
-两个索引文件（一行一条 JSON），**分开查、不要整文件读入**：
-
-| 文件 | 用途 |
-|------|------|
-| `references/jlpt/vocabulary.jsonl` | 生词等级（`ws[3]`） |
-| `references/jlpt/grammar.jsonl` | 语法点等级（若要在 `gram` 标注） |
-
-字段：`k` 查找键；`lv`=`n5`–`n1`；词汇另有 `r` 读音，读音行可有 `w`（词形）；语法核心行可有 `src`（完整句型）。
-
-**批量优先**：先收集本首歌全部待定级词形，对 `vocabulary.jsonl` **尽量一次 `grep -E` 查完**；需标等级的语法核心另对 `grammar.jsonl` 批量查。一词一搜浪费往返与 token。词特别多时可拆成每批 30–50 个。
-
-检索方式（冒号后有空格）：
+**用脚本查，不要整文件读入，也不要自己裸 `grep` 猜：**
 
 ```bash
-# 词汇：本首歌全部词形一次查
-grep -E '"k": "(会う|私|向こう|浮かぶ)"' references/jlpt/vocabulary.jsonl
+# 词汇：收集本首歌全部待定级词形后一次查完（词多可拆批）
+python3 references/jlpt/jlpt_lookup.py vocab 私 蠢く 浮かぶ あげる
 
-# 词汇调试单条
-grep '"k": "向こう"' references/jlpt/vocabulary.jsonl
+# 人读表格
+python3 references/jlpt/jlpt_lookup.py vocab --tsv 私 浮かぶ
 
-# 语法：句型核心一次查（波浪号用 〜）
-grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
+# 语法（若要在 gram 里标等级；波浪号用 〜）
+python3 references/jlpt/jlpt_lookup.py grammar 〜ては だに
 ```
 
+每行一个 JSON，看 `status`：
+
+| status | 怎么填 `ws[3]` |
+|--------|----------------|
+| `ok` | 用返回的 `lv` |
+| `ambiguous` | **不要自动定级**（可对照释义后手选，或填 `''`）；若有 `lv_guess` 仅供参考 |
+| `reject` / `miss` | 填 `''` |
+
 定级规则：
-1. 优先用**词形**作 `k`（字典形，如 `浮かぶ` 而非 `浮かんで`）。
-2. 命中后取该行 `lv` 写入 `ws[3]`（或语法说明里的等级）。
-3. 若只命中读音行（带 `"w": "词形"`）：以 `w` 与歌词词形一致的那条为准；同音多义（如 `むこう`→向こう/無効）不可混用。
-4. 命中行的 `m`（英文释义）与歌词用法明显不符时（如助词「に」对上「荷」），视为未命中。
-5. **无命中 → 不分级**：`ws[3]=''`；不要写 `n5`/`n4`/`n3`/`n2`/`n1`。
-6. 禁止打开整份 `vocabulary.jsonl` / `grammar.jsonl` 或各级源 md 来估级。
+1. 用**词形**（字典形，如 `浮かぶ` 而非 `浮かんで`）查询。
+2. 脚本已处理：词形优先、垃圾释义剔除、同键多等级标 `ambiguous`。
+3. **禁止凭语感估级**；禁止打开整份 `vocabulary.jsonl` / `grammar.jsonl` 或各级源 md 来估级。
+4. 索引源文件仍由 `references/jlpt/build_index.py` 从各级 md 生成；改分类表后需重跑该脚本。
 
 ### 第 4 步：生成并交付
 
@@ -69,8 +64,9 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 2. 在文件内填写 `SONG_ID`（`歌名|歌手名`），并替换 `S` 与 `POS` 占位。
 3. 替换 hero 元信息（`[歌名]`/`[歌手名]`/`[歌名中文译名]`/`[作词人]`/`[一句歌词主题/简介]` 共 5 处）。
 4. 在内联 `<style>` 中按本首歌定制 hero 配色与特效（见 data-guide）。
-5. 用 `html` skill 的 `scripts/shot.py <html>` 自检（确认无 JS 报错、桌面+移动端布局正常、hero 显示本首歌信息）。建议用本地 `http://` 打开（`file://` 下 ES module / import map 可能受限）。
-6. 用 `present_files` 交付该单文件 HTML。
+5. **交卷检查（必做）**：`python3 references/jlpt/validate_lyric_page.py 歌词名-歌词学习.html`。有 `error` 必须先改到清零再交付；`warning` 尽量处理。
+6. 用 `html` skill 的 `scripts/shot.py <html>` 自检（确认无 JS 报错、桌面+移动端布局正常、hero 显示本首歌信息）。建议用本地 `http://` 打开（`file://` 下 ES module / import map 可能受限）。
+7. 用 `present_files` 交付该单文件 HTML。
 
 ## 硬性规则（不可破坏）
 
@@ -93,4 +89,6 @@ grep -E '"k": "(だに|〜から|だけ)"' references/jlpt/grammar.jsonl
 
 - `assets/lyric-page-template.html`：自包含单文件模板（样式/交互/数据占位一体）。生成时复制并替换数据与 hero。
 - `references/data-guide.md`：`S`/`POS` 的数据结构、读音与去重规则、完整示例。填数据前必读。
-- `references/jlpt/vocabulary.jsonl` / `grammar.jsonl`：JLPT 唯一分级源（词汇 / 语法分开）。用 `grep '"k": "…"'` 检索（见第 3.5 步）。由 `references/jlpt/build_index.py` 从各级 md 生成；改源表后需重跑该脚本。
+- `references/jlpt/vocabulary.jsonl` / `grammar.jsonl`：JLPT 唯一分级源（词汇 / 语法分开）。用 `jlpt_lookup.py` 查询（见第 3.5 步）。由 `build_index.py` 从各级 md 生成；改源表后需重跑该脚本。
+- `references/jlpt/jlpt_lookup.py`：批量查等级（`ok` / `ambiguous` / `reject` / `miss`）。
+- `references/jlpt/validate_lyric_page.py`：生成后交卷检查（占位符、ws↔POS、形态名、等级与索引对照）。
