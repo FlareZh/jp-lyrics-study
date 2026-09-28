@@ -36,7 +36,7 @@ git clone https://github.com/FlareZh/jp-lyrics-study.git
 助理会：
 
 1. 检索官方日文歌词，发给你确认
-2. 确认后再按模板填数据并生成 HTML
+2. 确认后再按模板填数据并生成 HTML（以 `assets/lyric-page-template.html` 为唯一底稿，不参考 `demo/`）
 3. 交付 `歌词名-歌词学习.html`（单文件）
 
 ## 目录结构

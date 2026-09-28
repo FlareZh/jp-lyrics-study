@@ -18,6 +18,7 @@ description: 生成"日语歌词逐句学习网页"。当用户给出日语歌�
 
 - 读取 `references/data-guide.md`，掌握 `S` 数组与 `POS` 表的确切结构与读音/去重规则。
 - 读取 `assets/lyric-page-template.html`；确认脚本中：`SONG_ID`（`歌名|歌手名`）、`TODO: 填充歌词数据`（`const S=[...]`）、`TODO: 填充词性与活用`（`const POS={...}`）。
+- **禁止打开、阅读、复制或对照 `demo/` 下任何文件**（含 `demo/あぶく.html`）。样式/交互只以模板为准；数据只按 data-guide 与本曲歌词新建。
 
 ### 第 3 步：逐句拆分并填数据
 
@@ -61,7 +62,7 @@ python3 references/jlpt/jlpt_lookup.py vocab --tsv 私 浮かぶ
 
 ### 第 4 步：生成并交付
 
-1. 复制 `assets/lyric-page-template.html` 为 `歌词名-歌词学习.html`（仅此一个文件）。
+1. 复制 `assets/lyric-page-template.html` 为 `歌词名-歌词学习.html`（仅此一个文件）。**不要**以 `demo/` 里的页面为底稿或对照抄数据。
 2. 在文件内填写 `SONG_ID`（`歌名|歌手名`），并替换 `S` 与 `POS` 占位。
 3. 替换 hero 元信息（`[歌名]`/`[歌手名]`/`[歌名中文译名]`/`[作词人]`/`[一句歌词主题/简介]` 共 5 处）。
 4. 在内联 `<style>` 中按本首歌定制 hero 配色与特效（见 data-guide）。
@@ -71,6 +72,7 @@ python3 references/jlpt/jlpt_lookup.py vocab --tsv 私 浮かぶ
 
 ## 硬性规则（不可破坏）
 
+- **禁止参考 demo**：生成歌词学习页时不得打开、阅读、复制或对照 `demo/` 下任何文件。唯一底稿是 `assets/lyric-page-template.html`；数据结构与填法只认 `references/data-guide.md`；分级只认 `jlpt_lookup.py`。`demo/` 仅供人眼预览，不是生成素材。
 - **英语跳过**：歌词里的拉丁字母英文不做任何处理——不注音、不分词、不进生词表、不标词性/形态/等级、不写语法点；在 `jp`/`seg`/`tr` 中原样保留即可。整句若几乎全是英文，仍可给一句中文大意翻译，但不要拆解英文词。片假名外来语（如 `ライオン`）不算英语，照常处理。
 - **词性**：进入 `ws` 的非英语实词都要标；助词不进 `ws`/`POS`。
 - **形态**：仅 动词/形容词/助动词/句型 标（含动词短语、使役、敬语动词）。动词：字典形、ない形、ます形、て形、た形、ば形、意志形、命令形、可能态、被动态、使役态、使役被动态。形容词（イ/ナ）：字典形、否定形、过去形、て形、副词化、假定形。详见 data-guide。
@@ -90,8 +92,9 @@ python3 references/jlpt/jlpt_lookup.py vocab --tsv 私 浮かぶ
 
 ## 资源
 
-- `assets/lyric-page-template.html`：自包含单文件模板（样式/交互/数据占位一体）。生成时复制并替换数据与 hero。
+- `assets/lyric-page-template.html`：自包含单文件模板（样式/交互/数据占位一体）。生成时**唯一**底稿：复制并替换数据与 hero。
 - `references/data-guide.md`：`S`/`POS` 的数据结构、读音与去重规则、完整示例。填数据前必读。
+- `demo/`：**不要**在生成流程中读取；仅供人眼预览成品效果。
 - `references/jlpt/vocabulary.jsonl` / `grammar.jsonl`：JLPT 唯一分级源（词汇 / 语法分开）。用 `jlpt_lookup.py` 查询（见第 3.5 步）。由 `build_index.py` 从各级 md 生成；改源表后需重跑该脚本。
 - `references/jlpt/jlpt_lookup.py`：批量查等级（`ok` / `ambiguous` / `reject` / `miss`）。
 - `references/jlpt/validate_lyric_page.py`：生成后交卷检查（占位符、ws↔POS、形态名、等级与索引对照）。
